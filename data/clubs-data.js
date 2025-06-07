@@ -2130,7 +2130,7 @@ const CLUBS_DATA = [
   {
     "rank": 305,
     "name": "Marquette Golden Eagles",
-    "lat": 43.068211,
+    "lat": 43.088211,
     "lng": -87.919378,
     "country": "USA"
   },
@@ -2431,7 +2431,7 @@ const CLUBS_DATA = [
   {
     "rank": 348,
     "name": "Panerythraikos BC",
-    "lat": 37.975611,
+    "lat": 37.995611,
     "lng": 23.629578,
     "country": "Greece"
   },
@@ -3103,7 +3103,7 @@ const CLUBS_DATA = [
   {
     "rank": 444,
     "name": "NEA Filadelfeia",
-    "lat": 37.975281,
+    "lat": 37.995281,
     "lng": 23.629244,
     "country": "Greece"
   },
@@ -3306,7 +3306,7 @@ const CLUBS_DATA = [
   {
     "rank": 473,
     "name": "Milwaukee Panthers",
-    "lat": 43.068346,
+    "lat": 43.088346,
     "lng": -87.919211,
     "country": "USA"
   },
