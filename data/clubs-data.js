@@ -44,7 +44,7 @@ const CLUBS_DATA = [
   {
     "rank": 7,
     "name": "Los Angeles Clippers",
-    "lat": 34.059411,
+    "lat": 34.079411,
     "lng": -118.250578,
     "country": "USA"
   },
@@ -2046,7 +2046,7 @@ const CLUBS_DATA = [
   {
     "rank": 293,
     "name": "KK FMP Meridian",
-    "lat": 44.804211,
+    "lat": 44.824211,
     "lng": 20.436578,
     "country": "Serbia"
   },
@@ -2529,7 +2529,7 @@ const CLUBS_DATA = [
   {
     "rank": 362,
     "name": "George Washington Colonials",
-    "lat": 38.936546,
+    "lat": 38.956546,
     "lng": -77.049511,
     "country": "USA"
   },
@@ -2739,7 +2739,7 @@ const CLUBS_DATA = [
   {
     "rank": 392,
     "name": "La Salle Explorers",
-    "lat": 39.982046000000004,
+    "lat": 40.002046000000004,
     "lng": -75.177811,
     "country": "USA"
   },
@@ -3075,8 +3075,8 @@ const CLUBS_DATA = [
   {
     "rank": 440,
     "name": "Loyola Chicago Ramblers",
-    "lat": 41.907546,
-    "lng": -87.642411,
+    "lat": 41.927546,
+    "lng": -87.632411,
     "country": "USA"
   },
   {
@@ -3124,7 +3124,7 @@ const CLUBS_DATA = [
   {
     "rank": 447,
     "name": "UIC Flames",
-    "lat": 41.907681000000004,
+    "lat": 41.947681000000004,
     "lng": -87.642244,
     "country": "USA"
   },
@@ -3509,14 +3509,14 @@ const CLUBS_DATA = [
   {
     "rank": 502,
     "name": "Florida International Panthers",
-    "lat": 25.790846000000002,
+    "lat": 25.810846000000002,
     "lng": -80.204511,
     "country": "USA"
   },
   {
     "rank": 503,
     "name": "Rice Owls",
-    "lat": 29.790246,
+    "lat": 29.810246,
     "lng": -95.382711,
     "country": "USA"
   },
@@ -3621,7 +3621,7 @@ const CLUBS_DATA = [
   {
     "rank": 518,
     "name": "American University Eagles",
-    "lat": 38.936681,
+    "lat": 38.986681,
     "lng": -77.049444,
     "country": "USA"
   },
@@ -3831,7 +3831,7 @@ const CLUBS_DATA = [
   {
     "rank": 548,
     "name": "Drexel Dragons",
-    "lat": 39.981881,
+    "lat": 39.961881,
     "lng": -75.177744,
     "country": "USA"
   },
@@ -4034,7 +4034,7 @@ const CLUBS_DATA = [
   {
     "rank": 577,
     "name": "Vilniaus Stekas",
-    "lat": 54.716081,
+    "lat": 54.736081,
     "lng": 25.246444,
     "country": "Lithuania"
   },
@@ -4111,8 +4111,8 @@ const CLUBS_DATA = [
   {
     "rank": 588,
     "name": "Chicago State Cougars",
-    "lat": 41.907816000000004,
-    "lng": -87.642077,
+    "lat": 41.887816000000004,
+    "lng": -87.622077,
     "country": "USA"
   },
   {
@@ -4189,7 +4189,7 @@ const CLUBS_DATA = [
     "rank": 599,
     "name": "Pennsylvania Quakers",
     "lat": 39.981716,
-    "lng": -75.177577,
+    "lng": -75.147577,
     "country": "USA"
   },
   {
@@ -4440,7 +4440,7 @@ const CLUBS_DATA = [
   {
     "rank": 635,
     "name": "Klaipedos Neptunas-Akvaservis ",
-    "lat": 55.745746000000004,
+    "lat": 55.765746000000004,
     "lng": 21.082110999999998,
     "country": "Lithuania"
   },
@@ -4714,7 +4714,7 @@ const CLUBS_DATA = [
     "rank": 674,
     "name": "Howard Bison",
     "lat": 38.936816,
-    "lng": -77.049277,
+    "lng": -77.009277,
     "country": "USA"
   },
   {
