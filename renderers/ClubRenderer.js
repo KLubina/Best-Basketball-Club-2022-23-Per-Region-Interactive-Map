@@ -72,23 +72,14 @@ class ClubRenderer {
                 borderWeight: 1,
                 fillOpacity: 0.6
             };
-        } else if (rank <= 1000) {
+        } else {
             return {
-                name: 'Lower League (Top 1000)',
+                name: 'Lower League (500+)',
                 radius: 3,
                 fillColor: '#696969',      // Dim Gray
                 borderColor: '#2F4F4F',    // Dark Slate Gray border
                 borderWeight: 1,
                 fillOpacity: 0.55
-            };
-        } else {
-            return {
-                name: 'Amateur/Semi-Pro (1000+)',
-                radius: 2,
-                fillColor: '#2F4F4F',      // Dark Slate Gray
-                borderColor: '#000000',    // Black border
-                borderWeight: 1,
-                fillOpacity: 0.5
             };
         }
     }

@@ -90,65 +90,60 @@
     flex-shrink: 0;
 }
 
-.legend-marker.elite {
-    background-color: #FFD700;
-    border: 2px solid #FFA500;
-    width: 14px;
-    height: 14px;
-}
+/* === ALLE 8 LEGEND MARKER KLASSEN === */
 
-.legend-marker.world-class {
-    background-color: #FF8C00;
-    border: 2px solid #FF6347;
+.legend-marker.elite {
+    background-color: #FFD700;    /* Pure Gold */
+    border: 3px solid #FFA500;    /* Orange border */
     width: 12px;
     height: 12px;
 }
 
-.legend-marker.elite-national {
-    background-color: #FF6B35;
-    border: 1px solid #FF4500;
+.legend-marker.world-class {
+    background-color: #FF8C00;    /* Dark Orange */
+    border: 3px solid #FF6347;    /* Tomato border */
     width: 10px;
     height: 10px;
 }
 
-.legend-marker.top-national {
-    background-color: #FF4500;
-    border: 1px solid #DC143C;
-    width: 9px;
-    height: 9px;
-}
-
-.legend-marker.strong-national {
-    background-color: #DC143C;
-    border: 1px solid #B22222;
+.legend-marker.elite-national {
+    background-color: #FF6B35;    /* Red Orange */
+    border: 2px solid #FF4500;    /* Orange Red border */
     width: 8px;
     height: 8px;
 }
 
-.legend-marker.professional {
-    background-color: #B22222;
-    border: 1px solid #8B0000;
+.legend-marker.top-national {
+    background-color: #FF4500;    /* Orange Red */
+    border: 2px solid #DC143C;    /* Crimson border */
     width: 7px;
     height: 7px;
 }
 
-.legend-marker.regional {
-    background-color: #8B0000;
-    border: 1px solid #696969;
+.legend-marker.strong-national {
+    background-color: #DC143C;    /* Crimson */
+    border: 2px solid #B22222;    /* Fire Brick border */
     width: 6px;
     height: 6px;
 }
 
-.legend-marker.lower-league {
-    background-color: #696969;
-    border: 1px solid #2F4F4F;
+.legend-marker.professional {
+    background-color: #B22222;    /* Fire Brick */
+    border: 1px solid #8B0000;    /* Dark Red border */
     width: 5px;
     height: 5px;
 }
 
-.legend-marker.amateur {
-    background-color: #2F4F4F;
-    border: 1px solid #000000;
+.legend-marker.regional {
+    background-color: #8B0000;    /* Dark Red */
+    border: 1px solid #696969;    /* Dim Gray border */
     width: 4px;
     height: 4px;
+}
+
+.legend-marker.lower-league {
+    background-color: #696969;    /* Dim Gray */
+    border: 1px solid #2F4F4F;    /* Dark Slate Gray border */
+    width: 3px;
+    height: 3px;
 }
