@@ -44,66 +44,37 @@
                     Show dominance areas
                 </label>
             </div>
+            
+            <!-- Statistics area (updated dynamically) -->
             <div class="stats" id="stats">
                 <h3>Statistics</h3>
                 <div>Total clubs: <span id="totalClubs">0</span></div>
                 <div>Visible clubs: <span id="visibleClubs">0</span></div>
                 <div>Current zoom: <span id="zoomLevel">2</span></div>
             </div>
-            <div class="control-group">
-                <h3>Club Tier Legend</h3>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-marker elite"></div>
-                        <span>Elite (Top 3)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker world-class"></div>
-                        <span>World Class (Top 10)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker elite-national"></div>
-                        <span>Elite National (Top 25)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker top-national"></div>
-                        <span>Top National (Top 50)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker strong-national"></div>
-                        <span>Strong National (Top 100)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker professional"></div>
-                        <span>Professional (Top 250)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker regional"></div>
-                        <span>Regional (Top 500)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker lower-league"></div>
-                        <span>Lower League (Top 1000)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-marker amateur"></div>
-                        <span>Amateur/Semi-Pro (1000+)</span>
-                    </div>
-                </div>
+            
+            <!-- Legend placeholder - loaded dynamically from external file -->
+            <div id="legend-container">
+                <!-- Legend content will be loaded from components/legend.html -->
+                <div class="loading-placeholder">Loading legend...</div>
             </div>
+            
+            <!-- Instructions for map controls -->
             <h3>Map Controls</h3>
             <div class="help-text">
                 • Zoom: Mouse wheel or +/- buttons<br>
                 • Pan: Click and drag<br>
                 • Club info: Click on marker
             </div>
-            <!-- Quellenangabe -->
+            
+            <!-- Data source attribution -->
             <div class="source">
                 Ranking Source: <a href="https://store.steampowered.com/app/2098130/International_Basketball_Manager_23/" target="_blank" rel="noopener">International Basketball
                     Manager 23 Database</a><br>
                 <em>Data from around 2023</em>
             </div>
         </nav>
+        
         <div class="map-container">
             <div id="map"></div>
         </div>
@@ -114,6 +85,42 @@
     
     <!-- Data -->
     <script src="data/clubs-data.js"></script>
+    
+    <!-- Load external legend component -->
+    <script>
+        /**
+         * Load external HTML component into the page
+         * This allows for better code modularity and maintenance
+         */
+        async function loadLegendComponent() {
+            try {
+                // Fetch the external legend HTML file
+                const response = await fetch('components/legend.html');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                // Get the HTML content
+                const legendHTML = await response.text();
+                
+                // Insert the legend into the placeholder container
+                const legendContainer = document.getElementById('legend-container');
+                if (legendContainer) {
+                    legendContainer.innerHTML = legendHTML;
+                }
+            } catch (error) {
+                console.error('Error loading legend component:', error);
+                // Fallback: show error message in the container
+                const legendContainer = document.getElementById('legend-container');
+                if (legendContainer) {
+                    legendContainer.innerHTML = '<div class="error-message">Legend could not be loaded</div>';
+                }
+            }
+        }
+        
+        // Load the legend component when the DOM is ready
+        document.addEventListener('DOMContentLoaded', loadLegendComponent);
+    </script>
     
     <!-- Main Application (ES6 Modules) -->
     <script type="module" src="app.js"></script>
