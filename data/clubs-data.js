@@ -9,7 +9,7 @@ const CLUBS_DATA = [
   {
     "rank": 2,
     "name": "Milwaukee Bucks",
-    "lat": 43.0389,
+    "lat": 43.0589,
     "lng": -87.9065,
     "country": "USA"
   },
@@ -3803,7 +3803,7 @@ const CLUBS_DATA = [
   {
     "rank": 544,
     "name": "IUPUI Jaguars",
-    "lat": 39.797646,
+    "lat": 39.817646,
     "lng": -86.170811,
     "country": "USA"
   },
@@ -3824,7 +3824,7 @@ const CLUBS_DATA = [
   {
     "rank": 547,
     "name": "KK Atletas",
-    "lat": 54.715946,
+    "lat": 54.735946,
     "lng": 25.246610999999998,
     "country": "Lithuania"
   },
@@ -4069,7 +4069,7 @@ const CLUBS_DATA = [
   {
     "rank": 582,
     "name": "Vilniaus Perlas",
-    "lat": 54.716216,
+    "lat": 54.736216,
     "lng": 25.246277,
     "country": "Lithuania"
   },
@@ -4118,7 +4118,7 @@ const CLUBS_DATA = [
   {
     "rank": 589,
     "name": "Portland State Vikings",
-    "lat": 45.544746,
+    "lat": 45.564746,
     "lng": -122.691011,
     "country": "USA"
   },
@@ -4328,7 +4328,7 @@ const CLUBS_DATA = [
   {
     "rank": 619,
     "name": "CD Universidad Cat\u00f3lica",
-    "lat": -33.441246,
+    "lat": -33.461246,
     "lng": -70.682011,
     "country": "Chile"
   },
@@ -4706,7 +4706,7 @@ const CLUBS_DATA = [
   {
     "rank": 673,
     "name": "Georgia State Panthers",
-    "lat": 33.778411,
+    "lat": 33.808411,
     "lng": -84.400778,
     "country": "USA"
   },
@@ -4790,7 +4790,7 @@ const CLUBS_DATA = [
   {
     "rank": 685,
     "name": "New Orleans Privateers",
-    "lat": 29.958246,
+    "lat": 29.978246,
     "lng": -90.106511,
     "country": "USA"
   },
@@ -4881,7 +4881,7 @@ const CLUBS_DATA = [
   {
     "rank": 698,
     "name": "Southern Jaguars",
-    "lat": 29.958381,
+    "lat": 30.008381,
     "lng": -90.106344,
     "country": "USA"
   },
@@ -4916,7 +4916,7 @@ const CLUBS_DATA = [
   {
     "rank": 703,
     "name": "Houston Baptist Huskies",
-    "lat": 29.790446,
+    "lat": 29.810446,
     "lng": -95.382644,
     "country": "USA"
   },
