@@ -2809,7 +2809,7 @@ const CLUBS_DATA = [
   {
     "rank": 402,
     "name": "AO Tritonas",
-    "lat": 37.975446,
+    "lat": 37.955446,
     "lng": 23.629410999999998,
     "country": "Greece"
   },
@@ -3054,7 +3054,7 @@ const CLUBS_DATA = [
   {
     "rank": 437,
     "name": "Brown Bears",
-    "lat": 41.853546,
+    "lat": 41.873546,
     "lng": -71.425411,
     "country": "USA"
   },
@@ -3131,7 +3131,7 @@ const CLUBS_DATA = [
   {
     "rank": 448,
     "name": "BC Zalgiris Kaunas 2",
-    "lat": 54.925811,
+    "lat": 54.945811,
     "lng": 23.890677999999998,
     "country": "Lithuania"
   },
@@ -3243,7 +3243,7 @@ const CLUBS_DATA = [
   {
     "rank": 464,
     "name": "Obras Basket",
-    "lat": -34.596846,
+    "lat": -34.566846,
     "lng": -58.394211,
     "country": "Argentina"
   },
@@ -3341,7 +3341,7 @@ const CLUBS_DATA = [
   {
     "rank": 478,
     "name": "Club Ciclista Ol\u00edmpico",
-    "lat": -27.462446,
+    "lat": -27.482446,
     "lng": -58.843211000000004,
     "country": "Argentina"
   },
@@ -3398,7 +3398,7 @@ const CLUBS_DATA = [
     "rank": 486,
     "name": "Northeastern Huskies",
     "lat": 42.389546,
-    "lng": -71.071511,
+    "lng": -71.051511,
     "country": "USA"
   },
   {
@@ -3516,7 +3516,7 @@ const CLUBS_DATA = [
   {
     "rank": 503,
     "name": "Rice Owls",
-    "lat": 29.810246,
+    "lat": 29.850246,
     "lng": -95.382711,
     "country": "USA"
   },
@@ -3593,7 +3593,7 @@ const CLUBS_DATA = [
   {
     "rank": 514,
     "name": "Club Bigu\u00e1",
-    "lat": -34.877646,
+    "lat": -34.897646,
     "lng": -56.030911,
     "country": "Uruguay"
   },
@@ -3825,7 +3825,7 @@ const CLUBS_DATA = [
     "rank": 547,
     "name": "KK Atletas",
     "lat": 54.735946,
-    "lng": 25.246610999999998,
+    "lng": 25.226610999999998,
     "country": "Lithuania"
   },
   {
@@ -4069,7 +4069,7 @@ const CLUBS_DATA = [
   {
     "rank": 582,
     "name": "Vilniaus Perlas",
-    "lat": 54.736216,
+    "lat": 54.756216,
     "lng": 25.246277,
     "country": "Lithuania"
   },
@@ -4251,7 +4251,7 @@ const CLUBS_DATA = [
   {
     "rank": 608,
     "name": "Independiente Oliva",
-    "lat": -34.877480999999996,
+    "lat": -34.857480999999996,
     "lng": -56.030744,
     "country": "Uruguay"
   },
@@ -4860,7 +4860,7 @@ const CLUBS_DATA = [
   {
     "rank": 695,
     "name": "Incarnate Word Cardinals",
-    "lat": 29.453746000000002,
+    "lat": 29.473746000000002,
     "lng": -98.50621100000001,
     "country": "USA"
   },
