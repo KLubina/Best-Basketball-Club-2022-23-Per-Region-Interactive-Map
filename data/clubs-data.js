@@ -1,712 +1,4944 @@
-// Basketball Club Data with PERFECT 2km Minimum Distance
-// Optimized to ensure ALL clubs remain visible at ANY dominance radius up to 2km
-// 122 weaker clubs have been repositioned to avoid being dominated by stronger clubs
-// VALIDATION: 0 conflicts < 1km, 0 conflicts < 2km, minimum distance: 2.008km
 const CLUBS_DATA = [
-    { rank: 1, name: "Los Angeles Lakers", lat: 34.052200, lng: -118.243700, country: "USA" },
-    { rank: 2, name: "Milwaukee Bucks", lat: 43.038900, lng: -87.906500, country: "USA" },
-    { rank: 3, name: "Golden State Warriors", lat: 37.768000, lng: -122.387700, country: "USA" },
-    { rank: 4, name: "Brooklyn Nets", lat: 40.678200, lng: -73.944200, country: "USA" },
-    { rank: 5, name: "Chicago Bulls", lat: 41.878100, lng: -87.629800, country: "USA" },
-    { rank: 6, name: "Philadelphia 76ers", lat: 39.901200, lng: -75.172000, country: "USA" },
-    { rank: 7, name: "Los Angeles Clippers", lat: 34.041411, lng: -118.226578, country: "USA" },
-    { rank: 8, name: "Miami Heat", lat: 25.761700, lng: -80.191800, country: "USA" },
-    { rank: 9, name: "Boston Celtics", lat: 42.360100, lng: -71.058900, country: "USA" },
-    { rank: 10, name: "Phoenix Suns", lat: 33.448400, lng: -112.074000, country: "USA" },
-    { rank: 11, name: "Denver Nuggets", lat: 39.739200, lng: -104.990300, country: "USA" },
-    { rank: 12, name: "Atlanta Hawks", lat: 33.749000, lng: -84.388000, country: "USA" },
-    { rank: 13, name: "Toronto Raptors", lat: 43.653200, lng: -79.383200, country: "Canada" },
-    { rank: 14, name: "Dallas Mavericks", lat: 32.776700, lng: -96.797000, country: "USA" },
-    { rank: 15, name: "New Orleans Pelicans", lat: 29.951100, lng: -90.071500, country: "USA" },
-    { rank: 16, name: "Minnesota Timberwolves", lat: 44.977800, lng: -93.265000, country: "USA" },
-    { rank: 17, name: "Portland Trail Blazers", lat: 45.515200, lng: -122.678400, country: "USA" },
-    { rank: 18, name: "New York Knicks", lat: 40.712800, lng: -74.006000, country: "USA" },
-    { rank: 19, name: "Cleveland Cavaliers", lat: 41.499300, lng: -81.694400, country: "USA" },
-    { rank: 20, name: "Washington Wizards", lat: 38.907200, lng: -77.036900, country: "USA" },
-    { rank: 21, name: "Memphis Grizzlies", lat: 35.149500, lng: -90.049000, country: "USA" },
-    { rank: 22, name: "Sacramento Kings", lat: 38.581600, lng: -121.494400, country: "USA" },
-    { rank: 23, name: "Charlotte Hornets", lat: 35.227100, lng: -80.843100, country: "USA" },
-    { rank: 24, name: "Anadolu Efes ", lat: 41.008200, lng: 28.978400, country: "Turkey" },
-    { rank: 25, name: "EA7 Emporio Armani Milano", lat: 45.464200, lng: 9.190000, country: "Italy" },
-    { rank: 26, name: "Toronto Raptors", lat: 43.641811, lng: -79.371378, country: "Canada" },
-    { rank: 27, name: "Utah Jazz", lat: 40.760800, lng: -111.891000, country: "USA" },
-    { rank: 28, name: "Olympiacos BC", lat: 37.975500, lng: 23.734800, country: "Greece" },
-    { rank: 29, name: "Fenerbahçe Beko", lat: 40.997211, lng: 28.985478, country: "Turkey" },
-    { rank: 30, name: "Virtus Segafredo Bologna", lat: 44.494900, lng: 11.342600, country: "Italy" },
-    { rank: 31, name: "Barça", lat: 41.385100, lng: 2.173400, country: "Spain" },
-    { rank: 32, name: "KK Crvena Zvezda mts", lat: 44.786600, lng: 20.448900, country: "Serbia" },
-    { rank: 33, name: "AS Monaco Basket", lat: 43.738400, lng: 7.424600, country: "Monaco" },
-    { rank: 34, name: "Panathinaikos BC", lat: 37.986611, lng: 23.723678, country: "Greece" },
-    { rank: 35, name: "Detroit Pistons", lat: 42.331400, lng: -83.045800, country: "USA" },
-    { rank: 36, name: "Indiana Pacers", lat: 39.768400, lng: -86.158100, country: "USA" },
-    { rank: 37, name: "Orlando Magic", lat: 28.538300, lng: -81.379200, country: "USA" },
-    { rank: 38, name: "Real Madrid", lat: 40.416800, lng: -3.703800, country: "Spain" },
-    { rank: 39, name: "BC Zalgiris Kaunas", lat: 54.898500, lng: 23.903600, country: "Lithuania" },
-    { rank: 40, name: "Oklahoma City Thunder", lat: 35.467600, lng: -97.516400, country: "USA" },
-    { rank: 41, name: "Maccabi Playtika Tel Aviv", lat: 32.085300, lng: 34.781800, country: "Israel" },
-    { rank: 42, name: "Cazoo Baskonia", lat: 42.849900, lng: -2.671500, country: "Spain" },
-    { rank: 43, name: "Gran Canaria ", lat: 28.124800, lng: -15.430000, country: "Spain" },
-    { rank: 44, name: "Houston Rockets", lat: 29.760400, lng: -95.369800, country: "USA" },
-    { rank: 45, name: "San Antonio Spurs", lat: 29.424100, lng: -98.493600, country: "USA" },
-    { rank: 46, name: "Umana Reyer Venezia", lat: 45.440800, lng: 12.315500, country: "Italy" },
-    { rank: 47, name: "FC Bayern München", lat: 48.135100, lng: 11.582000, country: "Germany" },
-    { rank: 48, name: "LDLC ASVEL Villeurbanne", lat: 45.764000, lng: 4.835700, country: "France" },
-    { rank: 49, name: "Lenovo Tenerife", lat: 28.463600, lng: -16.251800, country: "Spain" },
-    { rank: 50, name: "Valencia Basket", lat: 39.469900, lng: -0.376300, country: "Spain" },
-    { rank: 51, name: "Pinar Karsiyaka", lat: 38.423700, lng: 27.142800, country: "Turkey" },
-    { rank: 52, name: "Galatasaray Nef", lat: 41.007011, lng: 29.003678, country: "Turkey" },
-    { rank: 53, name: "Unicaja", lat: 36.719600, lng: -4.421400, country: "Spain" },
-    { rank: 54, name: "Joventut Badalona", lat: 41.450100, lng: 2.247100, country: "Spain" },
-    { rank: 55, name: "Türk Telekom", lat: 39.933400, lng: 32.859700, country: "Turkey" },
-    { rank: 56, name: "KK Partizan MozzartBet", lat: 44.815400, lng: 20.417100, country: "Serbia" },
-    { rank: 57, name: "Monbus Obradoiro", lat: 42.880500, lng: -8.545600, country: "Spain" },
-    { rank: 58, name: "Bertram Yachts Derthona", lat: 44.905600, lng: 8.874200, country: "Italy" },
-    { rank: 59, name: "London Lions", lat: 51.507400, lng: -0.127800, country: "United Kingdom" },
-    { rank: 60, name: "Besiktas", lat: 41.033411, lng: 28.983078, country: "Turkey" },
-    { rank: 61, name: "ALBA Berlin", lat: 52.520000, lng: 13.405000, country: "Germany" },
-    { rank: 62, name: "Germani Brescia", lat: 45.541600, lng: 10.211800, country: "Italy" },
-    { rank: 63, name: "KK Cedevita Olimpija", lat: 46.056900, lng: 14.505800, country: "Slovenia" },
-    { rank: 64, name: "Metropolitans 92", lat: 48.856600, lng: 2.352200, country: "France" },
-    { rank: 65, name: "Fortitudo Bologna", lat: 44.517700, lng: 11.320200, country: "Italy" },
-    { rank: 66, name: "Paris Basketball", lat: 48.845011, lng: 2.374178, country: "France" },
-    { rank: 67, name: "UCLA Bruins", lat: 34.028411, lng: -118.238978, country: "USA" },
-    { rank: 68, name: "SIG Strasbourg", lat: 48.573400, lng: 7.752100, country: "France" },
-    { rank: 69, name: "Bahçesehir Koleji", lat: 41.025011, lng: 29.021678, country: "Turkey" },
-    { rank: 70, name: "Gaziantep Basketbol", lat: 37.066200, lng: 37.383300, country: "Turkey" },
-    { rank: 71, name: "Surne Bilbao Basket", lat: 43.262700, lng: -2.925300, country: "Spain" },
-    { rank: 72, name: "KK Buducnost VOLI", lat: 42.430400, lng: 19.259400, country: "Montenegro" },
-    { rank: 73, name: "Banco di Sardegna Sassari", lat: 40.725900, lng: 8.554700, country: "Italy" },
-    { rank: 74, name: "Frutti Extra Bursaspor", lat: 40.182600, lng: 29.066500, country: "Turkey" },
-    { rank: 75, name: "Tofas", lat: 40.200611, lng: 29.085778, country: "Turkey" },
-    { rank: 76, name: "Unahotels Reggio Emilia", lat: 44.698900, lng: 10.634600, country: "Italy" },
-    { rank: 77, name: "AEK BC", lat: 37.981011, lng: 23.759678, country: "Greece" },
-    { rank: 78, name: "Rytas Vilnius", lat: 54.687200, lng: 25.279700, country: "Lithuania" },
-    { rank: 79, name: "Florida State Seminoles", lat: 30.438300, lng: -84.280700, country: "USA" },
-    { rank: 80, name: "Casademont Zaragoza", lat: 41.648800, lng: -0.889000, country: "Spain" },
-    { rank: 81, name: "Bnei Ofek Dist Herzliya", lat: 32.162400, lng: 34.844100, country: "Israel" },
-    { rank: 82, name: "Río Breogán", lat: 43.362300, lng: -8.411500, country: "Spain" },
-    { rank: 83, name: "Bàsquet Girona", lat: 41.979400, lng: 2.821400, country: "Spain" },
-    { rank: 84, name: "Creighton Bluejays", lat: 41.256500, lng: -95.934500, country: "USA" },
-    { rank: 85, name: "Hapoel Tel Aviv", lat: 32.085211, lng: 34.770678, country: "Israel" },
-    { rank: 86, name: "Covirán Granada", lat: 37.177300, lng: -3.598600, country: "Spain" },
-    { rank: 87, name: "Baxi Manresa", lat: 41.728900, lng: 1.826200, country: "Spain" },
-    { rank: 88, name: "U-BT Cluj-Napoca", lat: 46.771200, lng: 23.623600, country: "Romania" },
-    { rank: 89, name: "Darüssafaka", lat: 41.025011, lng: 29.039678, country: "Turkey" },
-    { rank: 90, name: "ratiopharm Ulm", lat: 48.397400, lng: 9.993400, country: "Germany" },
-    { rank: 91, name: "Real Betis", lat: 37.388600, lng: -5.982300, country: "Spain" },
-    { rank: 92, name: "Le Mans Sarthe Basket", lat: 48.006100, lng: 0.199600, country: "France" },
-    { rank: 93, name: "New Zealand Breakers", lat: -36.848500, lng: 174.763300, country: "New Zealand" },
-    { rank: 94, name: "HAKRO Merlins Crailsheim", lat: 49.134000, lng: 10.061400, country: "Germany" },
-    { rank: 95, name: "Telekom Baskets Bonn", lat: 50.737400, lng: 7.098200, country: "Germany" },
-    { rank: 96, name: "Ironi Hai Motors Ness Ziona", lat: 31.927800, lng: 34.792500, country: "Israel" },
-    { rank: 97, name: "BC Wolves", lat: 54.698011, lng: 25.268578, country: "Lithuania" },
-    { rank: 98, name: "Manisa Büyüksehir Belediyespor", lat: 38.619100, lng: 27.428900, country: "Turkey" },
-    { rank: 99, name: "Vanoli Cremona", lat: 45.133500, lng: 10.022200, country: "Italy" },
-    { rank: 100, name: "Carplus Fuenlabrada", lat: 40.284600, lng: -3.798900, country: "Spain" },
-    { rank: 101, name: "Dolomiti Energia Trento", lat: 46.074800, lng: 11.121700, country: "Italy" },
-    { rank: 102, name: "Peristeri BC", lat: 37.961011, lng: 23.745678, country: "Greece" },
-    { rank: 103, name: "Yukatel Merkezefendi", lat: 37.776500, lng: 29.086400, country: "Turkey" },
-    { rank: 104, name: "BC Lietkabelis", lat: 55.717200, lng: 21.117500, country: "Lithuania" },
-    { rank: 105, name: "UCAM Murcia", lat: 37.992200, lng: -1.130700, country: "Spain" },
-    { rank: 106, name: "Hapoel Holon", lat: 32.016700, lng: 34.766700, country: "Israel" },
-    { rank: 107, name: "Semt77 Yalovaspor", lat: 40.656400, lng: 29.277700, country: "Turkey" },
-    { rank: 108, name: "Brose Bamberg", lat: 49.898800, lng: 10.902700, country: "Germany" },
-    { rank: 109, name: "Texas Longhorns", lat: 30.267200, lng: -97.743100, country: "USA" },
-    { rank: 110, name: "Lavrio Megabolt", lat: 37.716700, lng: 24.066700, country: "Greece" },
-    { rank: 111, name: "S.E. Melbourne Phoenix", lat: -37.813600, lng: 144.963100, country: "Australia" },
-    { rank: 112, name: "JL Bourg Basket", lat: 46.204400, lng: 5.225500, country: "France" },
-    { rank: 113, name: "Perth Wildcats", lat: -31.950500, lng: 115.860500, country: "Australia" },
-    { rank: 114, name: "Kansas Jayhawks", lat: 38.971700, lng: -95.235300, country: "USA" },
-    { rank: 115, name: "Hapoel B-Cure Laser Haifa", lat: 32.794000, lng: 34.989600, country: "Israel" },
-    { rank: 116, name: "Ironi Kiryat Ata", lat: 32.804400, lng: 35.104400, country: "Israel" },
-    { rank: 117, name: "Happy Casa Brindisi", lat: 40.638400, lng: 17.941100, country: "Italy" },
-    { rank: 118, name: "Aliaga Petkim", lat: 38.800700, lng: 26.977000, country: "Turkey" },
-    { rank: 119, name: "Prometey Slobozhanske", lat: 49.993500, lng: 36.230400, country: "Ukraine" },
-    { rank: 120, name: "Duke Blue Devils", lat: 36.001400, lng: -78.938200, country: "USA" },
-    { rank: 121, name: "Michigan Wolverines", lat: 42.278000, lng: -83.738200, country: "USA" },
-    { rank: 122, name: "AYOS Konyaspor", lat: 37.866700, lng: 32.483300, country: "Turkey" },
-    { rank: 123, name: "Baylor Bears", lat: 31.580400, lng: -97.111400, country: "USA" },
-    { rank: 124, name: "Basketball Löwen Braunschweig", lat: 52.268900, lng: 10.526800, country: "Germany" },
-    { rank: 125, name: "Virginia Cavaliers", lat: 38.033600, lng: -78.508000, country: "USA" },
-    { rank: 126, name: "North Carolina Tar Heels", lat: 35.904900, lng: -79.046900, country: "USA" },
-    { rank: 127, name: "Niners Chemnitz", lat: 50.827800, lng: 12.921400, country: "Germany" },
-    { rank: 128, name: "Illinois Fighting Illini", lat: 40.102000, lng: -88.227200, country: "USA" },
-    { rank: 129, name: "BC CBET Jonava", lat: 55.077800, lng: 24.280300, country: "Lithuania" },
-    { rank: 130, name: "Cholet Basket", lat: 47.058800, lng: -0.871000, country: "France" },
-    { rank: 131, name: "GeVi Napoli Basket", lat: 40.851800, lng: 14.268100, country: "Italy" },
-    { rank: 132, name: "Indiana Hoosiers", lat: 39.163700, lng: -86.526400, country: "USA" },
-    { rank: 133, name: "JDA Dijon Basket", lat: 47.322000, lng: 5.041500, country: "France" },
-    { rank: 134, name: "Notre Dame Fighting Irish", lat: 41.700100, lng: -86.237900, country: "USA" },
-    { rank: 135, name: "SLUC Nancy Basket", lat: 48.692100, lng: 6.184400, country: "France" },
-    { rank: 136, name: "Kentucky Wildcats", lat: 38.040600, lng: -84.503700, country: "USA" },
-    { rank: 137, name: "EWE Baskets Oldenburg", lat: 53.143500, lng: 8.214600, country: "Germany" },
-    { rank: 138, name: "NutriBullet Treviso", lat: 45.666900, lng: 12.243100, country: "Italy" },
-    { rank: 139, name: "Adelaide 36ers", lat: -34.928500, lng: 138.600700, country: "Australia" },
-    { rank: 140, name: "USC Trojans", lat: 34.017211, lng: -118.228978, country: "USA" },
-    { rank: 141, name: "Hapoel Yossi Avrahami Eilat", lat: 29.556900, lng: 34.951600, country: "Israel" },
-    { rank: 142, name: "Promitheas Patras", lat: 38.246600, lng: 21.734600, country: "Greece" },
-    { rank: 143, name: "Chorale Roanne", lat: 46.033900, lng: 4.064400, country: "France" },
-    { rank: 144, name: "AS Karditsas", lat: 39.366700, lng: 21.921100, country: "Greece" },
-    { rank: 145, name: "Givova Scafati", lat: 40.758300, lng: 14.527800, country: "Italy" },
-    { rank: 146, name: "BC Utenos Juventus", lat: 55.497800, lng: 25.266900, country: "Lithuania" },
-    { rank: 147, name: "Miami Hurricanes", lat: 25.772811, lng: -80.180678, country: "USA" },
-    { rank: 148, name: "Virginia Tech Hokies", lat: 37.228400, lng: -80.423400, country: "USA" },
-    { rank: 149, name: "Arizona Wildcats", lat: 32.222600, lng: -110.974700, country: "USA" },
-    { rank: 150, name: "Aris BC", lat: 40.640300, lng: 22.943900, country: "Greece" },
-    { rank: 151, name: "Clemson Tigers", lat: 34.683400, lng: -82.837400, country: "USA" },
-    { rank: 152, name: "Illawarra Hawks", lat: -34.424400, lng: 150.893100, country: "Australia" },
-    { rank: 153, name: "NC State Wolfpack", lat: 35.779600, lng: -78.638200, country: "USA" },
-    { rank: 154, name: "Openjobmetis Varese", lat: 45.820500, lng: 8.825000, country: "Italy" },
-    { rank: 155, name: "Syracuse Orange", lat: 43.048100, lng: -76.147400, country: "USA" },
-    { rank: 156, name: "PAOK BC", lat: 40.631411, lng: 22.955078, country: "Greece" },
-    { rank: 157, name: "MHP RIESEN Ludwigsburg", lat: 48.894100, lng: 9.191800, country: "Germany" },
-    { rank: 158, name: "Villanova Wildcats", lat: 40.037900, lng: -75.343600, country: "USA" },
-    { rank: 159, name: "Hapoel Bank Yahav Jerusalem", lat: 31.768300, lng: 35.213700, country: "Israel" },
-    { rank: 160, name: "Maccabi Effie Capital Rishon LeZion", lat: 31.973000, lng: 34.792600, country: "Israel" },
-    { rank: 161, name: "Veolia Towers Hamburg", lat: 53.551100, lng: 9.993700, country: "Germany" },
-    { rank: 162, name: "Carpegna Prosciutto Pesaro", lat: 43.910200, lng: 12.913300, country: "Italy" },
-    { rank: 163, name: "MLP Academics Heidelberg", lat: 49.398800, lng: 8.672400, country: "Germany" },
-    { rank: 164, name: "Sydney Kings", lat: -33.868800, lng: 151.209300, country: "Australia" },
-    { rank: 165, name: "Nanterre 92", lat: 48.881611, lng: 2.340178, country: "France" },
-    { rank: 166, name: "Alabama Crimson Tide", lat: 33.209800, lng: -87.569200, country: "USA" },
-    { rank: 167, name: "Fraport Skyliners", lat: 50.110900, lng: 8.682100, country: "Germany" },
-    { rank: 168, name: "Arkansas Razorbacks", lat: 36.062500, lng: -94.157400, country: "USA" },
-    { rank: 169, name: "Ohio State Buckeyes", lat: 39.961200, lng: -83.000700, country: "USA" },
-    { rank: 170, name: "BCM Gravelines-Dunkerque", lat: 51.034200, lng: 2.377000, country: "France" },
-    { rank: 171, name: "Auburn Tigers", lat: 32.601000, lng: -85.488700, country: "USA" },
-    { rank: 172, name: "Filou Oostende", lat: 51.217200, lng: 2.926700, country: "Belgium" },
-    { rank: 173, name: "KK Igokea m:tel", lat: 43.848600, lng: 18.356400, country: "Bosnia and Herzegovina" },
-    { rank: 174, name: "Kolossos H Hotels", lat: 36.393200, lng: 25.461500, country: "Greece" },
-    { rank: 175, name: "Cairns Taipans", lat: -16.918600, lng: 145.778100, country: "Australia" },
-    { rank: 176, name: "Minnesota Golden Gophers", lat: 44.960800, lng: -93.283000, country: "USA" },
-    { rank: 177, name: "Syntainics MBC", lat: 51.496900, lng: 11.969500, country: "Germany" },
-    { rank: 178, name: "Onvo Büyükçekmece Basketbol", lat: 41.034011, lng: 28.989678, country: "Turkey" },
-    { rank: 179, name: "Hapoel Gilboa Galil", lat: 32.937500, lng: 35.536400, country: "Israel" },
-    { rank: 180, name: "Pittsburgh Panthers", lat: 40.440600, lng: -79.995900, country: "USA" },
-    { rank: 181, name: "Boston College Eagles", lat: 42.339800, lng: -71.166300, country: "USA" },
-    { rank: 182, name: "Rutgers Scarlet Knights", lat: 40.500800, lng: -74.447400, country: "USA" },
-    { rank: 183, name: "Wake Forest Demon Deacons", lat: 36.134900, lng: -80.277200, country: "USA" },
-    { rank: 184, name: "Tasmania JackJumpers", lat: -42.882100, lng: 147.327200, country: "Australia" },
-    { rank: 185, name: "BC Neptunas Klaipeda", lat: 55.728611, lng: 21.105878, country: "Lithuania" },
-    { rank: 186, name: "Texas Tech Red Raiders", lat: 33.577900, lng: -101.855200, country: "USA" },
-    { rank: 187, name: "Georgia Tech Yellow Jackets", lat: 33.775600, lng: -84.396300, country: "USA" },
-    { rank: 188, name: "AA Quimsa", lat: -27.783300, lng: -64.266700, country: "Argentina" },
-    { rank: 189, name: "Brisbane Bullets", lat: -27.469800, lng: 153.025100, country: "Australia" },
-    { rank: 190, name: "Hapoel Nofar Galil Elyon", lat: 32.925811, lng: 35.547778, country: "Israel" },
-    { rank: 191, name: "Ionikos Basket", lat: 37.947300, lng: 23.664700, country: "Greece" },
-    { rank: 192, name: "medi bayreuth", lat: 49.942900, lng: 11.575300, country: "Germany" },
-    { rank: 193, name: "Houston Cougars", lat: 29.772011, lng: -95.358578, country: "USA" },
-    { rank: 194, name: "Hapoel Be'er Sheva", lat: 31.253000, lng: 34.791500, country: "Israel" },
-    { rank: 195, name: "Gonzaga Bulldogs", lat: 47.658700, lng: -117.426000, country: "USA" },
-    { rank: 196, name: "Hereda San Pablo Burgos", lat: 42.340400, lng: -3.702600, country: "Spain" },
-    { rank: 197, name: "BC Siauliai", lat: 55.934900, lng: 23.313500, country: "Lithuania" },
-    { rank: 198, name: "WKS Slask Wroclaw", lat: 51.107900, lng: 17.038500, country: "Poland" },
-    { rank: 199, name: "Melbourne United", lat: -37.803811, lng: 144.974478, country: "Australia" },
-    { rank: 200, name: "Oregon Ducks", lat: 44.050500, lng: -123.095100, country: "USA" },
-    { rank: 201, name: "Florida Gators", lat: 29.651600, lng: -82.324800, country: "USA" },
-    { rank: 202, name: "Wisconsin Badgers", lat: 43.072200, lng: -89.400800, country: "USA" },
-    { rank: 203, name: "South Carolina Gamecocks", lat: 34.000700, lng: -81.034800, country: "USA" },
-    { rank: 204, name: "Pallacanestro Trieste", lat: 45.649500, lng: 13.776800, country: "Italy" },
-    { rank: 205, name: "West Virginia Mountaineers", lat: 39.629500, lng: -79.955900, country: "USA" },
-    { rank: 206, name: "Tennessee Volunteers", lat: 35.954400, lng: -83.929500, country: "USA" },
-    { rank: 207, name: "Tezenis Verona", lat: 45.438400, lng: 10.991600, country: "Italy" },
-    { rank: 208, name: "Iowa Hawkeyes", lat: 41.661100, lng: -91.530200, country: "USA" },
-    { rank: 209, name: "Purdue Boilermakers", lat: 40.423700, lng: -86.921200, country: "USA" },
-    { rank: 210, name: "MoraBanc Andorra", lat: 42.506300, lng: 1.521800, country: "Andorra" },
-    { rank: 211, name: "Limoges CSP", lat: 45.833600, lng: 1.261100, country: "France" },
-    { rank: 212, name: "LSU Tigers", lat: 30.451500, lng: -91.187100, country: "USA" },
-    { rank: 213, name: "Oklahoma Sooners", lat: 35.222600, lng: -97.439500, country: "USA" },
-    { rank: 214, name: "Louisville Cardinals", lat: 38.252700, lng: -85.758500, country: "USA" },
-    { rank: 215, name: "KK Split", lat: 43.508100, lng: 16.440200, country: "Croatia" },
-    { rank: 216, name: "Oklahoma State Cowboys", lat: 36.115600, lng: -97.058300, country: "USA" },
-    { rank: 217, name: "Texas A&M Aggies", lat: 30.628000, lng: -96.334400, country: "USA" },
-    { rank: 218, name: "Okapi Aalst", lat: 50.936500, lng: 4.043500, country: "Belgium" },
-    { rank: 219, name: "Ole Miss Rebels", lat: 34.366400, lng: -89.534800, country: "USA" },
-    { rank: 220, name: "EB Pau-Lacq-Orthez", lat: 43.295100, lng: -0.370700, country: "France" },
-    { rank: 221, name: "Arizona State Sun Devils", lat: 33.425500, lng: -111.940000, country: "USA" },
-    { rank: 222, name: "BC Pieno Zvaigzdes", lat: 55.916900, lng: 24.163800, country: "Lithuania" },
-    { rank: 223, name: "KK Zadar", lat: 44.119400, lng: 15.231400, country: "Croatia" },
-    { rank: 224, name: "TCU Horned Frogs", lat: 32.708100, lng: -97.373100, country: "USA" },
-    { rank: 225, name: "Würzburg Baskets", lat: 49.791300, lng: 9.953400, country: "Germany" },
-    { rank: 226, name: "KK Mega MIS", lat: 44.786211, lng: 20.460578, country: "Serbia" },
-    { rank: 227, name: "Northwestern Wildcats", lat: 42.053400, lng: -87.675100, country: "USA" },
-    { rank: 228, name: "Nebraska Cornhuskers", lat: 40.813600, lng: -96.702600, country: "USA" },
-    { rank: 229, name: "Missouri Tigers", lat: 38.951700, lng: -92.334100, country: "USA" },
-    { rank: 230, name: "Stanford Cardinal", lat: 37.441900, lng: -122.143000, country: "USA" },
-    { rank: 231, name: "ESSM Le Portel", lat: 50.713300, lng: 1.566700, country: "France" },
-    { rank: 232, name: "BG Göttingen", lat: 51.541200, lng: 9.915800, country: "Germany" },
-    { rank: 233, name: "UConn Huskies", lat: 41.807700, lng: -72.254000, country: "USA" },
-    { rank: 234, name: "Mississippi State Bulldogs", lat: 33.473500, lng: -88.782000, country: "USA" },
-    { rank: 235, name: "Heroes Den Bosch", lat: 51.697800, lng: 5.303700, country: "Netherlands" },
-    { rank: 236, name: "Vanderbilt Commodores", lat: 36.144700, lng: -86.802700, country: "USA" },
-    { rank: 237, name: "Instituto de Córdoba", lat: -31.420100, lng: -64.188800, country: "Argentina" },
-    { rank: 238, name: "Kangoeroes Basket Mechelen", lat: 51.025900, lng: 4.477700, country: "Belgium" },
-    { rank: 239, name: "Iowa State Cyclones", lat: 42.030800, lng: -93.631900, country: "USA" },
-    { rank: 240, name: "Kansas State Wildcats", lat: 39.183600, lng: -96.571700, country: "USA" },
-    { rank: 241, name: "Maryland Terrapins", lat: 38.986900, lng: -76.942600, country: "USA" },
-    { rank: 242, name: "Belfius Mons-Hainaut", lat: 50.454200, lng: 3.956500, country: "Belgium" },
-    { rank: 243, name: "Xavier Musketeers", lat: 39.161200, lng: -84.456900, country: "USA" },
-    { rank: 244, name: "Spirou Basket", lat: 50.405800, lng: 4.446400, country: "Belgium" },
-    { rank: 245, name: "Feyenoord Basketball", lat: 51.922500, lng: 4.479200, country: "Netherlands" },
-    { rank: 246, name: "ADA Blois", lat: 47.598000, lng: 1.334800, country: "France" },
-    { rank: 247, name: "Maccabi Ashdod", lat: 31.794800, lng: 34.655300, country: "Israel" },
-    { rank: 248, name: "Penn State Nittany Lions", lat: 40.798200, lng: -77.859900, country: "USA" },
-    { rank: 249, name: "Landstede Hammers Zwolle", lat: 52.516800, lng: 6.083000, country: "Netherlands" },
-    { rank: 250, name: "Circus Brussels Basketball", lat: 50.850300, lng: 4.351700, country: "Belgium" },
-    { rank: 251, name: "Memphis Tigers", lat: 35.176311, lng: -90.035478, country: "USA" },
-    { rank: 252, name: "Providence Friars", lat: 41.824000, lng: -71.412800, country: "USA" },
-    { rank: 253, name: "Colorado Buffaloes", lat: 40.015000, lng: -105.270500, country: "USA" },
-    { rank: 254, name: "Michigan State Spartans", lat: 42.733500, lng: -84.546700, country: "USA" },
-    { rank: 255, name: "ICG Força Lleida", lat: 41.617600, lng: 0.620000, country: "Spain" },
-    { rank: 256, name: "Stella Artois Leuven Bears", lat: 50.879800, lng: 4.700500, country: "Belgium" },
-    { rank: 257, name: "Cincinnati Bearcats", lat: 39.103100, lng: -84.512000, country: "USA" },
-    { rank: 258, name: "Georgia Bulldogs", lat: 33.951900, lng: -83.357600, country: "USA" },
-    { rank: 259, name: "KK Borac Mozzart", lat: 44.195300, lng: 17.905100, country: "Bosnia and Herzegovina" },
-    { rank: 260, name: "St. John's Red Storm", lat: 40.728200, lng: -73.794900, country: "USA" },
-    { rank: 261, name: "Dayton Flyers", lat: 39.758900, lng: -84.191600, country: "USA" },
-    { rank: 262, name: "Telenet Giants Antwerp", lat: 51.219400, lng: 4.402500, country: "Belgium" },
-    { rank: 263, name: "Rostock Seawolves", lat: 54.088700, lng: 12.147600, country: "Germany" },
-    { rank: 264, name: "Saint Louis Billikens", lat: 38.627000, lng: -90.199400, country: "USA" },
-    { rank: 265, name: "KK Mornar-Barsko Zlato", lat: 42.095600, lng: 19.126700, country: "Montenegro" },
-    { rank: 266, name: "Utah Utes", lat: 40.771011, lng: -111.880078, country: "USA" },
-    { rank: 267, name: "Élan Chalon", lat: 46.783300, lng: 4.833300, country: "France" },
-    { rank: 268, name: "Tulane Green Wave", lat: 29.940011, lng: -90.082678, country: "USA" },
-    { rank: 269, name: "Washington Huskies", lat: 47.606200, lng: -122.332100, country: "USA" },
-    { rank: 270, name: "San Diego State Aztecs", lat: 32.715700, lng: -117.161100, country: "USA" },
-    { rank: 271, name: "Apollon Patras", lat: 38.237211, lng: 21.746078, country: "Greece" },
-    { rank: 272, name: "Orléans Loiret Basket", lat: 47.902900, lng: 1.909300, country: "France" },
-    { rank: 273, name: "California Golden Bears", lat: 37.871500, lng: -122.273000, country: "USA" },
-    { rank: 274, name: "Wyoming Cowboys", lat: 41.311400, lng: -105.591100, country: "USA" },
-    { rank: 275, name: "Hubo Limburg United", lat: 50.879800, lng: 5.692600, country: "Belgium" },
-    { rank: 276, name: "SMU Mustangs", lat: 32.841200, lng: -96.783400, country: "USA" },
-    { rank: 277, name: "BYU Cougars", lat: 40.251800, lng: -111.649300, country: "USA" },
-    { rank: 278, name: "Donar Groningen", lat: 53.219400, lng: 6.566500, country: "Netherlands" },
-    { rank: 279, name: "Oregon State Beavers", lat: 44.564500, lng: -123.262000, country: "USA" },
-    { rank: 280, name: "San Diego Toreros", lat: 32.726211, lng: -117.150278, country: "USA" },
-    { rank: 281, name: "East Carolina Pirates", lat: 35.612000, lng: -77.366600, country: "USA" },
-    { rank: 282, name: "Den Helder Suns", lat: 52.953700, lng: 4.772200, country: "Netherlands" },
-    { rank: 283, name: "Saint Mary's Gaels", lat: 37.827200, lng: -122.271400, country: "USA" },
-    { rank: 284, name: "DePaul Blue Demons", lat: 41.889411, lng: -87.618478, country: "USA" },
-    { rank: 285, name: "BC Labas GAS Prienai", lat: 54.633300, lng: 23.950000, country: "Lithuania" },
-    { rank: 286, name: "Guuk Gipuzkoa Basket", lat: 43.263211, lng: -2.945778, country: "Spain" },
-    { rank: 287, name: "VCU Rams", lat: 37.540700, lng: -77.436000, country: "USA" },
-    { rank: 288, name: "BC Gargzdai", lat: 55.717200, lng: 21.395000, country: "Lithuania" },
-    { rank: 289, name: "Zunder Palencia", lat: 42.009600, lng: -4.528400, country: "Spain" },
-    { rank: 290, name: "Aris Leeuwarden", lat: 53.201200, lng: 5.799900, country: "Netherlands" },
-    { rank: 291, name: "Temple Owls", lat: 39.952600, lng: -75.165200, country: "USA" },
-    { rank: 292, name: "BC Nevezis Kedainiai", lat: 55.283300, lng: 23.983300, country: "Lithuania" },
-    { rank: 293, name: "KK FMP Meridian", lat: 44.786211, lng: 20.460578, country: "Serbia" },
-    { rank: 294, name: "Washington State Cougars", lat: 46.729800, lng: -117.181700, country: "USA" },
-    { rank: 295, name: "Portland Pilots", lat: 45.526611, lng: -122.667178, country: "USA" },
-    { rank: 296, name: "RSW Liège Basket", lat: 50.632600, lng: 5.579700, country: "Belgium" },
-    { rank: 297, name: "Alliance Sport Alsace", lat: 48.564411, lng: 7.763178, country: "France" },
-    { rank: 298, name: "CS San Martín Corrientes", lat: -27.469200, lng: -58.830600, country: "Argentina" },
-    { rank: 299, name: "Movistar Estudiantes", lat: 40.438911, lng: -3.677378, country: "Spain" },
-    { rank: 300, name: "Georgetown Hoyas", lat: 38.918411, lng: -77.025678, country: "USA" },
-    { rank: 301, name: "ZZ Leiden", lat: 52.160100, lng: 4.497000, country: "Netherlands" },
-    { rank: 302, name: "Fos Provence Basket", lat: 43.437800, lng: 4.947400, country: "France" },
-    { rank: 303, name: "Colorado State Rams", lat: 40.585300, lng: -105.084400, country: "USA" },
-    { rank: 304, name: "Florida Gulf Coast Eagles", lat: 26.461900, lng: -81.771700, country: "USA" },
-    { rank: 305, name: "Marquette Golden Eagles", lat: 43.050211, lng: -87.895378, country: "USA" },
-    { rank: 306, name: "KK Cibona", lat: 45.815000, lng: 15.981900, country: "Croatia" },
-    { rank: 307, name: "Tulsa Golden Hurricane", lat: 36.154000, lng: -95.992800, country: "USA" },
-    { rank: 308, name: "Butler Bulldogs", lat: 39.779811, lng: -86.146978, country: "USA" },
-    { rank: 309, name: "CA Boca Juniors", lat: -34.603700, lng: -58.381600, country: "Argentina" },
-    { rank: 310, name: "Seton Hall Pirates", lat: 40.742900, lng: -74.247300, country: "USA" },
-    { rank: 311, name: "Pepperdine Waves", lat: 34.035900, lng: -118.710800, country: "USA" },
-    { rank: 312, name: "San Francisco Dons", lat: 37.774900, lng: -122.419400, country: "USA" },
-    { rank: 313, name: "Nevada Wolf Pack", lat: 39.529600, lng: -119.813800, country: "USA" },
-    { rank: 314, name: "Lipscomb Bisons", lat: 36.162700, lng: -86.781600, country: "USA" },
-    { rank: 315, name: "UAB Blazers", lat: 33.518600, lng: -86.810400, country: "USA" },
-    { rank: 316, name: "Yoast United", lat: 52.171411, lng: 4.485778, country: "Netherlands" },
-    { rank: 317, name: "New Mexico Lobos", lat: 35.084400, lng: -106.650400, country: "USA" },
-    { rank: 318, name: "CB Almansa con Afanion", lat: 38.872500, lng: -1.096900, country: "Spain" },
-    { rank: 319, name: "C.R. Flamengo", lat: -22.906800, lng: -43.172900, country: "Brazil" },
-    { rank: 320, name: "Apollo Amsterdam", lat: 52.367600, lng: 4.904100, country: "Netherlands" },
-    { rank: 321, name: "CA Riachuelo", lat: -34.635800, lng: -58.491600, country: "Argentina" },
-    { rank: 322, name: "Béliers de Kemper", lat: 48.018100, lng: -4.097600, country: "France" },
-    { rank: 323, name: "UNLV Rebels", lat: 36.169900, lng: -115.139800, country: "USA" },
-    { rank: 324, name: "Richmond Spiders", lat: 37.551211, lng: -77.425778, country: "USA" },
-    { rank: 325, name: "Vaqueros de Bayamón", lat: 18.396500, lng: -66.161500, country: "Puerto Rico" },
-    { rank: 326, name: "Santa Clara Broncos", lat: 37.354100, lng: -121.955200, country: "USA" },
-    { rank: 327, name: "Melilla Sport Capital", lat: 35.291900, lng: -2.938100, country: "Spain" },
-    { rank: 328, name: "KK SC Derby", lat: 44.766600, lng: 20.448900, country: "Serbia" },
-    { rank: 329, name: "AO Agriniou", lat: 38.621100, lng: 21.408200, country: "Greece" },
-    { rank: 330, name: "Saint-Vallier BD", lat: 45.183000, lng: 4.816700, country: "France" },
-    { rank: 331, name: "Gimnasia y Esgrima de Comodoro", lat: -45.866700, lng: -67.500000, country: "Argentina" },
-    { rank: 332, name: "Davidson Wildcats", lat: 35.501800, lng: -80.841400, country: "USA" },
-    { rank: 333, name: "Iraklis Thessaloniki", lat: 40.651611, lng: 22.934978, country: "Greece" },
-    { rank: 334, name: "Utah State Aggies", lat: 41.737000, lng: -111.833800, country: "USA" },
-    { rank: 335, name: "Western Kentucky Hilltoppers", lat: 36.995400, lng: -86.466900, country: "USA" },
-    { rank: 336, name: "Champagne Châlons-Reims Basket", lat: 49.258300, lng: 4.031700, country: "France" },
-    { rank: 337, name: "Boise State Broncos", lat: 43.615000, lng: -116.202300, country: "USA" },
-    { rank: 338, name: "UCF Knights", lat: 28.549611, lng: -81.367878, country: "USA" },
-    { rank: 339, name: "South Florida Bulls", lat: 27.766300, lng: -82.640400, country: "USA" },
-    { rank: 340, name: "KK Krka", lat: 45.759700, lng: 15.151600, country: "Slovenia" },
-    { rank: 341, name: "Liberty Flames", lat: 37.352000, lng: -79.172800, country: "USA" },
-    { rank: 342, name: "North Alabama Lions", lat: 34.730400, lng: -87.677400, country: "USA" },
-    { rank: 343, name: "Étoile Angers Basket", lat: 47.478400, lng: -0.563200, country: "France" },
-    { rank: 344, name: "HLA Alicante", lat: 38.345200, lng: -0.481000, country: "Spain" },
-    { rank: 345, name: "Nantes Basket Hermine", lat: 47.218400, lng: -1.553600, country: "France" },
-    { rank: 346, name: "Wichita State Shockers", lat: 37.687200, lng: -97.330100, country: "USA" },
-    { rank: 347, name: "Bryant Bulldogs", lat: 41.765800, lng: -71.513500, country: "USA" },
-    { rank: 348, name: "Panerythraikos BC", lat: 37.957611, lng: 23.653578, country: "Greece" },
-    { rank: 349, name: "TAU Castelló", lat: 39.986400, lng: -0.051300, country: "Spain" },
-    { rank: 350, name: "Ermis Schimatari", lat: 38.333300, lng: 23.550000, country: "Greece" },
-    { rank: 351, name: "KK Gorica", lat: 45.955300, lng: 13.636300, country: "Slovenia" },
-    { rank: 352, name: "Middle Tennessee Blue Raiders", lat: 35.845600, lng: -86.390300, country: "USA" },
-    { rank: 353, name: "Eastern Michigan Eagles", lat: 42.241100, lng: -83.613000, country: "USA" },
-    { rank: 354, name: "Antibes Sharks", lat: 43.580900, lng: 7.125100, country: "France" },
-    { rank: 355, name: "North Florida Ospreys", lat: 30.332200, lng: -81.655700, country: "USA" },
-    { rank: 356, name: "San José State Spartans", lat: 37.338200, lng: -121.886300, country: "USA" },
-    { rank: 357, name: "Saint Joseph's Hawks", lat: 39.964211, lng: -75.154078, country: "USA" },
-    { rank: 358, name: "Boulazac Basket Dordogne", lat: 45.183300, lng: 0.716700, country: "France" },
-    { rank: 359, name: "Duquesne Dukes", lat: 40.452011, lng: -79.984778, country: "USA" },
-    { rank: 360, name: "Leyma Coruña", lat: 43.374011, lng: -8.400278, country: "Spain" },
-    { rank: 361, name: "Toledo Rockets", lat: 41.652800, lng: -83.537900, country: "USA" },
-    { rank: 362, name: "George Washington Colonials", lat: 38.918546, lng: -77.025511, country: "USA" },
-    { rank: 363, name: "Stetson Hatters", lat: 29.053600, lng: -81.300300, country: "USA" },
-    { rank: 364, name: "Central Arkansas Bears", lat: 35.092600, lng: -92.442600, country: "USA" },
-    { rank: 365, name: "C.A. Aguada", lat: -34.884400, lng: -56.018100, country: "Uruguay" },
-    { rank: 366, name: "Aix-Maurienne Savoie Basket", lat: 45.564700, lng: 6.323500, country: "France" },
-    { rank: 367, name: "Cáceres Patrimonio de la Humanidad", lat: 39.475300, lng: -6.372400, country: "Spain" },
-    { rank: 368, name: "Stade Rochelais", lat: 46.160300, lng: -1.151100, country: "France" },
-    { rank: 369, name: "Basketball Academie Limburg", lat: 50.891011, lng: 5.681378, country: "Belgium" },
-    { rank: 370, name: "Maroussi BC", lat: 38.050000, lng: 23.806400, country: "Greece" },
-    { rank: 371, name: "KK MZT Skopje Aerodrom ", lat: 41.997300, lng: 21.428000, country: "North Macedonia" },
-    { rank: 372, name: "George Mason Patriots", lat: 38.846200, lng: -77.306300, country: "USA" },
-    { rank: 373, name: "Pacific Tigers", lat: 37.981600, lng: -121.310700, country: "USA" },
-    { rank: 374, name: "Medipolis SC Jena", lat: 50.927800, lng: 11.589700, country: "Germany" },
-    { rank: 375, name: "Club Regatas Corrientes", lat: -27.480611, lng: -58.819378, country: "Argentina" },
-    { rank: 376, name: "St. Bonaventure Bonnies", lat: 42.083700, lng: -78.489400, country: "USA" },
-    { rank: 377, name: "Fresno State Bulldogs", lat: 36.737800, lng: -119.787100, country: "USA" },
-    { rank: 378, name: "Aias Evosmou", lat: 40.666700, lng: 22.950000, country: "Greece" },
-    { rank: 379, name: "Valparaiso Beacons", lat: 41.478900, lng: -87.046700, country: "USA" },
-    { rank: 380, name: "Kennesaw State Owls", lat: 34.023400, lng: -84.581600, country: "USA" },
-    { rank: 381, name: "Loyola Marymount Lions", lat: 34.052600, lng: -118.418300, country: "USA" },
-    { rank: 382, name: "Grupo Alega Cantabria CBT", lat: 43.462300, lng: -3.810000, country: "Spain" },
-    { rank: 383, name: "Detroit Mercy Titans", lat: 42.342811, lng: -83.034578, country: "USA" },
-    { rank: 384, name: "UMass Lowell River Hawks", lat: 42.633400, lng: -71.316200, country: "USA" },
-    { rank: 385, name: "Fordham Rams", lat: 40.844800, lng: -73.864800, country: "USA" },
-    { rank: 386, name: "UMBC Retrievers", lat: 39.254000, lng: -76.709300, country: "USA" },
-    { rank: 387, name: "Kent State Golden Flashes", lat: 41.145400, lng: -81.344000, country: "USA" },
-    { rank: 388, name: "CA San Lorenzo", lat: -34.669200, lng: -58.534800, country: "Argentina" },
-    { rank: 389, name: "Boston University Terriers", lat: 42.371411, lng: -71.047678, country: "USA" },
-    { rank: 390, name: "Ball State Cardinals", lat: 40.193400, lng: -85.388700, country: "USA" },
-    { rank: 391, name: "Club Ourense Baloncesto", lat: 42.337000, lng: -7.864200, country: "Spain" },
-    { rank: 392, name: "La Salle Explorers", lat: 39.964046, lng: -75.153811, country: "USA" },
-    { rank: 393, name: "Jacksonville State Gamecocks", lat: 33.820500, lng: -85.768600, country: "USA" },
-    { rank: 394, name: "Tennessee Tech Golden Eagles", lat: 36.161400, lng: -85.480800, country: "USA" },
-    { rank: 395, name: "Joniskio Delikatesas", lat: 56.239400, lng: 23.616100, country: "Lithuania" },
-    { rank: 396, name: "Bowling Green Falcons", lat: 41.374800, lng: -83.658200, country: "USA" },
-    { rank: 397, name: "CD Colegio Los Leones", lat: -33.448900, lng: -70.669300, country: "Chile" },
-    { rank: 398, name: "Rhode Island Rams", lat: 41.835411, lng: -71.401578, country: "USA" },
-    { rank: 399, name: "Missouri State Bears", lat: 37.209000, lng: -93.292300, country: "USA" },
-    { rank: 400, name: "Southern Illinois Salukis", lat: 37.717200, lng: -89.216700, country: "USA" },
-    { rank: 401, name: "ALM Évreux Basket", lat: 49.024400, lng: 1.150800, country: "France" },
-    { rank: 402, name: "AO Tritonas", lat: 37.957446, lng: 23.653411, country: "Greece" },
-    { rank: 403, name: "Northern Kentucky Norse", lat: 39.045800, lng: -84.512000, country: "USA" },
-    { rank: 404, name: "CA Peñarol", lat: -34.895811, lng: -56.007078, country: "Uruguay" },
-    { rank: 405, name: "Psychiko BC", lat: 37.983900, lng: 23.779400, country: "Greece" },
-    { rank: 406, name: "Marshall Thundering Herd", lat: 38.423100, lng: -82.438700, country: "USA" },
-    { rank: 407, name: "Drake Bulldogs", lat: 41.586800, lng: -93.625000, country: "USA" },
-    { rank: 408, name: "Maine Black Bears", lat: 44.977800, lng: -68.801700, country: "USA" },
-    { rank: 409, name: "GS Eleftheroupoli Kavalas", lat: 41.055600, lng: 24.405600, country: "Greece" },
-    { rank: 410, name: "Morehead State Eagles", lat: 38.186700, lng: -83.432700, country: "USA" },
-    { rank: 411, name: "Illinois State Redbirds", lat: 40.514200, lng: -88.990600, country: "USA" },
-    { rank: 412, name: "Eastern Kentucky Colonels", lat: 37.734700, lng: -84.273300, country: "USA" },
-    { rank: 413, name: "Hofstra Pride", lat: 40.728300, lng: -73.598500, country: "USA" },
-    { rank: 414, name: "Oberá Tenis Club", lat: -27.486400, lng: -55.119200, country: "Argentina" },
-    { rank: 415, name: "Belmont Bruins", lat: 36.156011, lng: -86.791378, country: "USA" },
-    { rank: 416, name: "Wright State Raiders", lat: 39.770211, lng: -84.180778, country: "USA" },
-    { rank: 417, name: "Northern Iowa Panthers", lat: 42.507800, lng: -92.445300, country: "USA" },
-    { rank: 418, name: "UEMC Real Valladolid", lat: 41.652800, lng: -4.724500, country: "Spain" },
-    { rank: 419, name: "BC Vytis", lat: 54.909411, lng: 23.905478, country: "Lithuania" },
-    { rank: 420, name: "Oakland Golden Grizzlies", lat: 42.633400, lng: -83.214800, country: "USA" },
-    { rank: 421, name: "UT Martin Skyhawks", lat: 36.289600, lng: -88.850600, country: "USA" },
-    { rank: 422, name: "Ohio Bobcats", lat: 39.329200, lng: -82.101300, country: "USA" },
-    { rank: 423, name: "Air Force Falcons", lat: 38.997200, lng: -104.858600, country: "USA" },
-    { rank: 424, name: "KK Helios Suns", lat: 46.239600, lng: 15.267700, country: "Slovenia" },
-    { rank: 425, name: "Northern Illinois Huskies", lat: 41.927800, lng: -88.647900, country: "USA" },
-    { rank: 426, name: "Seattle U Redhawks", lat: 47.617611, lng: -122.320978, country: "USA" },
-    { rank: 427, name: "Lille Métropole Basket", lat: 50.629200, lng: 3.057300, country: "France" },
-    { rank: 428, name: "Club Comunicaciones", lat: -34.615011, lng: -58.370378, country: "Argentina" },
-    { rank: 429, name: "NE Megaridas", lat: 38.000000, lng: 23.083300, country: "Greece" },
-    { rank: 430, name: "Bradley Braves", lat: 40.693600, lng: -89.588900, country: "USA" },
-    { rank: 431, name: "Evansville Purple Aces", lat: 37.971600, lng: -87.571100, country: "USA" },
-    { rank: 432, name: "Indiana State Sycamores", lat: 39.466700, lng: -87.413900, country: "USA" },
-    { rank: 433, name: "Purdue Fort Wayne Mastodons", lat: 41.079300, lng: -85.139400, country: "USA" },
-    { rank: 434, name: "UMass Minutemen", lat: 42.386800, lng: -72.530100, country: "USA" },
-    { rank: 435, name: "CD Universidad de Concepción", lat: -36.820100, lng: -73.044400, country: "Chile" },
-    { rank: 436, name: "Old Dominion Monarchs", lat: 36.846800, lng: -76.285200, country: "USA" },
-    { rank: 437, name: "Brown Bears", lat: 41.835546, lng: -71.401411, country: "USA" },
-    { rank: 438, name: "Club Ferro Carril Oeste", lat: -34.583300, lng: -58.516700, country: "Argentina" },
-    { rank: 439, name: "New Hampshire Wildcats", lat: 43.208100, lng: -71.537600, country: "USA" },
-    { rank: 440, name: "Loyola Chicago Ramblers", lat: 41.889546, lng: -87.618411, country: "USA" },
-    { rank: 441, name: "Youngstown State Penguins", lat: 41.104000, lng: -80.649500, country: "USA" },
-    { rank: 442, name: "Murray State Racers", lat: 36.610300, lng: -88.314800, country: "USA" },
-    { rank: 443, name: "BC Telsiai", lat: 55.981100, lng: 22.247500, country: "Lithuania" },
-    { rank: 444, name: "NEA Filadelfeia", lat: 37.957281, lng: 23.653244, country: "Greece" },
-    { rank: 445, name: "CSU Bakersfield Roadrunners", lat: 35.373300, lng: -119.018700, country: "USA" },
-    { rank: 446, name: "Tennessee State Tigers", lat: 36.174011, lng: -86.770278, country: "USA" },
-    { rank: 447, name: "UIC Flames", lat: 41.889681, lng: -87.618244, country: "USA" },
-    { rank: 448, name: "BC Zalgiris Kaunas 2", lat: 54.907811, lng: 23.914678, country: "Lithuania" },
-    { rank: 449, name: "HKK Siroki", lat: 43.383300, lng: 17.583300, country: "Bosnia and Herzegovina" },
-    { rank: 450, name: "Chattanooga Mocs", lat: 35.045600, lng: -85.309700, country: "USA" },
-    { rank: 451, name: "BC Silute", lat: 55.350000, lng: 21.483300, country: "Lithuania" },
-    { rank: 452, name: "Trikoupis Messolonghi BC", lat: 38.366700, lng: 21.430600, country: "Greece" },
-    { rank: 453, name: "Saint-Chamond BVG", lat: 45.474700, lng: 4.513900, country: "France" },
-    { rank: 454, name: "New Mexico State Aggies", lat: 32.279800, lng: -106.763700, country: "USA" },
-    { rank: 455, name: "Denain Voltaire", lat: 50.325800, lng: 3.394700, country: "France" },
-    { rank: 456, name: "Austin Peay Governors", lat: 36.527000, lng: -87.359500, country: "USA" },
-    { rank: 457, name: "Western Michigan Broncos", lat: 42.263400, lng: -85.668100, country: "USA" },
-    { rank: 458, name: "Central Michigan Chippewas", lat: 43.595600, lng: -84.783600, country: "USA" },
-    { rank: 459, name: "Oral Roberts Golden Eagles", lat: 36.165211, lng: -95.981578, country: "USA" },
-    { rank: 460, name: "JA Vichy-Clermont", lat: 46.124400, lng: 3.424700, country: "France" },
-    { rank: 461, name: "Albany Great Danes", lat: 42.680300, lng: -73.837000, country: "USA" },
-    { rank: 462, name: "Buffalo Bulls", lat: 42.886400, lng: -78.878400, country: "USA" },
-    { rank: 463, name: "Tigers Tübingen", lat: 48.521600, lng: 9.057600, country: "Germany" },
-    { rank: 464, name: "Obras Basket", lat: -34.614846, lng: -58.370211, country: "Argentina" },
-    { rank: 465, name: "Mazeikiai M Basket", lat: 56.313900, lng: 22.331100, country: "Lithuania" },
-    { rank: 466, name: "Miami (OH) Redhawks", lat: 39.509200, lng: -84.732300, country: "USA" },
-    { rank: 467, name: "Stephen F. Austin Lumberjacks", lat: 31.601800, lng: -94.654900, country: "USA" },
-    { rank: 468, name: "Siena Saints", lat: 42.719100, lng: -73.756200, country: "USA" },
-    { rank: 469, name: "Green Bay Phoenix", lat: 44.513300, lng: -87.907300, country: "USA" },
-    { rank: 470, name: "KK Sencur", lat: 46.239600, lng: 14.416700, country: "Slovenia" },
-    { rank: 471, name: "Southern Utah Thunderbirds", lat: 37.678100, lng: -113.061900, country: "USA" },
-    { rank: 472, name: "UTSA Roadrunners", lat: 29.435611, lng: -98.482378, country: "USA" },
-    { rank: 473, name: "Milwaukee Panthers", lat: 43.050346, lng: -87.895211, country: "USA" },
-    { rank: 474, name: "Louisiana Tech Bulldogs", lat: 32.525200, lng: -92.637900, country: "USA" },
-    { rank: 475, name: "NJIT Highlanders", lat: 40.736200, lng: -74.176000, country: "USA" },
-    { rank: 476, name: "Robert Morris Colonials", lat: 40.621800, lng: -80.089600, country: "USA" },
-    { rank: 477, name: "Koroivos BC", lat: 40.616700, lng: 22.016700, country: "Greece" },
-    { rank: 478, name: "Club Ciclista Olímpico", lat: -27.480446, lng: -58.819211, country: "Argentina" },
-    { rank: 479, name: "SIU Edwardsville Cougars", lat: 38.811100, lng: -90.153500, country: "USA" },
-    { rank: 480, name: "ABA Ancud", lat: -41.869700, lng: -73.820300, country: "Chile" },
-    { rank: 481, name: "Phoenix Hagen", lat: 51.361700, lng: 7.463100, country: "Germany" },
-    { rank: 482, name: "Southeast Missouri State Redhawks", lat: 37.309200, lng: -89.558600, country: "USA" },
-    { rank: 483, name: "Colgate Raiders", lat: 42.820900, lng: -75.537900, country: "USA" },
-    { rank: 484, name: "Army Black Knights", lat: 41.391500, lng: -73.962600, country: "USA" },
-    { rank: 485, name: "Bayer Giants Leverkusen", lat: 51.031500, lng: 6.984200, country: "Germany" },
-    { rank: 486, name: "Northeastern Huskies", lat: 42.371546, lng: -71.047511, country: "USA" },
-    { rank: 487, name: "OKK Spars", lat: 44.786600, lng: 17.268600, country: "Bosnia and Herzegovina" },
-    { rank: 488, name: "Loyola (MD) Greyhounds", lat: 39.349800, lng: -76.501800, country: "USA" },
-    { rank: 489, name: "UTEP Miners", lat: 31.761900, lng: -106.485000, country: "USA" },
-    { rank: 490, name: "Denver Pioneers", lat: 39.750611, lng: -104.979078, country: "USA" },
-    { rank: 491, name: "KK Pelister-Bitola", lat: 41.036100, lng: 21.334400, country: "North Macedonia" },
-    { rank: 492, name: "Charlotte 49ers", lat: 35.238411, lng: -80.831978, country: "USA" },
-    { rank: 493, name: "Bueno Arenas Albacete Basket", lat: 39.000000, lng: -1.866700, country: "Spain" },
-    { rank: 494, name: "Harvard Crimson", lat: 42.377000, lng: -71.116700, country: "USA" },
-    { rank: 495, name: "Akron Zips", lat: 41.081400, lng: -81.519000, country: "USA" },
-    { rank: 496, name: "Eastern Illinois Panthers", lat: 39.640300, lng: -88.078100, country: "USA" },
-    { rank: 497, name: "Vermont Catamounts", lat: 44.475900, lng: -73.197800, country: "USA" },
-    { rank: 498, name: "Marist Red Foxes", lat: 41.727000, lng: -73.930100, country: "USA" },
-    { rank: 499, name: "RASTA Vechta", lat: 52.729400, lng: 8.284400, country: "Germany" },
-    { rank: 500, name: "Dartmouth Big Green", lat: 43.604400, lng: -72.288700, country: "USA" },
-    { rank: 501, name: "Lafayette Leopards", lat: 40.700900, lng: -75.207100, country: "USA" },
-    { rank: 502, name: "Florida International Panthers", lat: 25.772846, lng: -80.180511, country: "USA" },
-    { rank: 503, name: "Rice Owls", lat: 29.772246, lng: -95.358711, country: "USA" },
-    { rank: 504, name: "Marijampoles Suduva-Mantinga", lat: 54.559700, lng: 23.354400, country: "Lithuania" },
-    { rank: 505, name: "CD Valdivia", lat: -39.814200, lng: -73.245900, country: "Chile" },
-    { rank: 506, name: "Vilkaviskio Perlas", lat: 54.651400, lng: 23.033300, country: "Lithuania" },
-    { rank: 507, name: "KK Borac WWIN", lat: 44.206611, lng: 17.893978, country: "Bosnia and Herzegovina" },
-    { rank: 508, name: "Florida Atlantic Owls", lat: 26.368300, lng: -80.128900, country: "USA" },
-    { rank: 509, name: "Cornell Big Red", lat: 42.453400, lng: -76.473500, country: "USA" },
-    { rank: 510, name: "Cleveland State Vikings", lat: 41.510611, lng: -81.683178, country: "USA" },
-    { rank: 511, name: "Southern Miss Golden Eagles", lat: 31.320700, lng: -89.336900, country: "USA" },
-    { rank: 512, name: "Bucknell Bison", lat: 40.954800, lng: -76.883900, country: "USA" },
-    { rank: 513, name: "KK Sutjeska", lat: 42.430400, lng: 18.768100, country: "Montenegro" },
-    { rank: 514, name: "Club Biguá", lat: -34.895646, lng: -56.006911, country: "Uruguay" },
-    { rank: 515, name: "Atlético Puerto Varas", lat: -41.319400, lng: -72.983300, country: "Chile" },
-    { rank: 516, name: "UC San Diego Tritons", lat: 32.880100, lng: -117.234000, country: "USA" },
-    { rank: 517, name: "PS Karlsruhe Lions", lat: 49.006900, lng: 8.403700, country: "Germany" },
-    { rank: 518, name: "American University Eagles", lat: 38.918681, lng: -77.025444, country: "USA" },
-    { rank: 519, name: "Sam Houston Bearkats", lat: 30.714400, lng: -95.554700, country: "USA" },
-    { rank: 520, name: "High Point Panthers", lat: 35.955700, lng: -80.005300, country: "USA" },
-    { rank: 521, name: "Utah Tech Trailblazers", lat: 37.104100, lng: -113.584100, country: "USA" },
-    { rank: 522, name: "Utah Valley Wolverines", lat: 40.273200, lng: -111.715300, country: "USA" },
-    { rank: 523, name: "AD Atenas", lat: -34.461100, lng: -58.706900, country: "Argentina" },
-    { rank: 524, name: "CA Argentino", lat: -28.469700, lng: -65.779500, country: "Argentina" },
-    { rank: 525, name: "Towson Tigers", lat: 39.395400, lng: -76.610300, country: "USA" },
-    { rank: 526, name: "Tarleton Texans", lat: 32.234300, lng: -98.200100, country: "USA" },
-    { rank: 527, name: "JobStairs Giessen 46ers", lat: 50.583800, lng: 8.674200, country: "Germany" },
-    { rank: 528, name: "VfL Kirchheim Knights", lat: 48.652800, lng: 9.439400, country: "Germany" },
-    { rank: 529, name: "Palangos Kursiai", lat: 55.916700, lng: 21.066700, country: "Lithuania" },
-    { rank: 530, name: "St. Thomas - Minnesota Tommies", lat: 44.985946, lng: -93.254611, country: "USA" },
-    { rank: 531, name: "KK Podgorica", lat: 42.441811, lng: 19.248178, country: "Montenegro" },
-    { rank: 532, name: "Monmouth Hawks", lat: 40.267700, lng: -74.005900, country: "USA" },
-    { rank: 533, name: "Bellarmine Knights", lat: 38.264011, lng: -85.747378, country: "USA" },
-    { rank: 534, name: "Western Illinois Leathernecks", lat: 40.465300, lng: -90.671200, country: "USA" },
-    { rank: 535, name: "Holy Cross Crusaders", lat: 42.261900, lng: -71.806300, country: "USA" },
-    { rank: 536, name: "California Baptist Lancers", lat: 33.942500, lng: -117.361700, country: "USA" },
-    { rank: 537, name: "Saint-Quentin Basketball", lat: 49.846700, lng: 3.287800, country: "France" },
-    { rank: 538, name: "Alimerka Oviedo Baloncesto", lat: 43.361400, lng: -5.859300, country: "Spain" },
-    { rank: 539, name: "Wiha Panthers Schwenningen", lat: 48.066700, lng: 8.533300, country: "Germany" },
-    { rank: 540, name: "Columbia Lions", lat: 40.807500, lng: -73.962600, country: "USA" },
-    { rank: 541, name: "Merrimack Warriors", lat: 42.644811, lng: -71.304978, country: "USA" },
-    { rank: 542, name: "UNC Wilmington Seahawks", lat: 34.225700, lng: -77.886800, country: "USA" },
-    { rank: 543, name: "KK Zlatibor", lat: 43.733300, lng: 19.716700, country: "Serbia" },
-    { rank: 544, name: "IUPUI Jaguars", lat: 39.779646, lng: -86.146811, country: "USA" },
-    { rank: 545, name: "Lehigh Mountain Hawks", lat: 40.625900, lng: -75.378400, country: "USA" },
-    { rank: 546, name: "Nürnberg Falcons BC", lat: 49.452100, lng: 11.076700, country: "Germany" },
-    { rank: 547, name: "KK Atletas", lat: 54.697946, lng: 25.270611, country: "Lithuania" },
-    { rank: 548, name: "Drexel Dragons", lat: 39.963881, lng: -75.153744, country: "USA" },
-    { rank: 549, name: "Kretingos Kretinga", lat: 55.883300, lng: 21.250000, country: "Lithuania" },
-    { rank: 550, name: "Iona Gaels", lat: 40.877600, lng: -73.837000, country: "USA" },
-    { rank: 551, name: "Eisbären Bremerhaven", lat: 53.539500, lng: 8.580900, country: "Germany" },
-    { rank: 552, name: "Sesi Franca", lat: -20.538600, lng: -47.400800, country: "Brazil" },
-    { rank: 553, name: "North Texas Mean Green", lat: 33.214800, lng: -97.133100, country: "USA" },
-    { rank: 554, name: "Abilene Christian Wildcats", lat: 32.448700, lng: -99.733100, country: "USA" },
-    { rank: 555, name: "ART Giants Düsseldorf", lat: 51.227700, lng: 6.773500, country: "Germany" },
-    { rank: 556, name: "Jacksonville Dolphins", lat: 30.343611, lng: -81.644578, country: "USA" },
-    { rank: 557, name: "Eastern Washington Eagles", lat: 47.491300, lng: -117.584700, country: "USA" },
-    { rank: 558, name: "Artland Dragons", lat: 52.774400, lng: 7.971900, country: "Germany" },
-    { rank: 559, name: "Canisius Golden Griffins", lat: 42.897811, lng: -78.867178, country: "USA" },
-    { rank: 560, name: "Manhattan Jaspers", lat: 40.889600, lng: -73.901700, country: "USA" },
-    { rank: 561, name: "Weber State Wildcats", lat: 41.223000, lng: -111.973800, country: "USA" },
-    { rank: 562, name: "VfL SparkassenStars Bochum", lat: 51.481800, lng: 7.216200, country: "Germany" },
-    { rank: 563, name: "UT Rio Grande Valley Vaqueros", lat: 26.300900, lng: -98.167000, country: "USA" },
-    { rank: 564, name: "La Unión de Formosa", lat: -26.177500, lng: -58.178100, country: "Argentina" },
-    { rank: 565, name: "Navy Midshipmen", lat: 38.983200, lng: -76.495100, country: "USA" },
-    { rank: 566, name: "Fairfield Stags", lat: 41.157900, lng: -73.247800, country: "USA" },
-    { rank: 567, name: "AO Amyntas", lat: 40.628011, lng: 22.005478, country: "Greece" },
-    { rank: 568, name: "Yale Bulldogs", lat: 41.316300, lng: -72.922300, country: "USA" },
-    { rank: 569, name: "Quinnipiac Bobcats", lat: 41.427100, lng: -72.894400, country: "USA" },
-    { rank: 570, name: "Titanes de Barranquilla", lat: 10.963900, lng: -74.796400, country: "Colombia" },
-    { rank: 571, name: "Kavala BC", lat: 41.066811, lng: 24.394378, country: "Greece" },
-    { rank: 572, name: "Delaware Blue Hens", lat: 39.683700, lng: -75.749700, country: "USA" },
-    { rank: 573, name: "CD Español Osorno", lat: -40.572800, lng: -73.132200, country: "Chile" },
-    { rank: 574, name: "Sacramento State Hornets", lat: 38.593011, lng: -121.483178, country: "USA" },
-    { rank: 575, name: "Saint Peter's Peacocks", lat: 40.728400, lng: -74.077600, country: "USA" },
-    { rank: 576, name: "Rider Broncs", lat: 40.267700, lng: -74.742900, country: "USA" },
-    { rank: 577, name: "Vilniaus Stekas", lat: 54.698081, lng: 25.270444, country: "Lithuania" },
-    { rank: 578, name: "KK Vrijednosnice Osijek", lat: 45.555000, lng: 18.695500, country: "Croatia" },
-    { rank: 579, name: "Montana Grizzlies", lat: 46.878700, lng: -113.996700, country: "USA" },
-    { rank: 580, name: "Kansas City Roos", lat: 39.099700, lng: -94.578600, country: "USA" },
-    { rank: 581, name: "Gardner-Webb Runnin' Bulldogs", lat: 35.297100, lng: -81.872300, country: "USA" },
-    { rank: 582, name: "Vilniaus Perlas", lat: 54.698216, lng: 25.270277, country: "Lithuania" },
-    { rank: 583, name: "William & Mary Tribe", lat: 37.270700, lng: -76.707500, country: "USA" },
-    { rank: 584, name: "South Dakota Coyotes", lat: 42.791800, lng: -96.928900, country: "USA" },
-    { rank: 585, name: "Español de Talca", lat: -35.426400, lng: -71.655400, country: "Chile" },
-    { rank: 586, name: "Princeton Tigers", lat: 40.357300, lng: -74.667200, country: "USA" },
-    { rank: 587, name: "Cal Poly Mustangs", lat: 35.305000, lng: -120.662500, country: "USA" },
-    { rank: 588, name: "Chicago State Cougars", lat: 41.889816, lng: -87.618077, country: "USA" },
-    { rank: 589, name: "Portland State Vikings", lat: 45.526746, lng: -122.667011, country: "USA" },
-    { rank: 590, name: "Long Beach State Beach", lat: 33.770100, lng: -118.193700, country: "USA" },
-    { rank: 591, name: "Charleston Cougars", lat: 32.776500, lng: -79.931100, country: "USA" },
-    { rank: 592, name: "CA Unión", lat: -31.409611, lng: -64.177578, country: "Argentina" },
-    { rank: 593, name: "Grand Canyon Lopes", lat: 33.538700, lng: -112.151600, country: "USA" },
-    { rank: 594, name: "Real Estelí", lat: 13.093100, lng: -86.353900, country: "Nicaragua" },
-    { rank: 595, name: "Puente Alto CD", lat: -33.616700, lng: -70.583300, country: "Chile" },
-    { rank: 596, name: "CA Platense", lat: -34.533300, lng: -58.466700, country: "Argentina" },
-    { rank: 597, name: "KK Sloga", lat: 44.309200, lng: 20.971100, country: "Serbia" },
-    { rank: 598, name: "UT Arlington Mavericks", lat: 32.730300, lng: -97.113600, country: "USA" },
-    { rank: 599, name: "Pennsylvania Quakers", lat: 39.963716, lng: -75.153577, country: "USA" },
-    { rank: 600, name: "Lamar Cardinals", lat: 30.062700, lng: -94.109900, country: "USA" },
-    { rank: 601, name: "Campbell Fighting Camels", lat: 35.515100, lng: -78.878400, country: "USA" },
-    { rank: 602, name: "Idaho Vandals", lat: 46.729800, lng: -117.009400, country: "USA" },
-    { rank: 603, name: "CD Las Ánimas", lat: -33.459111, lng: -70.658178, country: "Chile" },
-    { rank: 604, name: "Römerstrom Gladiators Trier", lat: 49.759600, lng: 6.644100, country: "Germany" },
-    { rank: 605, name: "KK TFT Skopje", lat: 41.985211, lng: 21.439078, country: "North Macedonia" },
-    { rank: 606, name: "CD Tinguiririca San Fernando", lat: -34.583300, lng: -70.983300, country: "Chile" },
-    { rank: 607, name: "Dresden Titans", lat: 51.050400, lng: 13.737300, country: "Germany" },
-    { rank: 608, name: "Independiente Oliva", lat: -34.895481, lng: -56.006744, country: "Uruguay" },
-    { rank: 609, name: "Idaho State Bengals", lat: 42.871300, lng: -112.445500, country: "USA" },
-    { rank: 610, name: "South Carolina Upstate Spartans", lat: 34.949500, lng: -81.932000, country: "USA" },
-    { rank: 611, name: "CSU Fullerton Titans", lat: 33.883900, lng: -117.885000, country: "USA" },
-    { rank: 612, name: "Santiago Morning Quilicura", lat: -33.366700, lng: -70.733300, country: "Chile" },
-    { rank: 613, name: "UC Riverside Highlanders", lat: 33.973700, lng: -117.328100, country: "USA" },
-    { rank: 614, name: "AS Papagou", lat: 37.991500, lng: 23.818600, country: "Greece" },
-    { rank: 615, name: "North Dakota State Bison", lat: 46.877200, lng: -96.789800, country: "USA" },
-    { rank: 616, name: "North Carolina A&T Aggies", lat: 36.072600, lng: -79.792000, country: "USA" },
-    { rank: 617, name: "Hampton Pirates", lat: 37.027100, lng: -76.344400, country: "USA" },
-    { rank: 618, name: "Mount St. Mary's Mountaineers", lat: 39.640300, lng: -77.428600, country: "USA" },
-    { rank: 619, name: "CD Universidad Católica", lat: -33.459246, lng: -70.658011, country: "Chile" },
-    { rank: 620, name: "Juaristi ISB", lat: 43.252211, lng: -2.935078, country: "Spain" },
-    { rank: 621, name: "Uni Baskets Paderborn", lat: 51.718900, lng: 8.757500, country: "Germany" },
-    { rank: 622, name: "CD Castro", lat: -42.483300, lng: -73.766700, country: "Chile" },
-    { rank: 623, name: "Elon Phoenix", lat: 36.102600, lng: -79.502000, country: "USA" },
-    { rank: 624, name: "Grambling Tigers", lat: 32.520700, lng: -92.717900, country: "USA" },
-    { rank: 625, name: "Western Carolina Catamounts", lat: 35.309900, lng: -83.185200, country: "USA" },
-    { rank: 626, name: "UC Davis Aggies", lat: 38.538200, lng: -121.761700, country: "USA" },
-    { rank: 627, name: "James Madison Dukes", lat: 38.434900, lng: -78.868900, country: "USA" },
-    { rank: 628, name: "Niagara Purple Eagles", lat: 43.107900, lng: -78.986700, country: "USA" },
-    { rank: 629, name: "Montana State Bobcats", lat: 45.677000, lng: -111.042900, country: "USA" },
-    { rank: 630, name: "Mogi Basquete", lat: -23.523200, lng: -46.211100, country: "Brazil" },
-    { rank: 631, name: "Northern Arizona Lumberjacks", lat: 35.198300, lng: -111.651300, country: "USA" },
-    { rank: 632, name: "Coastal Carolina Chanticleers", lat: 33.794800, lng: -79.007500, country: "USA" },
-    { rank: 633, name: "Longwood Lancers", lat: 37.303600, lng: -78.162500, country: "USA" },
-    { rank: 634, name: "UNC Asheville Bulldogs", lat: 35.595100, lng: -82.551500, country: "USA" },
-    { rank: 635, name: "Klaipedos Neptunas-Akvaservis ", lat: 55.727746, lng: 21.106111, country: "Lithuania" },
-    { rank: 636, name: "Northern Colorado Bears", lat: 40.405900, lng: -104.675700, country: "USA" },
-    { rank: 637, name: "Radford Highlanders", lat: 37.131800, lng: -80.576400, country: "USA" },
-    { rank: 638, name: "CSU Northridge Matadors", lat: 34.241100, lng: -118.529500, country: "USA" },
-    { rank: 639, name: "CEB Puerto Montt", lat: -41.473300, lng: -72.940000, country: "Chile" },
-    { rank: 640, name: "Hawaii Rainbow Warriors", lat: 21.298500, lng: -157.816500, country: "USA" },
-    { rank: 641, name: "Hartford Hawks", lat: 41.765800, lng: -72.685100, country: "USA" },
-    { rank: 642, name: "Louisiana Ragin' Cajuns", lat: 30.224100, lng: -92.019800, country: "USA" },
-    { rank: 643, name: "Morgan State Bears", lat: 39.343400, lng: -76.581900, country: "USA" },
-    { rank: 644, name: "VMI Keydets", lat: 37.787300, lng: -79.441100, country: "USA" },
-    { rank: 645, name: "Presbyterian Blue Hose", lat: 34.869800, lng: -81.510100, country: "USA" },
-    { rank: 646, name: "East Tennessee State Buccaneers", lat: 36.300700, lng: -82.370900, country: "USA" },
-    { rank: 647, name: "Winthrop Eagles", lat: 35.043400, lng: -81.028900, country: "USA" },
-    { rank: 648, name: "AB Temuco", lat: -38.735900, lng: -72.590400, country: "Chile" },
-    { rank: 649, name: "UNC Greensboro Spartans", lat: 36.072600, lng: -79.805100, country: "USA" },
-    { rank: 650, name: "Binghamton Bearcats", lat: 42.086200, lng: -75.968300, country: "USA" },
-    { rank: 651, name: "Omaha Mavericks", lat: 41.266811, lng: -95.923378, country: "USA" },
-    { rank: 652, name: "North Dakota Fighting Hawks", lat: 47.925300, lng: -97.032900, country: "USA" },
-    { rank: 653, name: "Arkansas State Red Wolves", lat: 35.839700, lng: -90.678700, country: "USA" },
-    { rank: 654, name: "Delaware State Hornets", lat: 39.157300, lng: -75.527700, country: "USA" },
-    { rank: 655, name: "UC Irvine Anteaters", lat: 33.640500, lng: -117.844300, country: "USA" },
-    { rank: 656, name: "Northwestern State Demons", lat: 31.761900, lng: -93.086200, country: "USA" },
-    { rank: 657, name: "Coppin State Eagles", lat: 39.309600, lng: -76.672800, country: "USA" },
-    { rank: 658, name: "South Dakota State Jackrabbits", lat: 44.311400, lng: -96.796900, country: "USA" },
-    { rank: 659, name: "Charleston Southern Buccaneers", lat: 32.817900, lng: -80.001800, country: "USA" },
-    { rank: 660, name: "Samford Bulldogs", lat: 33.473400, lng: -86.794600, country: "USA" },
-    { rank: 661, name: "Mercer Bears", lat: 32.840700, lng: -83.632400, country: "USA" },
-    { rank: 662, name: "The Citadel Bulldogs", lat: 32.787811, lng: -79.919978, country: "USA" },
-    { rank: 663, name: "WWU Baskets Münster", lat: 51.960700, lng: 7.626100, country: "Germany" },
-    { rank: 664, name: "Furman Paladins", lat: 34.924900, lng: -82.437500, country: "USA" },
-    { rank: 665, name: "Stony Brook Seawolves", lat: 40.917600, lng: -73.141200, country: "USA" },
-    { rank: 666, name: "Norfolk State Spartans", lat: 36.858011, lng: -76.273978, country: "USA" },
-    { rank: 667, name: "Wofford Terriers", lat: 34.924900, lng: -81.949800, country: "USA" },
-    { rank: 668, name: "Texas A&M-CC Islanders", lat: 27.800600, lng: -97.396400, country: "USA" },
-    { rank: 669, name: "Georgia Southern Eagles", lat: 32.427900, lng: -81.783200, country: "USA" },
-    { rank: 670, name: "Maryland-Eastern Shore Hawks", lat: 38.349800, lng: -75.501800, country: "USA" },
-    { rank: 671, name: "South Carolina State Bulldogs", lat: 33.453400, lng: -80.996200, country: "USA" },
-    { rank: 672, name: "UC Santa Barbara Gauchos", lat: 34.414000, lng: -119.848900, country: "USA" },
-    { rank: 673, name: "Georgia State Panthers", lat: 33.760411, lng: -84.376778, country: "USA" },
-    { rank: 674, name: "Howard Bison", lat: 38.918816, lng: -77.025277, country: "USA" },
-    { rank: 675, name: "Appalachian State Mountaineers", lat: 36.216800, lng: -81.674600, country: "USA" },
-    { rank: 676, name: "Nicholls Colonels", lat: 29.701300, lng: -90.442600, country: "USA" },
-    { rank: 677, name: "South Alabama Jaguars", lat: 30.695400, lng: -88.039900, country: "USA" },
-    { rank: 678, name: "UL Monroe Warhawks", lat: 32.509300, lng: -92.119300, country: "USA" },
-    { rank: 679, name: "Jackson State Tigers", lat: 32.298800, lng: -90.184800, country: "USA" },
-    { rank: 680, name: "Troy Trojans", lat: 31.808800, lng: -85.966900, country: "USA" },
-    { rank: 681, name: "Texas State Bobcats", lat: 29.898800, lng: -97.939100, country: "USA" },
-    { rank: 682, name: "North Carolina Central Eagles", lat: 35.977800, lng: -78.898600, country: "USA" },
-    { rank: 683, name: "CB Prat", lat: 41.754200, lng: 1.846100, country: "Spain" },
-    { rank: 684, name: "McNeese Cowboys", lat: 30.226600, lng: -93.217400, country: "USA" },
-    { rank: 685, name: "New Orleans Privateers", lat: 29.940246, lng: -90.082511, country: "USA" },
-    { rank: 686, name: "Wagner Seahawks", lat: 40.617600, lng: -74.142400, country: "USA" },
-    { rank: 687, name: "St. Francis (PA) Red Flash", lat: 40.342300, lng: -78.939400, country: "USA" },
-    { rank: 688, name: "SE Louisiana Lions", lat: 30.520900, lng: -90.442600, country: "USA" },
-    { rank: 689, name: "Long Island University Sharks", lat: 40.689300, lng: -73.944200, country: "USA" },
-    { rank: 690, name: "Sacred Heart Pioneers", lat: 41.168211, lng: -73.236678, country: "USA" },
-    { rank: 691, name: "Central Connecticut Blue Devils", lat: 41.648800, lng: -72.727800, country: "USA" },
-    { rank: 692, name: "St. Francis (BKN) Terriers", lat: 40.700611, lng: -73.933078, country: "USA" },
-    { rank: 693, name: "Fairleigh Dickinson Knights", lat: 40.958400, lng: -74.104800, country: "USA" },
-    { rank: 694, name: "Little Rock Trojans", lat: 34.746500, lng: -92.289600, country: "USA" },
-    { rank: 695, name: "Incarnate Word Cardinals", lat: 29.435746, lng: -98.482211, country: "USA" },
-    { rank: 696, name: "Mississippi Valley State Delta Devils", lat: 33.351500, lng: -90.307000, country: "USA" },
-    { rank: 697, name: "Florida A&M Rattlers", lat: 30.449611, lng: -84.269478, country: "USA" },
-    { rank: 698, name: "Southern Jaguars", lat: 29.940381, lng: -90.082344, country: "USA" },
-    { rank: 699, name: "Alcorn State Braves", lat: 31.554000, lng: -91.391800, country: "USA" },
-    { rank: 700, name: "Prairie View A&M Panthers", lat: 30.086300, lng: -95.991700, country: "USA" },
-    { rank: 701, name: "Arkansas-Pine Bluff Golden Lions", lat: 34.228400, lng: -92.003100, country: "USA" },
-    { rank: 702, name: "Alabama State Hornets", lat: 32.366800, lng: -86.299900, country: "USA" },
-    { rank: 703, name: "Houston Baptist Huskies", lat: 29.772446, lng: -95.358644, country: "USA" },
-    { rank: 704, name: "Alabama A&M Bulldogs", lat: 34.730400, lng: -86.586100, country: "USA" },
-    { rank: 705, name: "Bethune-Cookman Wildcats", lat: 29.210800, lng: -81.022800, country: "USA" },
-    { rank: 706, name: "Texas Southern Tigers", lat: 29.771861, lng: -95.372028, country: "USA" }
+  {
+    "rank": 1,
+    "name": "Los Angeles Lakers",
+    "lat": 34.0522,
+    "lng": -118.2437,
+    "country": "USA"
+  },
+  {
+    "rank": 2,
+    "name": "Milwaukee Bucks",
+    "lat": 43.0389,
+    "lng": -87.9065,
+    "country": "USA"
+  },
+  {
+    "rank": 3,
+    "name": "Golden State Warriors",
+    "lat": 37.768,
+    "lng": -122.3877,
+    "country": "USA"
+  },
+  {
+    "rank": 4,
+    "name": "Brooklyn Nets",
+    "lat": 40.6782,
+    "lng": -73.9442,
+    "country": "USA"
+  },
+  {
+    "rank": 5,
+    "name": "Chicago Bulls",
+    "lat": 41.8781,
+    "lng": -87.6298,
+    "country": "USA"
+  },
+  {
+    "rank": 6,
+    "name": "Philadelphia 76ers",
+    "lat": 39.9012,
+    "lng": -75.172,
+    "country": "USA"
+  },
+  {
+    "rank": 7,
+    "name": "Los Angeles Clippers",
+    "lat": 34.059411,
+    "lng": -118.250578,
+    "country": "USA"
+  },
+  {
+    "rank": 8,
+    "name": "Miami Heat",
+    "lat": 25.7617,
+    "lng": -80.1918,
+    "country": "USA"
+  },
+  {
+    "rank": 9,
+    "name": "Boston Celtics",
+    "lat": 42.3601,
+    "lng": -71.0589,
+    "country": "USA"
+  },
+  {
+    "rank": 10,
+    "name": "Phoenix Suns",
+    "lat": 33.4484,
+    "lng": -112.074,
+    "country": "USA"
+  },
+  {
+    "rank": 11,
+    "name": "Denver Nuggets",
+    "lat": 39.7392,
+    "lng": -104.9903,
+    "country": "USA"
+  },
+  {
+    "rank": 12,
+    "name": "Atlanta Hawks",
+    "lat": 33.749,
+    "lng": -84.388,
+    "country": "USA"
+  },
+  {
+    "rank": 13,
+    "name": "Toronto Raptors",
+    "lat": 43.6532,
+    "lng": -79.3832,
+    "country": "Canada"
+  },
+  {
+    "rank": 14,
+    "name": "Dallas Mavericks",
+    "lat": 32.7767,
+    "lng": -96.797,
+    "country": "USA"
+  },
+  {
+    "rank": 15,
+    "name": "New Orleans Pelicans",
+    "lat": 29.9511,
+    "lng": -90.0715,
+    "country": "USA"
+  },
+  {
+    "rank": 16,
+    "name": "Minnesota Timberwolves",
+    "lat": 44.9778,
+    "lng": -93.265,
+    "country": "USA"
+  },
+  {
+    "rank": 17,
+    "name": "Portland Trail Blazers",
+    "lat": 45.5152,
+    "lng": -122.6784,
+    "country": "USA"
+  },
+  {
+    "rank": 18,
+    "name": "New York Knicks",
+    "lat": 40.7128,
+    "lng": -74.006,
+    "country": "USA"
+  },
+  {
+    "rank": 19,
+    "name": "Cleveland Cavaliers",
+    "lat": 41.4993,
+    "lng": -81.6944,
+    "country": "USA"
+  },
+  {
+    "rank": 20,
+    "name": "Washington Wizards",
+    "lat": 38.9072,
+    "lng": -77.0369,
+    "country": "USA"
+  },
+  {
+    "rank": 21,
+    "name": "Memphis Grizzlies",
+    "lat": 35.1495,
+    "lng": -90.049,
+    "country": "USA"
+  },
+  {
+    "rank": 22,
+    "name": "Sacramento Kings",
+    "lat": 38.5816,
+    "lng": -121.4944,
+    "country": "USA"
+  },
+  {
+    "rank": 23,
+    "name": "Charlotte Hornets",
+    "lat": 35.2271,
+    "lng": -80.8431,
+    "country": "USA"
+  },
+  {
+    "rank": 24,
+    "name": "Anadolu Efes ",
+    "lat": 41.0082,
+    "lng": 28.9784,
+    "country": "Turkey"
+  },
+  {
+    "rank": 25,
+    "name": "EA7 Emporio Armani Milano",
+    "lat": 45.4642,
+    "lng": 9.19,
+    "country": "Italy"
+  },
+  {
+    "rank": 26,
+    "name": "Toronto Raptors",
+    "lat": 43.659811,
+    "lng": -79.39537800000001,
+    "country": "Canada"
+  },
+  {
+    "rank": 27,
+    "name": "Utah Jazz",
+    "lat": 40.7608,
+    "lng": -111.891,
+    "country": "USA"
+  },
+  {
+    "rank": 28,
+    "name": "Olympiacos BC",
+    "lat": 37.9755,
+    "lng": 23.7348,
+    "country": "Greece"
+  },
+  {
+    "rank": 29,
+    "name": "Fenerbah\u00e7e Beko",
+    "lat": 41.015211,
+    "lng": 28.961478,
+    "country": "Turkey"
+  },
+  {
+    "rank": 30,
+    "name": "Virtus Segafredo Bologna",
+    "lat": 44.4949,
+    "lng": 11.3426,
+    "country": "Italy"
+  },
+  {
+    "rank": 31,
+    "name": "Bar\u00e7a",
+    "lat": 41.3851,
+    "lng": 2.1734,
+    "country": "Spain"
+  },
+  {
+    "rank": 32,
+    "name": "KK Crvena Zvezda mts",
+    "lat": 44.7866,
+    "lng": 20.4489,
+    "country": "Serbia"
+  },
+  {
+    "rank": 33,
+    "name": "AS Monaco Basket",
+    "lat": 43.7384,
+    "lng": 7.4246,
+    "country": "Monaco"
+  },
+  {
+    "rank": 34,
+    "name": "Panathinaikos BC",
+    "lat": 38.004611000000004,
+    "lng": 23.699678,
+    "country": "Greece"
+  },
+  {
+    "rank": 35,
+    "name": "Detroit Pistons",
+    "lat": 42.3314,
+    "lng": -83.0458,
+    "country": "USA"
+  },
+  {
+    "rank": 36,
+    "name": "Indiana Pacers",
+    "lat": 39.7684,
+    "lng": -86.1581,
+    "country": "USA"
+  },
+  {
+    "rank": 37,
+    "name": "Orlando Magic",
+    "lat": 28.5383,
+    "lng": -81.3792,
+    "country": "USA"
+  },
+  {
+    "rank": 38,
+    "name": "Real Madrid",
+    "lat": 40.4168,
+    "lng": -3.7038,
+    "country": "Spain"
+  },
+  {
+    "rank": 39,
+    "name": "BC Zalgiris Kaunas",
+    "lat": 54.8985,
+    "lng": 23.9036,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 40,
+    "name": "Oklahoma City Thunder",
+    "lat": 35.4676,
+    "lng": -97.5164,
+    "country": "USA"
+  },
+  {
+    "rank": 41,
+    "name": "Maccabi Playtika Tel Aviv",
+    "lat": 32.0853,
+    "lng": 34.7818,
+    "country": "Israel"
+  },
+  {
+    "rank": 42,
+    "name": "Cazoo Baskonia",
+    "lat": 42.8499,
+    "lng": -2.6715,
+    "country": "Spain"
+  },
+  {
+    "rank": 43,
+    "name": "Gran Canaria ",
+    "lat": 28.1248,
+    "lng": -15.43,
+    "country": "Spain"
+  },
+  {
+    "rank": 44,
+    "name": "Houston Rockets",
+    "lat": 29.7604,
+    "lng": -95.3698,
+    "country": "USA"
+  },
+  {
+    "rank": 45,
+    "name": "San Antonio Spurs",
+    "lat": 29.4241,
+    "lng": -98.4936,
+    "country": "USA"
+  },
+  {
+    "rank": 46,
+    "name": "Umana Reyer Venezia",
+    "lat": 45.4408,
+    "lng": 12.3155,
+    "country": "Italy"
+  },
+  {
+    "rank": 47,
+    "name": "FC Bayern M\u00fcnchen",
+    "lat": 48.1351,
+    "lng": 11.582,
+    "country": "Germany"
+  },
+  {
+    "rank": 48,
+    "name": "LDLC ASVEL Villeurbanne",
+    "lat": 45.764,
+    "lng": 4.8357,
+    "country": "France"
+  },
+  {
+    "rank": 49,
+    "name": "Lenovo Tenerife",
+    "lat": 28.4636,
+    "lng": -16.2518,
+    "country": "Spain"
+  },
+  {
+    "rank": 50,
+    "name": "Valencia Basket",
+    "lat": 39.4699,
+    "lng": -0.3763,
+    "country": "Spain"
+  },
+  {
+    "rank": 51,
+    "name": "Pinar Karsiyaka",
+    "lat": 38.4237,
+    "lng": 27.1428,
+    "country": "Turkey"
+  },
+  {
+    "rank": 52,
+    "name": "Galatasaray Nef",
+    "lat": 41.007011,
+    "lng": 29.003678,
+    "country": "Turkey"
+  },
+  {
+    "rank": 53,
+    "name": "Unicaja",
+    "lat": 36.7196,
+    "lng": -4.4214,
+    "country": "Spain"
+  },
+  {
+    "rank": 54,
+    "name": "Joventut Badalona",
+    "lat": 41.4501,
+    "lng": 2.2471,
+    "country": "Spain"
+  },
+  {
+    "rank": 55,
+    "name": "T\u00fcrk Telekom",
+    "lat": 39.9334,
+    "lng": 32.8597,
+    "country": "Turkey"
+  },
+  {
+    "rank": 56,
+    "name": "KK Partizan MozzartBet",
+    "lat": 44.8154,
+    "lng": 20.4171,
+    "country": "Serbia"
+  },
+  {
+    "rank": 57,
+    "name": "Monbus Obradoiro",
+    "lat": 42.8805,
+    "lng": -8.5456,
+    "country": "Spain"
+  },
+  {
+    "rank": 58,
+    "name": "Bertram Yachts Derthona",
+    "lat": 44.9056,
+    "lng": 8.8742,
+    "country": "Italy"
+  },
+  {
+    "rank": 59,
+    "name": "London Lions",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "country": "United Kingdom"
+  },
+  {
+    "rank": 60,
+    "name": "Besiktas",
+    "lat": 41.033411,
+    "lng": 28.983078,
+    "country": "Turkey"
+  },
+  {
+    "rank": 61,
+    "name": "ALBA Berlin",
+    "lat": 52.52,
+    "lng": 13.405,
+    "country": "Germany"
+  },
+  {
+    "rank": 62,
+    "name": "Germani Brescia",
+    "lat": 45.5416,
+    "lng": 10.2118,
+    "country": "Italy"
+  },
+  {
+    "rank": 63,
+    "name": "KK Cedevita Olimpija",
+    "lat": 46.0569,
+    "lng": 14.5058,
+    "country": "Slovenia"
+  },
+  {
+    "rank": 64,
+    "name": "Metropolitans 92",
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "country": "France"
+  },
+  {
+    "rank": 65,
+    "name": "Fortitudo Bologna",
+    "lat": 44.5177,
+    "lng": 11.3202,
+    "country": "Italy"
+  },
+  {
+    "rank": 66,
+    "name": "Paris Basketball",
+    "lat": 48.845011,
+    "lng": 2.374178,
+    "country": "France"
+  },
+  {
+    "rank": 67,
+    "name": "UCLA Bruins",
+    "lat": 34.028411,
+    "lng": -118.238978,
+    "country": "USA"
+  },
+  {
+    "rank": 68,
+    "name": "SIG Strasbourg",
+    "lat": 48.5734,
+    "lng": 7.7521,
+    "country": "France"
+  },
+  {
+    "rank": 69,
+    "name": "Bah\u00e7esehir Koleji",
+    "lat": 41.025011,
+    "lng": 29.021678,
+    "country": "Turkey"
+  },
+  {
+    "rank": 70,
+    "name": "Gaziantep Basketbol",
+    "lat": 37.0662,
+    "lng": 37.3833,
+    "country": "Turkey"
+  },
+  {
+    "rank": 71,
+    "name": "Surne Bilbao Basket",
+    "lat": 43.2627,
+    "lng": -2.9253,
+    "country": "Spain"
+  },
+  {
+    "rank": 72,
+    "name": "KK Buducnost VOLI",
+    "lat": 42.4304,
+    "lng": 19.2594,
+    "country": "Montenegro"
+  },
+  {
+    "rank": 73,
+    "name": "Banco di Sardegna Sassari",
+    "lat": 40.7259,
+    "lng": 8.5547,
+    "country": "Italy"
+  },
+  {
+    "rank": 74,
+    "name": "Frutti Extra Bursaspor",
+    "lat": 40.1826,
+    "lng": 29.0665,
+    "country": "Turkey"
+  },
+  {
+    "rank": 75,
+    "name": "Tofas",
+    "lat": 40.200611,
+    "lng": 29.085778,
+    "country": "Turkey"
+  },
+  {
+    "rank": 76,
+    "name": "Unahotels Reggio Emilia",
+    "lat": 44.6989,
+    "lng": 10.6346,
+    "country": "Italy"
+  },
+  {
+    "rank": 77,
+    "name": "AEK BC",
+    "lat": 37.981011,
+    "lng": 23.759678,
+    "country": "Greece"
+  },
+  {
+    "rank": 78,
+    "name": "Rytas Vilnius",
+    "lat": 54.6872,
+    "lng": 25.2797,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 79,
+    "name": "Florida State Seminoles",
+    "lat": 30.4383,
+    "lng": -84.2807,
+    "country": "USA"
+  },
+  {
+    "rank": 80,
+    "name": "Casademont Zaragoza",
+    "lat": 41.6488,
+    "lng": -0.889,
+    "country": "Spain"
+  },
+  {
+    "rank": 81,
+    "name": "Bnei Ofek Dist Herzliya",
+    "lat": 32.1624,
+    "lng": 34.8441,
+    "country": "Israel"
+  },
+  {
+    "rank": 82,
+    "name": "R\u00edo Breog\u00e1n",
+    "lat": 43.3623,
+    "lng": -8.4115,
+    "country": "Spain"
+  },
+  {
+    "rank": 83,
+    "name": "B\u00e0squet Girona",
+    "lat": 41.9794,
+    "lng": 2.8214,
+    "country": "Spain"
+  },
+  {
+    "rank": 84,
+    "name": "Creighton Bluejays",
+    "lat": 41.2565,
+    "lng": -95.9345,
+    "country": "USA"
+  },
+  {
+    "rank": 85,
+    "name": "Hapoel Tel Aviv",
+    "lat": 32.103211,
+    "lng": 34.746677999999996,
+    "country": "Israel"
+  },
+  {
+    "rank": 86,
+    "name": "Covir\u00e1n Granada",
+    "lat": 37.1773,
+    "lng": -3.5986,
+    "country": "Spain"
+  },
+  {
+    "rank": 87,
+    "name": "Baxi Manresa",
+    "lat": 41.7289,
+    "lng": 1.8262,
+    "country": "Spain"
+  },
+  {
+    "rank": 88,
+    "name": "U-BT Cluj-Napoca",
+    "lat": 46.7712,
+    "lng": 23.6236,
+    "country": "Romania"
+  },
+  {
+    "rank": 89,
+    "name": "Dar\u00fcssafaka",
+    "lat": 41.043011,
+    "lng": 29.015677999999998,
+    "country": "Turkey"
+  },
+  {
+    "rank": 90,
+    "name": "ratiopharm Ulm",
+    "lat": 48.3974,
+    "lng": 9.9934,
+    "country": "Germany"
+  },
+  {
+    "rank": 91,
+    "name": "Real Betis",
+    "lat": 37.3886,
+    "lng": -5.9823,
+    "country": "Spain"
+  },
+  {
+    "rank": 92,
+    "name": "Le Mans Sarthe Basket",
+    "lat": 48.0061,
+    "lng": 0.1996,
+    "country": "France"
+  },
+  {
+    "rank": 93,
+    "name": "New Zealand Breakers",
+    "lat": -36.8485,
+    "lng": 174.7633,
+    "country": "New Zealand"
+  },
+  {
+    "rank": 94,
+    "name": "HAKRO Merlins Crailsheim",
+    "lat": 49.134,
+    "lng": 10.0614,
+    "country": "Germany"
+  },
+  {
+    "rank": 95,
+    "name": "Telekom Baskets Bonn",
+    "lat": 50.7374,
+    "lng": 7.0982,
+    "country": "Germany"
+  },
+  {
+    "rank": 96,
+    "name": "Ironi Hai Motors Ness Ziona",
+    "lat": 31.9278,
+    "lng": 34.7925,
+    "country": "Israel"
+  },
+  {
+    "rank": 97,
+    "name": "BC Wolves",
+    "lat": 54.716011,
+    "lng": 25.244578,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 98,
+    "name": "Manisa B\u00fcy\u00fcksehir Belediyespor",
+    "lat": 38.6191,
+    "lng": 27.4289,
+    "country": "Turkey"
+  },
+  {
+    "rank": 99,
+    "name": "Vanoli Cremona",
+    "lat": 45.1335,
+    "lng": 10.0222,
+    "country": "Italy"
+  },
+  {
+    "rank": 100,
+    "name": "Carplus Fuenlabrada",
+    "lat": 40.2846,
+    "lng": -3.7989,
+    "country": "Spain"
+  },
+  {
+    "rank": 101,
+    "name": "Dolomiti Energia Trento",
+    "lat": 46.0748,
+    "lng": 11.1217,
+    "country": "Italy"
+  },
+  {
+    "rank": 102,
+    "name": "Peristeri BC",
+    "lat": 37.979011,
+    "lng": 23.721678,
+    "country": "Greece"
+  },
+  {
+    "rank": 103,
+    "name": "Yukatel Merkezefendi",
+    "lat": 37.7765,
+    "lng": 29.0864,
+    "country": "Turkey"
+  },
+  {
+    "rank": 104,
+    "name": "BC Lietkabelis",
+    "lat": 55.7172,
+    "lng": 21.1175,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 105,
+    "name": "UCAM Murcia",
+    "lat": 37.9922,
+    "lng": -1.1307,
+    "country": "Spain"
+  },
+  {
+    "rank": 106,
+    "name": "Hapoel Holon",
+    "lat": 32.0167,
+    "lng": 34.7667,
+    "country": "Israel"
+  },
+  {
+    "rank": 107,
+    "name": "Semt77 Yalovaspor",
+    "lat": 40.6564,
+    "lng": 29.2777,
+    "country": "Turkey"
+  },
+  {
+    "rank": 108,
+    "name": "Brose Bamberg",
+    "lat": 49.8988,
+    "lng": 10.9027,
+    "country": "Germany"
+  },
+  {
+    "rank": 109,
+    "name": "Texas Longhorns",
+    "lat": 30.2672,
+    "lng": -97.7431,
+    "country": "USA"
+  },
+  {
+    "rank": 110,
+    "name": "Lavrio Megabolt",
+    "lat": 37.7167,
+    "lng": 24.0667,
+    "country": "Greece"
+  },
+  {
+    "rank": 111,
+    "name": "S.E. Melbourne Phoenix",
+    "lat": -37.8136,
+    "lng": 144.9631,
+    "country": "Australia"
+  },
+  {
+    "rank": 112,
+    "name": "JL Bourg Basket",
+    "lat": 46.2044,
+    "lng": 5.2255,
+    "country": "France"
+  },
+  {
+    "rank": 113,
+    "name": "Perth Wildcats",
+    "lat": -31.9505,
+    "lng": 115.8605,
+    "country": "Australia"
+  },
+  {
+    "rank": 114,
+    "name": "Kansas Jayhawks",
+    "lat": 38.9717,
+    "lng": -95.2353,
+    "country": "USA"
+  },
+  {
+    "rank": 115,
+    "name": "Hapoel B-Cure Laser Haifa",
+    "lat": 32.794,
+    "lng": 34.9896,
+    "country": "Israel"
+  },
+  {
+    "rank": 116,
+    "name": "Ironi Kiryat Ata",
+    "lat": 32.8044,
+    "lng": 35.1044,
+    "country": "Israel"
+  },
+  {
+    "rank": 117,
+    "name": "Happy Casa Brindisi",
+    "lat": 40.6384,
+    "lng": 17.9411,
+    "country": "Italy"
+  },
+  {
+    "rank": 118,
+    "name": "Aliaga Petkim",
+    "lat": 38.8007,
+    "lng": 26.977,
+    "country": "Turkey"
+  },
+  {
+    "rank": 119,
+    "name": "Prometey Slobozhanske",
+    "lat": 49.9935,
+    "lng": 36.2304,
+    "country": "Ukraine"
+  },
+  {
+    "rank": 120,
+    "name": "Duke Blue Devils",
+    "lat": 36.0014,
+    "lng": -78.9382,
+    "country": "USA"
+  },
+  {
+    "rank": 121,
+    "name": "Michigan Wolverines",
+    "lat": 42.278,
+    "lng": -83.7382,
+    "country": "USA"
+  },
+  {
+    "rank": 122,
+    "name": "AYOS Konyaspor",
+    "lat": 37.8667,
+    "lng": 32.4833,
+    "country": "Turkey"
+  },
+  {
+    "rank": 123,
+    "name": "Baylor Bears",
+    "lat": 31.5804,
+    "lng": -97.1114,
+    "country": "USA"
+  },
+  {
+    "rank": 124,
+    "name": "Basketball L\u00f6wen Braunschweig",
+    "lat": 52.2689,
+    "lng": 10.5268,
+    "country": "Germany"
+  },
+  {
+    "rank": 125,
+    "name": "Virginia Cavaliers",
+    "lat": 38.0336,
+    "lng": -78.508,
+    "country": "USA"
+  },
+  {
+    "rank": 126,
+    "name": "North Carolina Tar Heels",
+    "lat": 35.9049,
+    "lng": -79.0469,
+    "country": "USA"
+  },
+  {
+    "rank": 127,
+    "name": "Niners Chemnitz",
+    "lat": 50.8278,
+    "lng": 12.9214,
+    "country": "Germany"
+  },
+  {
+    "rank": 128,
+    "name": "Illinois Fighting Illini",
+    "lat": 40.102,
+    "lng": -88.2272,
+    "country": "USA"
+  },
+  {
+    "rank": 129,
+    "name": "BC CBET Jonava",
+    "lat": 55.0778,
+    "lng": 24.2803,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 130,
+    "name": "Cholet Basket",
+    "lat": 47.0588,
+    "lng": -0.871,
+    "country": "France"
+  },
+  {
+    "rank": 131,
+    "name": "GeVi Napoli Basket",
+    "lat": 40.8518,
+    "lng": 14.2681,
+    "country": "Italy"
+  },
+  {
+    "rank": 132,
+    "name": "Indiana Hoosiers",
+    "lat": 39.1637,
+    "lng": -86.5264,
+    "country": "USA"
+  },
+  {
+    "rank": 133,
+    "name": "JDA Dijon Basket",
+    "lat": 47.322,
+    "lng": 5.0415,
+    "country": "France"
+  },
+  {
+    "rank": 134,
+    "name": "Notre Dame Fighting Irish",
+    "lat": 41.7001,
+    "lng": -86.2379,
+    "country": "USA"
+  },
+  {
+    "rank": 135,
+    "name": "SLUC Nancy Basket",
+    "lat": 48.6921,
+    "lng": 6.1844,
+    "country": "France"
+  },
+  {
+    "rank": 136,
+    "name": "Kentucky Wildcats",
+    "lat": 38.0406,
+    "lng": -84.5037,
+    "country": "USA"
+  },
+  {
+    "rank": 137,
+    "name": "EWE Baskets Oldenburg",
+    "lat": 53.1435,
+    "lng": 8.2146,
+    "country": "Germany"
+  },
+  {
+    "rank": 138,
+    "name": "NutriBullet Treviso",
+    "lat": 45.6669,
+    "lng": 12.2431,
+    "country": "Italy"
+  },
+  {
+    "rank": 139,
+    "name": "Adelaide 36ers",
+    "lat": -34.9285,
+    "lng": 138.6007,
+    "country": "Australia"
+  },
+  {
+    "rank": 140,
+    "name": "USC Trojans",
+    "lat": 34.035211000000004,
+    "lng": -118.252978,
+    "country": "USA"
+  },
+  {
+    "rank": 141,
+    "name": "Hapoel Yossi Avrahami Eilat",
+    "lat": 29.5569,
+    "lng": 34.9516,
+    "country": "Israel"
+  },
+  {
+    "rank": 142,
+    "name": "Promitheas Patras",
+    "lat": 38.2466,
+    "lng": 21.7346,
+    "country": "Greece"
+  },
+  {
+    "rank": 143,
+    "name": "Chorale Roanne",
+    "lat": 46.0339,
+    "lng": 4.0644,
+    "country": "France"
+  },
+  {
+    "rank": 144,
+    "name": "AS Karditsas",
+    "lat": 39.3667,
+    "lng": 21.9211,
+    "country": "Greece"
+  },
+  {
+    "rank": 145,
+    "name": "Givova Scafati",
+    "lat": 40.7583,
+    "lng": 14.5278,
+    "country": "Italy"
+  },
+  {
+    "rank": 146,
+    "name": "BC Utenos Juventus",
+    "lat": 55.4978,
+    "lng": 25.2669,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 147,
+    "name": "Miami Hurricanes",
+    "lat": 25.790811,
+    "lng": -80.204678,
+    "country": "USA"
+  },
+  {
+    "rank": 148,
+    "name": "Virginia Tech Hokies",
+    "lat": 37.2284,
+    "lng": -80.4234,
+    "country": "USA"
+  },
+  {
+    "rank": 149,
+    "name": "Arizona Wildcats",
+    "lat": 32.2226,
+    "lng": -110.9747,
+    "country": "USA"
+  },
+  {
+    "rank": 150,
+    "name": "Aris BC",
+    "lat": 40.6403,
+    "lng": 22.9439,
+    "country": "Greece"
+  },
+  {
+    "rank": 151,
+    "name": "Clemson Tigers",
+    "lat": 34.6834,
+    "lng": -82.8374,
+    "country": "USA"
+  },
+  {
+    "rank": 152,
+    "name": "Illawarra Hawks",
+    "lat": -34.4244,
+    "lng": 150.8931,
+    "country": "Australia"
+  },
+  {
+    "rank": 153,
+    "name": "NC State Wolfpack",
+    "lat": 35.7796,
+    "lng": -78.6382,
+    "country": "USA"
+  },
+  {
+    "rank": 154,
+    "name": "Openjobmetis Varese",
+    "lat": 45.8205,
+    "lng": 8.825,
+    "country": "Italy"
+  },
+  {
+    "rank": 155,
+    "name": "Syracuse Orange",
+    "lat": 43.0481,
+    "lng": -76.1474,
+    "country": "USA"
+  },
+  {
+    "rank": 156,
+    "name": "PAOK BC",
+    "lat": 40.649411,
+    "lng": 22.931078,
+    "country": "Greece"
+  },
+  {
+    "rank": 157,
+    "name": "MHP RIESEN Ludwigsburg",
+    "lat": 48.8941,
+    "lng": 9.1918,
+    "country": "Germany"
+  },
+  {
+    "rank": 158,
+    "name": "Villanova Wildcats",
+    "lat": 40.0379,
+    "lng": -75.3436,
+    "country": "USA"
+  },
+  {
+    "rank": 159,
+    "name": "Hapoel Bank Yahav Jerusalem",
+    "lat": 31.7683,
+    "lng": 35.2137,
+    "country": "Israel"
+  },
+  {
+    "rank": 160,
+    "name": "Maccabi Effie Capital Rishon LeZion",
+    "lat": 31.973,
+    "lng": 34.7926,
+    "country": "Israel"
+  },
+  {
+    "rank": 161,
+    "name": "Veolia Towers Hamburg",
+    "lat": 53.5511,
+    "lng": 9.9937,
+    "country": "Germany"
+  },
+  {
+    "rank": 162,
+    "name": "Carpegna Prosciutto Pesaro",
+    "lat": 43.9102,
+    "lng": 12.9133,
+    "country": "Italy"
+  },
+  {
+    "rank": 163,
+    "name": "MLP Academics Heidelberg",
+    "lat": 49.3988,
+    "lng": 8.6724,
+    "country": "Germany"
+  },
+  {
+    "rank": 164,
+    "name": "Sydney Kings",
+    "lat": -33.8688,
+    "lng": 151.2093,
+    "country": "Australia"
+  },
+  {
+    "rank": 165,
+    "name": "Nanterre 92",
+    "lat": 48.881611,
+    "lng": 2.340178,
+    "country": "France"
+  },
+  {
+    "rank": 166,
+    "name": "Alabama Crimson Tide",
+    "lat": 33.2098,
+    "lng": -87.5692,
+    "country": "USA"
+  },
+  {
+    "rank": 167,
+    "name": "Fraport Skyliners",
+    "lat": 50.1109,
+    "lng": 8.6821,
+    "country": "Germany"
+  },
+  {
+    "rank": 168,
+    "name": "Arkansas Razorbacks",
+    "lat": 36.0625,
+    "lng": -94.1574,
+    "country": "USA"
+  },
+  {
+    "rank": 169,
+    "name": "Ohio State Buckeyes",
+    "lat": 39.9612,
+    "lng": -83.0007,
+    "country": "USA"
+  },
+  {
+    "rank": 170,
+    "name": "BCM Gravelines-Dunkerque",
+    "lat": 51.0342,
+    "lng": 2.377,
+    "country": "France"
+  },
+  {
+    "rank": 171,
+    "name": "Auburn Tigers",
+    "lat": 32.601,
+    "lng": -85.4887,
+    "country": "USA"
+  },
+  {
+    "rank": 172,
+    "name": "Filou Oostende",
+    "lat": 51.2172,
+    "lng": 2.9267,
+    "country": "Belgium"
+  },
+  {
+    "rank": 173,
+    "name": "KK Igokea m:tel",
+    "lat": 43.8486,
+    "lng": 18.3564,
+    "country": "Bosnia and Herzegovina"
+  },
+  {
+    "rank": 174,
+    "name": "Kolossos H Hotels",
+    "lat": 36.3932,
+    "lng": 25.4615,
+    "country": "Greece"
+  },
+  {
+    "rank": 175,
+    "name": "Cairns Taipans",
+    "lat": -16.9186,
+    "lng": 145.7781,
+    "country": "Australia"
+  },
+  {
+    "rank": 176,
+    "name": "Minnesota Golden Gophers",
+    "lat": 44.9608,
+    "lng": -93.283,
+    "country": "USA"
+  },
+  {
+    "rank": 177,
+    "name": "Syntainics MBC",
+    "lat": 51.4969,
+    "lng": 11.9695,
+    "country": "Germany"
+  },
+  {
+    "rank": 178,
+    "name": "Onvo B\u00fcy\u00fck\u00e7ekmece Basketbol",
+    "lat": 41.052011,
+    "lng": 28.965678,
+    "country": "Turkey"
+  },
+  {
+    "rank": 179,
+    "name": "Hapoel Gilboa Galil",
+    "lat": 32.9375,
+    "lng": 35.5364,
+    "country": "Israel"
+  },
+  {
+    "rank": 180,
+    "name": "Pittsburgh Panthers",
+    "lat": 40.4406,
+    "lng": -79.9959,
+    "country": "USA"
+  },
+  {
+    "rank": 181,
+    "name": "Boston College Eagles",
+    "lat": 42.3398,
+    "lng": -71.1663,
+    "country": "USA"
+  },
+  {
+    "rank": 182,
+    "name": "Rutgers Scarlet Knights",
+    "lat": 40.5008,
+    "lng": -74.4474,
+    "country": "USA"
+  },
+  {
+    "rank": 183,
+    "name": "Wake Forest Demon Deacons",
+    "lat": 36.1349,
+    "lng": -80.2772,
+    "country": "USA"
+  },
+  {
+    "rank": 184,
+    "name": "Tasmania JackJumpers",
+    "lat": -42.8821,
+    "lng": 147.3272,
+    "country": "Australia"
+  },
+  {
+    "rank": 185,
+    "name": "BC Neptunas Klaipeda",
+    "lat": 55.746611,
+    "lng": 21.081878,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 186,
+    "name": "Texas Tech Red Raiders",
+    "lat": 33.5779,
+    "lng": -101.8552,
+    "country": "USA"
+  },
+  {
+    "rank": 187,
+    "name": "Georgia Tech Yellow Jackets",
+    "lat": 33.7756,
+    "lng": -84.3963,
+    "country": "USA"
+  },
+  {
+    "rank": 188,
+    "name": "AA Quimsa",
+    "lat": -27.7833,
+    "lng": -64.2667,
+    "country": "Argentina"
+  },
+  {
+    "rank": 189,
+    "name": "Brisbane Bullets",
+    "lat": -27.4698,
+    "lng": 153.0251,
+    "country": "Australia"
+  },
+  {
+    "rank": 190,
+    "name": "Hapoel Nofar Galil Elyon",
+    "lat": 32.943811000000004,
+    "lng": 35.523778,
+    "country": "Israel"
+  },
+  {
+    "rank": 191,
+    "name": "Ionikos Basket",
+    "lat": 37.9473,
+    "lng": 23.6647,
+    "country": "Greece"
+  },
+  {
+    "rank": 192,
+    "name": "medi bayreuth",
+    "lat": 49.9429,
+    "lng": 11.5753,
+    "country": "Germany"
+  },
+  {
+    "rank": 193,
+    "name": "Houston Cougars",
+    "lat": 29.790011,
+    "lng": -95.382578,
+    "country": "USA"
+  },
+  {
+    "rank": 194,
+    "name": "Hapoel Be'er Sheva",
+    "lat": 31.253,
+    "lng": 34.7915,
+    "country": "Israel"
+  },
+  {
+    "rank": 195,
+    "name": "Gonzaga Bulldogs",
+    "lat": 47.6587,
+    "lng": -117.426,
+    "country": "USA"
+  },
+  {
+    "rank": 196,
+    "name": "Hereda San Pablo Burgos",
+    "lat": 42.3404,
+    "lng": -3.7026,
+    "country": "Spain"
+  },
+  {
+    "rank": 197,
+    "name": "BC Siauliai",
+    "lat": 55.9349,
+    "lng": 23.3135,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 198,
+    "name": "WKS Slask Wroclaw",
+    "lat": 51.1079,
+    "lng": 17.0385,
+    "country": "Poland"
+  },
+  {
+    "rank": 199,
+    "name": "Melbourne United",
+    "lat": -37.785811,
+    "lng": 144.950478,
+    "country": "Australia"
+  },
+  {
+    "rank": 200,
+    "name": "Oregon Ducks",
+    "lat": 44.0505,
+    "lng": -123.0951,
+    "country": "USA"
+  },
+  {
+    "rank": 201,
+    "name": "Florida Gators",
+    "lat": 29.6516,
+    "lng": -82.3248,
+    "country": "USA"
+  },
+  {
+    "rank": 202,
+    "name": "Wisconsin Badgers",
+    "lat": 43.0722,
+    "lng": -89.4008,
+    "country": "USA"
+  },
+  {
+    "rank": 203,
+    "name": "South Carolina Gamecocks",
+    "lat": 34.0007,
+    "lng": -81.0348,
+    "country": "USA"
+  },
+  {
+    "rank": 204,
+    "name": "Pallacanestro Trieste",
+    "lat": 45.6495,
+    "lng": 13.7768,
+    "country": "Italy"
+  },
+  {
+    "rank": 205,
+    "name": "West Virginia Mountaineers",
+    "lat": 39.6295,
+    "lng": -79.9559,
+    "country": "USA"
+  },
+  {
+    "rank": 206,
+    "name": "Tennessee Volunteers",
+    "lat": 35.9544,
+    "lng": -83.9295,
+    "country": "USA"
+  },
+  {
+    "rank": 207,
+    "name": "Tezenis Verona",
+    "lat": 45.4384,
+    "lng": 10.9916,
+    "country": "Italy"
+  },
+  {
+    "rank": 208,
+    "name": "Iowa Hawkeyes",
+    "lat": 41.6611,
+    "lng": -91.5302,
+    "country": "USA"
+  },
+  {
+    "rank": 209,
+    "name": "Purdue Boilermakers",
+    "lat": 40.4237,
+    "lng": -86.9212,
+    "country": "USA"
+  },
+  {
+    "rank": 210,
+    "name": "MoraBanc Andorra",
+    "lat": 42.5063,
+    "lng": 1.5218,
+    "country": "Andorra"
+  },
+  {
+    "rank": 211,
+    "name": "Limoges CSP",
+    "lat": 45.8336,
+    "lng": 1.2611,
+    "country": "France"
+  },
+  {
+    "rank": 212,
+    "name": "LSU Tigers",
+    "lat": 30.4515,
+    "lng": -91.1871,
+    "country": "USA"
+  },
+  {
+    "rank": 213,
+    "name": "Oklahoma Sooners",
+    "lat": 35.2226,
+    "lng": -97.4395,
+    "country": "USA"
+  },
+  {
+    "rank": 214,
+    "name": "Louisville Cardinals",
+    "lat": 38.2527,
+    "lng": -85.7585,
+    "country": "USA"
+  },
+  {
+    "rank": 215,
+    "name": "KK Split",
+    "lat": 43.5081,
+    "lng": 16.4402,
+    "country": "Croatia"
+  },
+  {
+    "rank": 216,
+    "name": "Oklahoma State Cowboys",
+    "lat": 36.1156,
+    "lng": -97.0583,
+    "country": "USA"
+  },
+  {
+    "rank": 217,
+    "name": "Texas A&M Aggies",
+    "lat": 30.628,
+    "lng": -96.3344,
+    "country": "USA"
+  },
+  {
+    "rank": 218,
+    "name": "Okapi Aalst",
+    "lat": 50.9365,
+    "lng": 4.0435,
+    "country": "Belgium"
+  },
+  {
+    "rank": 219,
+    "name": "Ole Miss Rebels",
+    "lat": 34.3664,
+    "lng": -89.5348,
+    "country": "USA"
+  },
+  {
+    "rank": 220,
+    "name": "EB Pau-Lacq-Orthez",
+    "lat": 43.2951,
+    "lng": -0.3707,
+    "country": "France"
+  },
+  {
+    "rank": 221,
+    "name": "Arizona State Sun Devils",
+    "lat": 33.4255,
+    "lng": -111.94,
+    "country": "USA"
+  },
+  {
+    "rank": 222,
+    "name": "BC Pieno Zvaigzdes",
+    "lat": 55.9169,
+    "lng": 24.1638,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 223,
+    "name": "KK Zadar",
+    "lat": 44.1194,
+    "lng": 15.2314,
+    "country": "Croatia"
+  },
+  {
+    "rank": 224,
+    "name": "TCU Horned Frogs",
+    "lat": 32.7081,
+    "lng": -97.3731,
+    "country": "USA"
+  },
+  {
+    "rank": 225,
+    "name": "W\u00fcrzburg Baskets",
+    "lat": 49.7913,
+    "lng": 9.9534,
+    "country": "Germany"
+  },
+  {
+    "rank": 226,
+    "name": "KK Mega MIS",
+    "lat": 44.804211,
+    "lng": 20.436578,
+    "country": "Serbia"
+  },
+  {
+    "rank": 227,
+    "name": "Northwestern Wildcats",
+    "lat": 42.0534,
+    "lng": -87.6751,
+    "country": "USA"
+  },
+  {
+    "rank": 228,
+    "name": "Nebraska Cornhuskers",
+    "lat": 40.8136,
+    "lng": -96.7026,
+    "country": "USA"
+  },
+  {
+    "rank": 229,
+    "name": "Missouri Tigers",
+    "lat": 38.9517,
+    "lng": -92.3341,
+    "country": "USA"
+  },
+  {
+    "rank": 230,
+    "name": "Stanford Cardinal",
+    "lat": 37.4419,
+    "lng": -122.143,
+    "country": "USA"
+  },
+  {
+    "rank": 231,
+    "name": "ESSM Le Portel",
+    "lat": 50.7133,
+    "lng": 1.5667,
+    "country": "France"
+  },
+  {
+    "rank": 232,
+    "name": "BG G\u00f6ttingen",
+    "lat": 51.5412,
+    "lng": 9.9158,
+    "country": "Germany"
+  },
+  {
+    "rank": 233,
+    "name": "UConn Huskies",
+    "lat": 41.8077,
+    "lng": -72.254,
+    "country": "USA"
+  },
+  {
+    "rank": 234,
+    "name": "Mississippi State Bulldogs",
+    "lat": 33.4735,
+    "lng": -88.782,
+    "country": "USA"
+  },
+  {
+    "rank": 235,
+    "name": "Heroes Den Bosch",
+    "lat": 51.6978,
+    "lng": 5.3037,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 236,
+    "name": "Vanderbilt Commodores",
+    "lat": 36.1447,
+    "lng": -86.8027,
+    "country": "USA"
+  },
+  {
+    "rank": 237,
+    "name": "Instituto de C\u00f3rdoba",
+    "lat": -31.4201,
+    "lng": -64.1888,
+    "country": "Argentina"
+  },
+  {
+    "rank": 238,
+    "name": "Kangoeroes Basket Mechelen",
+    "lat": 51.0259,
+    "lng": 4.4777,
+    "country": "Belgium"
+  },
+  {
+    "rank": 239,
+    "name": "Iowa State Cyclones",
+    "lat": 42.0308,
+    "lng": -93.6319,
+    "country": "USA"
+  },
+  {
+    "rank": 240,
+    "name": "Kansas State Wildcats",
+    "lat": 39.1836,
+    "lng": -96.5717,
+    "country": "USA"
+  },
+  {
+    "rank": 241,
+    "name": "Maryland Terrapins",
+    "lat": 38.9869,
+    "lng": -76.9426,
+    "country": "USA"
+  },
+  {
+    "rank": 242,
+    "name": "Belfius Mons-Hainaut",
+    "lat": 50.4542,
+    "lng": 3.9565,
+    "country": "Belgium"
+  },
+  {
+    "rank": 243,
+    "name": "Xavier Musketeers",
+    "lat": 39.1612,
+    "lng": -84.4569,
+    "country": "USA"
+  },
+  {
+    "rank": 244,
+    "name": "Spirou Basket",
+    "lat": 50.4058,
+    "lng": 4.4464,
+    "country": "Belgium"
+  },
+  {
+    "rank": 245,
+    "name": "Feyenoord Basketball",
+    "lat": 51.9225,
+    "lng": 4.4792,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 246,
+    "name": "ADA Blois",
+    "lat": 47.598,
+    "lng": 1.3348,
+    "country": "France"
+  },
+  {
+    "rank": 247,
+    "name": "Maccabi Ashdod",
+    "lat": 31.7948,
+    "lng": 34.6553,
+    "country": "Israel"
+  },
+  {
+    "rank": 248,
+    "name": "Penn State Nittany Lions",
+    "lat": 40.7982,
+    "lng": -77.8599,
+    "country": "USA"
+  },
+  {
+    "rank": 249,
+    "name": "Landstede Hammers Zwolle",
+    "lat": 52.5168,
+    "lng": 6.083,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 250,
+    "name": "Circus Brussels Basketball",
+    "lat": 50.8503,
+    "lng": 4.3517,
+    "country": "Belgium"
+  },
+  {
+    "rank": 251,
+    "name": "Memphis Tigers",
+    "lat": 35.176311,
+    "lng": -90.035478,
+    "country": "USA"
+  },
+  {
+    "rank": 252,
+    "name": "Providence Friars",
+    "lat": 41.824,
+    "lng": -71.4128,
+    "country": "USA"
+  },
+  {
+    "rank": 253,
+    "name": "Colorado Buffaloes",
+    "lat": 40.015,
+    "lng": -105.2705,
+    "country": "USA"
+  },
+  {
+    "rank": 254,
+    "name": "Michigan State Spartans",
+    "lat": 42.7335,
+    "lng": -84.5467,
+    "country": "USA"
+  },
+  {
+    "rank": 255,
+    "name": "ICG For\u00e7a Lleida",
+    "lat": 41.6176,
+    "lng": 0.62,
+    "country": "Spain"
+  },
+  {
+    "rank": 256,
+    "name": "Stella Artois Leuven Bears",
+    "lat": 50.8798,
+    "lng": 4.7005,
+    "country": "Belgium"
+  },
+  {
+    "rank": 257,
+    "name": "Cincinnati Bearcats",
+    "lat": 39.1031,
+    "lng": -84.512,
+    "country": "USA"
+  },
+  {
+    "rank": 258,
+    "name": "Georgia Bulldogs",
+    "lat": 33.9519,
+    "lng": -83.3576,
+    "country": "USA"
+  },
+  {
+    "rank": 259,
+    "name": "KK Borac Mozzart",
+    "lat": 44.1953,
+    "lng": 17.9051,
+    "country": "Bosnia and Herzegovina"
+  },
+  {
+    "rank": 260,
+    "name": "St. John's Red Storm",
+    "lat": 40.7282,
+    "lng": -73.7949,
+    "country": "USA"
+  },
+  {
+    "rank": 261,
+    "name": "Dayton Flyers",
+    "lat": 39.7589,
+    "lng": -84.1916,
+    "country": "USA"
+  },
+  {
+    "rank": 262,
+    "name": "Telenet Giants Antwerp",
+    "lat": 51.2194,
+    "lng": 4.4025,
+    "country": "Belgium"
+  },
+  {
+    "rank": 263,
+    "name": "Rostock Seawolves",
+    "lat": 54.0887,
+    "lng": 12.1476,
+    "country": "Germany"
+  },
+  {
+    "rank": 264,
+    "name": "Saint Louis Billikens",
+    "lat": 38.627,
+    "lng": -90.1994,
+    "country": "USA"
+  },
+  {
+    "rank": 265,
+    "name": "KK Mornar-Barsko Zlato",
+    "lat": 42.0956,
+    "lng": 19.1267,
+    "country": "Montenegro"
+  },
+  {
+    "rank": 266,
+    "name": "Utah Utes",
+    "lat": 40.789011,
+    "lng": -111.904078,
+    "country": "USA"
+  },
+  {
+    "rank": 267,
+    "name": "\u00c9lan Chalon",
+    "lat": 46.7833,
+    "lng": 4.8333,
+    "country": "France"
+  },
+  {
+    "rank": 268,
+    "name": "Tulane Green Wave",
+    "lat": 29.958011,
+    "lng": -90.106678,
+    "country": "USA"
+  },
+  {
+    "rank": 269,
+    "name": "Washington Huskies",
+    "lat": 47.6062,
+    "lng": -122.3321,
+    "country": "USA"
+  },
+  {
+    "rank": 270,
+    "name": "San Diego State Aztecs",
+    "lat": 32.7157,
+    "lng": -117.1611,
+    "country": "USA"
+  },
+  {
+    "rank": 271,
+    "name": "Apollon Patras",
+    "lat": 38.255211,
+    "lng": 21.722078,
+    "country": "Greece"
+  },
+  {
+    "rank": 272,
+    "name": "Orl\u00e9ans Loiret Basket",
+    "lat": 47.9029,
+    "lng": 1.9093,
+    "country": "France"
+  },
+  {
+    "rank": 273,
+    "name": "California Golden Bears",
+    "lat": 37.8715,
+    "lng": -122.273,
+    "country": "USA"
+  },
+  {
+    "rank": 274,
+    "name": "Wyoming Cowboys",
+    "lat": 41.3114,
+    "lng": -105.5911,
+    "country": "USA"
+  },
+  {
+    "rank": 275,
+    "name": "Hubo Limburg United",
+    "lat": 50.8798,
+    "lng": 5.6926,
+    "country": "Belgium"
+  },
+  {
+    "rank": 276,
+    "name": "SMU Mustangs",
+    "lat": 32.8412,
+    "lng": -96.7834,
+    "country": "USA"
+  },
+  {
+    "rank": 277,
+    "name": "BYU Cougars",
+    "lat": 40.2518,
+    "lng": -111.6493,
+    "country": "USA"
+  },
+  {
+    "rank": 278,
+    "name": "Donar Groningen",
+    "lat": 53.2194,
+    "lng": 6.5665,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 279,
+    "name": "Oregon State Beavers",
+    "lat": 44.5645,
+    "lng": -123.262,
+    "country": "USA"
+  },
+  {
+    "rank": 280,
+    "name": "San Diego Toreros",
+    "lat": 32.744211,
+    "lng": -117.174278,
+    "country": "USA"
+  },
+  {
+    "rank": 281,
+    "name": "East Carolina Pirates",
+    "lat": 35.612,
+    "lng": -77.3666,
+    "country": "USA"
+  },
+  {
+    "rank": 282,
+    "name": "Den Helder Suns",
+    "lat": 52.9537,
+    "lng": 4.7722,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 283,
+    "name": "Saint Mary's Gaels",
+    "lat": 37.8272,
+    "lng": -122.2714,
+    "country": "USA"
+  },
+  {
+    "rank": 284,
+    "name": "DePaul Blue Demons",
+    "lat": 41.907411,
+    "lng": -87.642478,
+    "country": "USA"
+  },
+  {
+    "rank": 285,
+    "name": "BC Labas GAS Prienai",
+    "lat": 54.6333,
+    "lng": 23.95,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 286,
+    "name": "Guuk Gipuzkoa Basket",
+    "lat": 43.281211,
+    "lng": -2.969778,
+    "country": "Spain"
+  },
+  {
+    "rank": 287,
+    "name": "VCU Rams",
+    "lat": 37.5407,
+    "lng": -77.436,
+    "country": "USA"
+  },
+  {
+    "rank": 288,
+    "name": "BC Gargzdai",
+    "lat": 55.7172,
+    "lng": 21.395,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 289,
+    "name": "Zunder Palencia",
+    "lat": 42.0096,
+    "lng": -4.5284,
+    "country": "Spain"
+  },
+  {
+    "rank": 290,
+    "name": "Aris Leeuwarden",
+    "lat": 53.2012,
+    "lng": 5.7999,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 291,
+    "name": "Temple Owls",
+    "lat": 39.9526,
+    "lng": -75.1652,
+    "country": "USA"
+  },
+  {
+    "rank": 292,
+    "name": "BC Nevezis Kedainiai",
+    "lat": 55.2833,
+    "lng": 23.9833,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 293,
+    "name": "KK FMP Meridian",
+    "lat": 44.804211,
+    "lng": 20.436578,
+    "country": "Serbia"
+  },
+  {
+    "rank": 294,
+    "name": "Washington State Cougars",
+    "lat": 46.7298,
+    "lng": -117.1817,
+    "country": "USA"
+  },
+  {
+    "rank": 295,
+    "name": "Portland Pilots",
+    "lat": 45.544611,
+    "lng": -122.69117800000001,
+    "country": "USA"
+  },
+  {
+    "rank": 296,
+    "name": "RSW Li\u00e8ge Basket",
+    "lat": 50.6326,
+    "lng": 5.5797,
+    "country": "Belgium"
+  },
+  {
+    "rank": 297,
+    "name": "Alliance Sport Alsace",
+    "lat": 48.582411,
+    "lng": 7.739178,
+    "country": "France"
+  },
+  {
+    "rank": 298,
+    "name": "CS San Mart\u00edn Corrientes",
+    "lat": -27.4692,
+    "lng": -58.8306,
+    "country": "Argentina"
+  },
+  {
+    "rank": 299,
+    "name": "Movistar Estudiantes",
+    "lat": 40.438911,
+    "lng": -3.677378,
+    "country": "Spain"
+  },
+  {
+    "rank": 300,
+    "name": "Georgetown Hoyas",
+    "lat": 38.936411,
+    "lng": -77.049678,
+    "country": "USA"
+  },
+  {
+    "rank": 301,
+    "name": "ZZ Leiden",
+    "lat": 52.1601,
+    "lng": 4.497,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 302,
+    "name": "Fos Provence Basket",
+    "lat": 43.4378,
+    "lng": 4.9474,
+    "country": "France"
+  },
+  {
+    "rank": 303,
+    "name": "Colorado State Rams",
+    "lat": 40.5853,
+    "lng": -105.0844,
+    "country": "USA"
+  },
+  {
+    "rank": 304,
+    "name": "Florida Gulf Coast Eagles",
+    "lat": 26.4619,
+    "lng": -81.7717,
+    "country": "USA"
+  },
+  {
+    "rank": 305,
+    "name": "Marquette Golden Eagles",
+    "lat": 43.068211,
+    "lng": -87.919378,
+    "country": "USA"
+  },
+  {
+    "rank": 306,
+    "name": "KK Cibona",
+    "lat": 45.815,
+    "lng": 15.9819,
+    "country": "Croatia"
+  },
+  {
+    "rank": 307,
+    "name": "Tulsa Golden Hurricane",
+    "lat": 36.154,
+    "lng": -95.9928,
+    "country": "USA"
+  },
+  {
+    "rank": 308,
+    "name": "Butler Bulldogs",
+    "lat": 39.797811,
+    "lng": -86.170978,
+    "country": "USA"
+  },
+  {
+    "rank": 309,
+    "name": "CA Boca Juniors",
+    "lat": -34.6037,
+    "lng": -58.3816,
+    "country": "Argentina"
+  },
+  {
+    "rank": 310,
+    "name": "Seton Hall Pirates",
+    "lat": 40.7429,
+    "lng": -74.2473,
+    "country": "USA"
+  },
+  {
+    "rank": 311,
+    "name": "Pepperdine Waves",
+    "lat": 34.0359,
+    "lng": -118.7108,
+    "country": "USA"
+  },
+  {
+    "rank": 312,
+    "name": "San Francisco Dons",
+    "lat": 37.7749,
+    "lng": -122.4194,
+    "country": "USA"
+  },
+  {
+    "rank": 313,
+    "name": "Nevada Wolf Pack",
+    "lat": 39.5296,
+    "lng": -119.8138,
+    "country": "USA"
+  },
+  {
+    "rank": 314,
+    "name": "Lipscomb Bisons",
+    "lat": 36.1627,
+    "lng": -86.7816,
+    "country": "USA"
+  },
+  {
+    "rank": 315,
+    "name": "UAB Blazers",
+    "lat": 33.5186,
+    "lng": -86.8104,
+    "country": "USA"
+  },
+  {
+    "rank": 316,
+    "name": "Yoast United",
+    "lat": 52.189411,
+    "lng": 4.461778,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 317,
+    "name": "New Mexico Lobos",
+    "lat": 35.0844,
+    "lng": -106.6504,
+    "country": "USA"
+  },
+  {
+    "rank": 318,
+    "name": "CB Almansa con Afanion",
+    "lat": 38.8725,
+    "lng": -1.0969,
+    "country": "Spain"
+  },
+  {
+    "rank": 319,
+    "name": "C.R. Flamengo",
+    "lat": -22.9068,
+    "lng": -43.1729,
+    "country": "Brazil"
+  },
+  {
+    "rank": 320,
+    "name": "Apollo Amsterdam",
+    "lat": 52.3676,
+    "lng": 4.9041,
+    "country": "Netherlands"
+  },
+  {
+    "rank": 321,
+    "name": "CA Riachuelo",
+    "lat": -34.6358,
+    "lng": -58.4916,
+    "country": "Argentina"
+  },
+  {
+    "rank": 322,
+    "name": "B\u00e9liers de Kemper",
+    "lat": 48.0181,
+    "lng": -4.0976,
+    "country": "France"
+  },
+  {
+    "rank": 323,
+    "name": "UNLV Rebels",
+    "lat": 36.1699,
+    "lng": -115.1398,
+    "country": "USA"
+  },
+  {
+    "rank": 324,
+    "name": "Richmond Spiders",
+    "lat": 37.569211,
+    "lng": -77.449778,
+    "country": "USA"
+  },
+  {
+    "rank": 325,
+    "name": "Vaqueros de Bayam\u00f3n",
+    "lat": 18.3965,
+    "lng": -66.1615,
+    "country": "Puerto Rico"
+  },
+  {
+    "rank": 326,
+    "name": "Santa Clara Broncos",
+    "lat": 37.3541,
+    "lng": -121.9552,
+    "country": "USA"
+  },
+  {
+    "rank": 327,
+    "name": "Melilla Sport Capital",
+    "lat": 35.2919,
+    "lng": -2.9381,
+    "country": "Spain"
+  },
+  {
+    "rank": 328,
+    "name": "KK SC Derby",
+    "lat": 44.7666,
+    "lng": 20.4489,
+    "country": "Serbia"
+  },
+  {
+    "rank": 329,
+    "name": "AO Agriniou",
+    "lat": 38.6211,
+    "lng": 21.4082,
+    "country": "Greece"
+  },
+  {
+    "rank": 330,
+    "name": "Saint-Vallier BD",
+    "lat": 45.183,
+    "lng": 4.8167,
+    "country": "France"
+  },
+  {
+    "rank": 331,
+    "name": "Gimnasia y Esgrima de Comodoro",
+    "lat": -45.8667,
+    "lng": -67.5,
+    "country": "Argentina"
+  },
+  {
+    "rank": 332,
+    "name": "Davidson Wildcats",
+    "lat": 35.5018,
+    "lng": -80.8414,
+    "country": "USA"
+  },
+  {
+    "rank": 333,
+    "name": "Iraklis Thessaloniki",
+    "lat": 40.669611,
+    "lng": 22.910978,
+    "country": "Greece"
+  },
+  {
+    "rank": 334,
+    "name": "Utah State Aggies",
+    "lat": 41.737,
+    "lng": -111.8338,
+    "country": "USA"
+  },
+  {
+    "rank": 335,
+    "name": "Western Kentucky Hilltoppers",
+    "lat": 36.9954,
+    "lng": -86.4669,
+    "country": "USA"
+  },
+  {
+    "rank": 336,
+    "name": "Champagne Ch\u00e2lons-Reims Basket",
+    "lat": 49.2583,
+    "lng": 4.0317,
+    "country": "France"
+  },
+  {
+    "rank": 337,
+    "name": "Boise State Broncos",
+    "lat": 43.615,
+    "lng": -116.2023,
+    "country": "USA"
+  },
+  {
+    "rank": 338,
+    "name": "UCF Knights",
+    "lat": 28.567611,
+    "lng": -81.391878,
+    "country": "USA"
+  },
+  {
+    "rank": 339,
+    "name": "South Florida Bulls",
+    "lat": 27.7663,
+    "lng": -82.6404,
+    "country": "USA"
+  },
+  {
+    "rank": 340,
+    "name": "KK Krka",
+    "lat": 45.7597,
+    "lng": 15.1516,
+    "country": "Slovenia"
+  },
+  {
+    "rank": 341,
+    "name": "Liberty Flames",
+    "lat": 37.352,
+    "lng": -79.1728,
+    "country": "USA"
+  },
+  {
+    "rank": 342,
+    "name": "North Alabama Lions",
+    "lat": 34.7304,
+    "lng": -87.6774,
+    "country": "USA"
+  },
+  {
+    "rank": 343,
+    "name": "\u00c9toile Angers Basket",
+    "lat": 47.4784,
+    "lng": -0.5632,
+    "country": "France"
+  },
+  {
+    "rank": 344,
+    "name": "HLA Alicante",
+    "lat": 38.3452,
+    "lng": -0.481,
+    "country": "Spain"
+  },
+  {
+    "rank": 345,
+    "name": "Nantes Basket Hermine",
+    "lat": 47.2184,
+    "lng": -1.5536,
+    "country": "France"
+  },
+  {
+    "rank": 346,
+    "name": "Wichita State Shockers",
+    "lat": 37.6872,
+    "lng": -97.3301,
+    "country": "USA"
+  },
+  {
+    "rank": 347,
+    "name": "Bryant Bulldogs",
+    "lat": 41.7658,
+    "lng": -71.5135,
+    "country": "USA"
+  },
+  {
+    "rank": 348,
+    "name": "Panerythraikos BC",
+    "lat": 37.975611,
+    "lng": 23.629578,
+    "country": "Greece"
+  },
+  {
+    "rank": 349,
+    "name": "TAU Castell\u00f3",
+    "lat": 39.9864,
+    "lng": -0.0513,
+    "country": "Spain"
+  },
+  {
+    "rank": 350,
+    "name": "Ermis Schimatari",
+    "lat": 38.3333,
+    "lng": 23.55,
+    "country": "Greece"
+  },
+  {
+    "rank": 351,
+    "name": "KK Gorica",
+    "lat": 45.9553,
+    "lng": 13.6363,
+    "country": "Slovenia"
+  },
+  {
+    "rank": 352,
+    "name": "Middle Tennessee Blue Raiders",
+    "lat": 35.8456,
+    "lng": -86.3903,
+    "country": "USA"
+  },
+  {
+    "rank": 353,
+    "name": "Eastern Michigan Eagles",
+    "lat": 42.2411,
+    "lng": -83.613,
+    "country": "USA"
+  },
+  {
+    "rank": 354,
+    "name": "Antibes Sharks",
+    "lat": 43.5809,
+    "lng": 7.1251,
+    "country": "France"
+  },
+  {
+    "rank": 355,
+    "name": "North Florida Ospreys",
+    "lat": 30.3322,
+    "lng": -81.6557,
+    "country": "USA"
+  },
+  {
+    "rank": 356,
+    "name": "San Jos\u00e9 State Spartans",
+    "lat": 37.3382,
+    "lng": -121.8863,
+    "country": "USA"
+  },
+  {
+    "rank": 357,
+    "name": "Saint Joseph's Hawks",
+    "lat": 39.982211,
+    "lng": -75.178078,
+    "country": "USA"
+  },
+  {
+    "rank": 358,
+    "name": "Boulazac Basket Dordogne",
+    "lat": 45.1833,
+    "lng": 0.7167,
+    "country": "France"
+  },
+  {
+    "rank": 359,
+    "name": "Duquesne Dukes",
+    "lat": 40.470011,
+    "lng": -80.008778,
+    "country": "USA"
+  },
+  {
+    "rank": 360,
+    "name": "Leyma Coru\u00f1a",
+    "lat": 43.392011000000004,
+    "lng": -8.424278,
+    "country": "Spain"
+  },
+  {
+    "rank": 361,
+    "name": "Toledo Rockets",
+    "lat": 41.6528,
+    "lng": -83.5379,
+    "country": "USA"
+  },
+  {
+    "rank": 362,
+    "name": "George Washington Colonials",
+    "lat": 38.936546,
+    "lng": -77.049511,
+    "country": "USA"
+  },
+  {
+    "rank": 363,
+    "name": "Stetson Hatters",
+    "lat": 29.0536,
+    "lng": -81.3003,
+    "country": "USA"
+  },
+  {
+    "rank": 364,
+    "name": "Central Arkansas Bears",
+    "lat": 35.0926,
+    "lng": -92.4426,
+    "country": "USA"
+  },
+  {
+    "rank": 365,
+    "name": "C.A. Aguada",
+    "lat": -34.8844,
+    "lng": -56.0181,
+    "country": "Uruguay"
+  },
+  {
+    "rank": 366,
+    "name": "Aix-Maurienne Savoie Basket",
+    "lat": 45.5647,
+    "lng": 6.3235,
+    "country": "France"
+  },
+  {
+    "rank": 367,
+    "name": "C\u00e1ceres Patrimonio de la Humanidad",
+    "lat": 39.4753,
+    "lng": -6.3724,
+    "country": "Spain"
+  },
+  {
+    "rank": 368,
+    "name": "Stade Rochelais",
+    "lat": 46.1603,
+    "lng": -1.1511,
+    "country": "France"
+  },
+  {
+    "rank": 369,
+    "name": "Basketball Academie Limburg",
+    "lat": 50.909011,
+    "lng": 5.657378,
+    "country": "Belgium"
+  },
+  {
+    "rank": 370,
+    "name": "Maroussi BC",
+    "lat": 38.05,
+    "lng": 23.8064,
+    "country": "Greece"
+  },
+  {
+    "rank": 371,
+    "name": "KK MZT Skopje Aerodrom ",
+    "lat": 41.9973,
+    "lng": 21.428,
+    "country": "North Macedonia"
+  },
+  {
+    "rank": 372,
+    "name": "George Mason Patriots",
+    "lat": 38.8462,
+    "lng": -77.3063,
+    "country": "USA"
+  },
+  {
+    "rank": 373,
+    "name": "Pacific Tigers",
+    "lat": 37.9816,
+    "lng": -121.3107,
+    "country": "USA"
+  },
+  {
+    "rank": 374,
+    "name": "Medipolis SC Jena",
+    "lat": 50.9278,
+    "lng": 11.5897,
+    "country": "Germany"
+  },
+  {
+    "rank": 375,
+    "name": "Club Regatas Corrientes",
+    "lat": -27.462611,
+    "lng": -58.843378,
+    "country": "Argentina"
+  },
+  {
+    "rank": 376,
+    "name": "St. Bonaventure Bonnies",
+    "lat": 42.0837,
+    "lng": -78.4894,
+    "country": "USA"
+  },
+  {
+    "rank": 377,
+    "name": "Fresno State Bulldogs",
+    "lat": 36.7378,
+    "lng": -119.7871,
+    "country": "USA"
+  },
+  {
+    "rank": 378,
+    "name": "Aias Evosmou",
+    "lat": 40.6667,
+    "lng": 22.95,
+    "country": "Greece"
+  },
+  {
+    "rank": 379,
+    "name": "Valparaiso Beacons",
+    "lat": 41.4789,
+    "lng": -87.0467,
+    "country": "USA"
+  },
+  {
+    "rank": 380,
+    "name": "Kennesaw State Owls",
+    "lat": 34.0234,
+    "lng": -84.5816,
+    "country": "USA"
+  },
+  {
+    "rank": 381,
+    "name": "Loyola Marymount Lions",
+    "lat": 34.0526,
+    "lng": -118.4183,
+    "country": "USA"
+  },
+  {
+    "rank": 382,
+    "name": "Grupo Alega Cantabria CBT",
+    "lat": 43.4623,
+    "lng": -3.81,
+    "country": "Spain"
+  },
+  {
+    "rank": 383,
+    "name": "Detroit Mercy Titans",
+    "lat": 42.360811,
+    "lng": -83.058578,
+    "country": "USA"
+  },
+  {
+    "rank": 384,
+    "name": "UMass Lowell River Hawks",
+    "lat": 42.6334,
+    "lng": -71.3162,
+    "country": "USA"
+  },
+  {
+    "rank": 385,
+    "name": "Fordham Rams",
+    "lat": 40.8448,
+    "lng": -73.8648,
+    "country": "USA"
+  },
+  {
+    "rank": 386,
+    "name": "UMBC Retrievers",
+    "lat": 39.254,
+    "lng": -76.7093,
+    "country": "USA"
+  },
+  {
+    "rank": 387,
+    "name": "Kent State Golden Flashes",
+    "lat": 41.1454,
+    "lng": -81.344,
+    "country": "USA"
+  },
+  {
+    "rank": 388,
+    "name": "CA San Lorenzo",
+    "lat": -34.6692,
+    "lng": -58.5348,
+    "country": "Argentina"
+  },
+  {
+    "rank": 389,
+    "name": "Boston University Terriers",
+    "lat": 42.389411,
+    "lng": -71.071678,
+    "country": "USA"
+  },
+  {
+    "rank": 390,
+    "name": "Ball State Cardinals",
+    "lat": 40.1934,
+    "lng": -85.3887,
+    "country": "USA"
+  },
+  {
+    "rank": 391,
+    "name": "Club Ourense Baloncesto",
+    "lat": 42.337,
+    "lng": -7.8642,
+    "country": "Spain"
+  },
+  {
+    "rank": 392,
+    "name": "La Salle Explorers",
+    "lat": 39.982046000000004,
+    "lng": -75.177811,
+    "country": "USA"
+  },
+  {
+    "rank": 393,
+    "name": "Jacksonville State Gamecocks",
+    "lat": 33.8205,
+    "lng": -85.7686,
+    "country": "USA"
+  },
+  {
+    "rank": 394,
+    "name": "Tennessee Tech Golden Eagles",
+    "lat": 36.1614,
+    "lng": -85.4808,
+    "country": "USA"
+  },
+  {
+    "rank": 395,
+    "name": "Joniskio Delikatesas",
+    "lat": 56.2394,
+    "lng": 23.6161,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 396,
+    "name": "Bowling Green Falcons",
+    "lat": 41.3748,
+    "lng": -83.6582,
+    "country": "USA"
+  },
+  {
+    "rank": 397,
+    "name": "CD Colegio Los Leones",
+    "lat": -33.4489,
+    "lng": -70.6693,
+    "country": "Chile"
+  },
+  {
+    "rank": 398,
+    "name": "Rhode Island Rams",
+    "lat": 41.853411,
+    "lng": -71.425578,
+    "country": "USA"
+  },
+  {
+    "rank": 399,
+    "name": "Missouri State Bears",
+    "lat": 37.209,
+    "lng": -93.2923,
+    "country": "USA"
+  },
+  {
+    "rank": 400,
+    "name": "Southern Illinois Salukis",
+    "lat": 37.7172,
+    "lng": -89.2167,
+    "country": "USA"
+  },
+  {
+    "rank": 401,
+    "name": "ALM \u00c9vreux Basket",
+    "lat": 49.0244,
+    "lng": 1.1508,
+    "country": "France"
+  },
+  {
+    "rank": 402,
+    "name": "AO Tritonas",
+    "lat": 37.975446,
+    "lng": 23.629410999999998,
+    "country": "Greece"
+  },
+  {
+    "rank": 403,
+    "name": "Northern Kentucky Norse",
+    "lat": 39.0458,
+    "lng": -84.512,
+    "country": "USA"
+  },
+  {
+    "rank": 404,
+    "name": "CA Pe\u00f1arol",
+    "lat": -34.877811,
+    "lng": -56.031078,
+    "country": "Uruguay"
+  },
+  {
+    "rank": 405,
+    "name": "Psychiko BC",
+    "lat": 38.0019,
+    "lng": 23.755399999999998,
+    "country": "Greece"
+  },
+  {
+    "rank": 406,
+    "name": "Marshall Thundering Herd",
+    "lat": 38.4231,
+    "lng": -82.4387,
+    "country": "USA"
+  },
+  {
+    "rank": 407,
+    "name": "Drake Bulldogs",
+    "lat": 41.5868,
+    "lng": -93.625,
+    "country": "USA"
+  },
+  {
+    "rank": 408,
+    "name": "Maine Black Bears",
+    "lat": 44.9778,
+    "lng": -68.8017,
+    "country": "USA"
+  },
+  {
+    "rank": 409,
+    "name": "GS Eleftheroupoli Kavalas",
+    "lat": 41.0556,
+    "lng": 24.4056,
+    "country": "Greece"
+  },
+  {
+    "rank": 410,
+    "name": "Morehead State Eagles",
+    "lat": 38.1867,
+    "lng": -83.4327,
+    "country": "USA"
+  },
+  {
+    "rank": 411,
+    "name": "Illinois State Redbirds",
+    "lat": 40.5142,
+    "lng": -88.9906,
+    "country": "USA"
+  },
+  {
+    "rank": 412,
+    "name": "Eastern Kentucky Colonels",
+    "lat": 37.7347,
+    "lng": -84.2733,
+    "country": "USA"
+  },
+  {
+    "rank": 413,
+    "name": "Hofstra Pride",
+    "lat": 40.7283,
+    "lng": -73.5985,
+    "country": "USA"
+  },
+  {
+    "rank": 414,
+    "name": "Ober\u00e1 Tenis Club",
+    "lat": -27.4864,
+    "lng": -55.1192,
+    "country": "Argentina"
+  },
+  {
+    "rank": 415,
+    "name": "Belmont Bruins",
+    "lat": 36.174011,
+    "lng": -86.815378,
+    "country": "USA"
+  },
+  {
+    "rank": 416,
+    "name": "Wright State Raiders",
+    "lat": 39.788211000000004,
+    "lng": -84.204778,
+    "country": "USA"
+  },
+  {
+    "rank": 417,
+    "name": "Northern Iowa Panthers",
+    "lat": 42.5078,
+    "lng": -92.4453,
+    "country": "USA"
+  },
+  {
+    "rank": 418,
+    "name": "UEMC Real Valladolid",
+    "lat": 41.6528,
+    "lng": -4.7245,
+    "country": "Spain"
+  },
+  {
+    "rank": 419,
+    "name": "BC Vytis",
+    "lat": 54.927411,
+    "lng": 23.881477999999998,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 420,
+    "name": "Oakland Golden Grizzlies",
+    "lat": 42.6334,
+    "lng": -83.2148,
+    "country": "USA"
+  },
+  {
+    "rank": 421,
+    "name": "UT Martin Skyhawks",
+    "lat": 36.2896,
+    "lng": -88.8506,
+    "country": "USA"
+  },
+  {
+    "rank": 422,
+    "name": "Ohio Bobcats",
+    "lat": 39.3292,
+    "lng": -82.1013,
+    "country": "USA"
+  },
+  {
+    "rank": 423,
+    "name": "Air Force Falcons",
+    "lat": 38.9972,
+    "lng": -104.8586,
+    "country": "USA"
+  },
+  {
+    "rank": 424,
+    "name": "KK Helios Suns",
+    "lat": 46.2396,
+    "lng": 15.2677,
+    "country": "Slovenia"
+  },
+  {
+    "rank": 425,
+    "name": "Northern Illinois Huskies",
+    "lat": 41.9278,
+    "lng": -88.6479,
+    "country": "USA"
+  },
+  {
+    "rank": 426,
+    "name": "Seattle U Redhawks",
+    "lat": 47.635611,
+    "lng": -122.344978,
+    "country": "USA"
+  },
+  {
+    "rank": 427,
+    "name": "Lille M\u00e9tropole Basket",
+    "lat": 50.6292,
+    "lng": 3.0573,
+    "country": "France"
+  },
+  {
+    "rank": 428,
+    "name": "Club Comunicaciones",
+    "lat": -34.597011,
+    "lng": -58.394378,
+    "country": "Argentina"
+  },
+  {
+    "rank": 429,
+    "name": "NE Megaridas",
+    "lat": 38.0,
+    "lng": 23.0833,
+    "country": "Greece"
+  },
+  {
+    "rank": 430,
+    "name": "Bradley Braves",
+    "lat": 40.6936,
+    "lng": -89.5889,
+    "country": "USA"
+  },
+  {
+    "rank": 431,
+    "name": "Evansville Purple Aces",
+    "lat": 37.9716,
+    "lng": -87.5711,
+    "country": "USA"
+  },
+  {
+    "rank": 432,
+    "name": "Indiana State Sycamores",
+    "lat": 39.4667,
+    "lng": -87.4139,
+    "country": "USA"
+  },
+  {
+    "rank": 433,
+    "name": "Purdue Fort Wayne Mastodons",
+    "lat": 41.0793,
+    "lng": -85.1394,
+    "country": "USA"
+  },
+  {
+    "rank": 434,
+    "name": "UMass Minutemen",
+    "lat": 42.3868,
+    "lng": -72.5301,
+    "country": "USA"
+  },
+  {
+    "rank": 435,
+    "name": "CD Universidad de Concepci\u00f3n",
+    "lat": -36.8201,
+    "lng": -73.0444,
+    "country": "Chile"
+  },
+  {
+    "rank": 436,
+    "name": "Old Dominion Monarchs",
+    "lat": 36.8468,
+    "lng": -76.2852,
+    "country": "USA"
+  },
+  {
+    "rank": 437,
+    "name": "Brown Bears",
+    "lat": 41.853546,
+    "lng": -71.425411,
+    "country": "USA"
+  },
+  {
+    "rank": 438,
+    "name": "Club Ferro Carril Oeste",
+    "lat": -34.5833,
+    "lng": -58.5167,
+    "country": "Argentina"
+  },
+  {
+    "rank": 439,
+    "name": "New Hampshire Wildcats",
+    "lat": 43.2081,
+    "lng": -71.5376,
+    "country": "USA"
+  },
+  {
+    "rank": 440,
+    "name": "Loyola Chicago Ramblers",
+    "lat": 41.907546,
+    "lng": -87.642411,
+    "country": "USA"
+  },
+  {
+    "rank": 441,
+    "name": "Youngstown State Penguins",
+    "lat": 41.104,
+    "lng": -80.6495,
+    "country": "USA"
+  },
+  {
+    "rank": 442,
+    "name": "Murray State Racers",
+    "lat": 36.6103,
+    "lng": -88.3148,
+    "country": "USA"
+  },
+  {
+    "rank": 443,
+    "name": "BC Telsiai",
+    "lat": 55.9811,
+    "lng": 22.2475,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 444,
+    "name": "NEA Filadelfeia",
+    "lat": 37.975281,
+    "lng": 23.629244,
+    "country": "Greece"
+  },
+  {
+    "rank": 445,
+    "name": "CSU Bakersfield Roadrunners",
+    "lat": 35.3733,
+    "lng": -119.0187,
+    "country": "USA"
+  },
+  {
+    "rank": 446,
+    "name": "Tennessee State Tigers",
+    "lat": 36.192011,
+    "lng": -86.794278,
+    "country": "USA"
+  },
+  {
+    "rank": 447,
+    "name": "UIC Flames",
+    "lat": 41.907681000000004,
+    "lng": -87.642244,
+    "country": "USA"
+  },
+  {
+    "rank": 448,
+    "name": "BC Zalgiris Kaunas 2",
+    "lat": 54.925811,
+    "lng": 23.890677999999998,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 449,
+    "name": "HKK Siroki",
+    "lat": 43.3833,
+    "lng": 17.5833,
+    "country": "Bosnia and Herzegovina"
+  },
+  {
+    "rank": 450,
+    "name": "Chattanooga Mocs",
+    "lat": 35.0456,
+    "lng": -85.3097,
+    "country": "USA"
+  },
+  {
+    "rank": 451,
+    "name": "BC Silute",
+    "lat": 55.35,
+    "lng": 21.4833,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 452,
+    "name": "Trikoupis Messolonghi BC",
+    "lat": 38.3667,
+    "lng": 21.4306,
+    "country": "Greece"
+  },
+  {
+    "rank": 453,
+    "name": "Saint-Chamond BVG",
+    "lat": 45.4747,
+    "lng": 4.5139,
+    "country": "France"
+  },
+  {
+    "rank": 454,
+    "name": "New Mexico State Aggies",
+    "lat": 32.2798,
+    "lng": -106.7637,
+    "country": "USA"
+  },
+  {
+    "rank": 455,
+    "name": "Denain Voltaire",
+    "lat": 50.3258,
+    "lng": 3.3947,
+    "country": "France"
+  },
+  {
+    "rank": 456,
+    "name": "Austin Peay Governors",
+    "lat": 36.527,
+    "lng": -87.3595,
+    "country": "USA"
+  },
+  {
+    "rank": 457,
+    "name": "Western Michigan Broncos",
+    "lat": 42.2634,
+    "lng": -85.6681,
+    "country": "USA"
+  },
+  {
+    "rank": 458,
+    "name": "Central Michigan Chippewas",
+    "lat": 43.5956,
+    "lng": -84.7836,
+    "country": "USA"
+  },
+  {
+    "rank": 459,
+    "name": "Oral Roberts Golden Eagles",
+    "lat": 36.183211,
+    "lng": -96.005578,
+    "country": "USA"
+  },
+  {
+    "rank": 460,
+    "name": "JA Vichy-Clermont",
+    "lat": 46.1244,
+    "lng": 3.4247,
+    "country": "France"
+  },
+  {
+    "rank": 461,
+    "name": "Albany Great Danes",
+    "lat": 42.6803,
+    "lng": -73.837,
+    "country": "USA"
+  },
+  {
+    "rank": 462,
+    "name": "Buffalo Bulls",
+    "lat": 42.8864,
+    "lng": -78.8784,
+    "country": "USA"
+  },
+  {
+    "rank": 463,
+    "name": "Tigers T\u00fcbingen",
+    "lat": 48.5216,
+    "lng": 9.0576,
+    "country": "Germany"
+  },
+  {
+    "rank": 464,
+    "name": "Obras Basket",
+    "lat": -34.596846,
+    "lng": -58.394211,
+    "country": "Argentina"
+  },
+  {
+    "rank": 465,
+    "name": "Mazeikiai M Basket",
+    "lat": 56.3139,
+    "lng": 22.3311,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 466,
+    "name": "Miami (OH) Redhawks",
+    "lat": 39.5092,
+    "lng": -84.7323,
+    "country": "USA"
+  },
+  {
+    "rank": 467,
+    "name": "Stephen F. Austin Lumberjacks",
+    "lat": 31.6018,
+    "lng": -94.6549,
+    "country": "USA"
+  },
+  {
+    "rank": 468,
+    "name": "Siena Saints",
+    "lat": 42.7191,
+    "lng": -73.7562,
+    "country": "USA"
+  },
+  {
+    "rank": 469,
+    "name": "Green Bay Phoenix",
+    "lat": 44.5133,
+    "lng": -87.9073,
+    "country": "USA"
+  },
+  {
+    "rank": 470,
+    "name": "KK Sencur",
+    "lat": 46.2396,
+    "lng": 14.4167,
+    "country": "Slovenia"
+  },
+  {
+    "rank": 471,
+    "name": "Southern Utah Thunderbirds",
+    "lat": 37.6781,
+    "lng": -113.0619,
+    "country": "USA"
+  },
+  {
+    "rank": 472,
+    "name": "UTSA Roadrunners",
+    "lat": 29.453611000000002,
+    "lng": -98.506378,
+    "country": "USA"
+  },
+  {
+    "rank": 473,
+    "name": "Milwaukee Panthers",
+    "lat": 43.068346,
+    "lng": -87.919211,
+    "country": "USA"
+  },
+  {
+    "rank": 474,
+    "name": "Louisiana Tech Bulldogs",
+    "lat": 32.5252,
+    "lng": -92.6379,
+    "country": "USA"
+  },
+  {
+    "rank": 475,
+    "name": "NJIT Highlanders",
+    "lat": 40.7362,
+    "lng": -74.176,
+    "country": "USA"
+  },
+  {
+    "rank": 476,
+    "name": "Robert Morris Colonials",
+    "lat": 40.6218,
+    "lng": -80.0896,
+    "country": "USA"
+  },
+  {
+    "rank": 477,
+    "name": "Koroivos BC",
+    "lat": 40.6167,
+    "lng": 22.0167,
+    "country": "Greece"
+  },
+  {
+    "rank": 478,
+    "name": "Club Ciclista Ol\u00edmpico",
+    "lat": -27.462446,
+    "lng": -58.843211000000004,
+    "country": "Argentina"
+  },
+  {
+    "rank": 479,
+    "name": "SIU Edwardsville Cougars",
+    "lat": 38.8111,
+    "lng": -90.1535,
+    "country": "USA"
+  },
+  {
+    "rank": 480,
+    "name": "ABA Ancud",
+    "lat": -41.8697,
+    "lng": -73.8203,
+    "country": "Chile"
+  },
+  {
+    "rank": 481,
+    "name": "Phoenix Hagen",
+    "lat": 51.3617,
+    "lng": 7.4631,
+    "country": "Germany"
+  },
+  {
+    "rank": 482,
+    "name": "Southeast Missouri State Redhawks",
+    "lat": 37.3092,
+    "lng": -89.5586,
+    "country": "USA"
+  },
+  {
+    "rank": 483,
+    "name": "Colgate Raiders",
+    "lat": 42.8209,
+    "lng": -75.5379,
+    "country": "USA"
+  },
+  {
+    "rank": 484,
+    "name": "Army Black Knights",
+    "lat": 41.3915,
+    "lng": -73.9626,
+    "country": "USA"
+  },
+  {
+    "rank": 485,
+    "name": "Bayer Giants Leverkusen",
+    "lat": 51.0315,
+    "lng": 6.9842,
+    "country": "Germany"
+  },
+  {
+    "rank": 486,
+    "name": "Northeastern Huskies",
+    "lat": 42.389546,
+    "lng": -71.071511,
+    "country": "USA"
+  },
+  {
+    "rank": 487,
+    "name": "OKK Spars",
+    "lat": 44.7866,
+    "lng": 17.2686,
+    "country": "Bosnia and Herzegovina"
+  },
+  {
+    "rank": 488,
+    "name": "Loyola (MD) Greyhounds",
+    "lat": 39.3498,
+    "lng": -76.5018,
+    "country": "USA"
+  },
+  {
+    "rank": 489,
+    "name": "UTEP Miners",
+    "lat": 31.7619,
+    "lng": -106.485,
+    "country": "USA"
+  },
+  {
+    "rank": 490,
+    "name": "Denver Pioneers",
+    "lat": 39.768611,
+    "lng": -105.003078,
+    "country": "USA"
+  },
+  {
+    "rank": 491,
+    "name": "KK Pelister-Bitola",
+    "lat": 41.0361,
+    "lng": 21.3344,
+    "country": "North Macedonia"
+  },
+  {
+    "rank": 492,
+    "name": "Charlotte 49ers",
+    "lat": 35.256411,
+    "lng": -80.85597800000001,
+    "country": "USA"
+  },
+  {
+    "rank": 493,
+    "name": "Bueno Arenas Albacete Basket",
+    "lat": 39.0,
+    "lng": -1.8667,
+    "country": "Spain"
+  },
+  {
+    "rank": 494,
+    "name": "Harvard Crimson",
+    "lat": 42.377,
+    "lng": -71.1167,
+    "country": "USA"
+  },
+  {
+    "rank": 495,
+    "name": "Akron Zips",
+    "lat": 41.0814,
+    "lng": -81.519,
+    "country": "USA"
+  },
+  {
+    "rank": 496,
+    "name": "Eastern Illinois Panthers",
+    "lat": 39.6403,
+    "lng": -88.0781,
+    "country": "USA"
+  },
+  {
+    "rank": 497,
+    "name": "Vermont Catamounts",
+    "lat": 44.4759,
+    "lng": -73.1978,
+    "country": "USA"
+  },
+  {
+    "rank": 498,
+    "name": "Marist Red Foxes",
+    "lat": 41.727,
+    "lng": -73.9301,
+    "country": "USA"
+  },
+  {
+    "rank": 499,
+    "name": "RASTA Vechta",
+    "lat": 52.7294,
+    "lng": 8.2844,
+    "country": "Germany"
+  },
+  {
+    "rank": 500,
+    "name": "Dartmouth Big Green",
+    "lat": 43.6044,
+    "lng": -72.2887,
+    "country": "USA"
+  },
+  {
+    "rank": 501,
+    "name": "Lafayette Leopards",
+    "lat": 40.7009,
+    "lng": -75.2071,
+    "country": "USA"
+  },
+  {
+    "rank": 502,
+    "name": "Florida International Panthers",
+    "lat": 25.790846000000002,
+    "lng": -80.204511,
+    "country": "USA"
+  },
+  {
+    "rank": 503,
+    "name": "Rice Owls",
+    "lat": 29.790246,
+    "lng": -95.382711,
+    "country": "USA"
+  },
+  {
+    "rank": 504,
+    "name": "Marijampoles Suduva-Mantinga",
+    "lat": 54.5597,
+    "lng": 23.3544,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 505,
+    "name": "CD Valdivia",
+    "lat": -39.8142,
+    "lng": -73.2459,
+    "country": "Chile"
+  },
+  {
+    "rank": 506,
+    "name": "Vilkaviskio Perlas",
+    "lat": 54.6514,
+    "lng": 23.0333,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 507,
+    "name": "KK Borac WWIN",
+    "lat": 44.224611,
+    "lng": 17.869978,
+    "country": "Bosnia and Herzegovina"
+  },
+  {
+    "rank": 508,
+    "name": "Florida Atlantic Owls",
+    "lat": 26.3683,
+    "lng": -80.1289,
+    "country": "USA"
+  },
+  {
+    "rank": 509,
+    "name": "Cornell Big Red",
+    "lat": 42.4534,
+    "lng": -76.4735,
+    "country": "USA"
+  },
+  {
+    "rank": 510,
+    "name": "Cleveland State Vikings",
+    "lat": 41.528611,
+    "lng": -81.707178,
+    "country": "USA"
+  },
+  {
+    "rank": 511,
+    "name": "Southern Miss Golden Eagles",
+    "lat": 31.3207,
+    "lng": -89.3369,
+    "country": "USA"
+  },
+  {
+    "rank": 512,
+    "name": "Bucknell Bison",
+    "lat": 40.9548,
+    "lng": -76.8839,
+    "country": "USA"
+  },
+  {
+    "rank": 513,
+    "name": "KK Sutjeska",
+    "lat": 42.4304,
+    "lng": 18.7681,
+    "country": "Montenegro"
+  },
+  {
+    "rank": 514,
+    "name": "Club Bigu\u00e1",
+    "lat": -34.877646,
+    "lng": -56.030911,
+    "country": "Uruguay"
+  },
+  {
+    "rank": 515,
+    "name": "Atl\u00e9tico Puerto Varas",
+    "lat": -41.3194,
+    "lng": -72.9833,
+    "country": "Chile"
+  },
+  {
+    "rank": 516,
+    "name": "UC San Diego Tritons",
+    "lat": 32.8801,
+    "lng": -117.234,
+    "country": "USA"
+  },
+  {
+    "rank": 517,
+    "name": "PS Karlsruhe Lions",
+    "lat": 49.0069,
+    "lng": 8.4037,
+    "country": "Germany"
+  },
+  {
+    "rank": 518,
+    "name": "American University Eagles",
+    "lat": 38.936681,
+    "lng": -77.049444,
+    "country": "USA"
+  },
+  {
+    "rank": 519,
+    "name": "Sam Houston Bearkats",
+    "lat": 30.7144,
+    "lng": -95.5547,
+    "country": "USA"
+  },
+  {
+    "rank": 520,
+    "name": "High Point Panthers",
+    "lat": 35.9557,
+    "lng": -80.0053,
+    "country": "USA"
+  },
+  {
+    "rank": 521,
+    "name": "Utah Tech Trailblazers",
+    "lat": 37.1041,
+    "lng": -113.5841,
+    "country": "USA"
+  },
+  {
+    "rank": 522,
+    "name": "Utah Valley Wolverines",
+    "lat": 40.2732,
+    "lng": -111.7153,
+    "country": "USA"
+  },
+  {
+    "rank": 523,
+    "name": "AD Atenas",
+    "lat": -34.4611,
+    "lng": -58.7069,
+    "country": "Argentina"
+  },
+  {
+    "rank": 524,
+    "name": "CA Argentino",
+    "lat": -28.4697,
+    "lng": -65.7795,
+    "country": "Argentina"
+  },
+  {
+    "rank": 525,
+    "name": "Towson Tigers",
+    "lat": 39.3954,
+    "lng": -76.6103,
+    "country": "USA"
+  },
+  {
+    "rank": 526,
+    "name": "Tarleton Texans",
+    "lat": 32.2343,
+    "lng": -98.2001,
+    "country": "USA"
+  },
+  {
+    "rank": 527,
+    "name": "JobStairs Giessen 46ers",
+    "lat": 50.5838,
+    "lng": 8.6742,
+    "country": "Germany"
+  },
+  {
+    "rank": 528,
+    "name": "VfL Kirchheim Knights",
+    "lat": 48.6528,
+    "lng": 9.4394,
+    "country": "Germany"
+  },
+  {
+    "rank": 529,
+    "name": "Palangos Kursiai",
+    "lat": 55.9167,
+    "lng": 21.0667,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 530,
+    "name": "St. Thomas - Minnesota Tommies",
+    "lat": 45.003946,
+    "lng": -93.278611,
+    "country": "USA"
+  },
+  {
+    "rank": 531,
+    "name": "KK Podgorica",
+    "lat": 42.459811,
+    "lng": 19.224178,
+    "country": "Montenegro"
+  },
+  {
+    "rank": 532,
+    "name": "Monmouth Hawks",
+    "lat": 40.2677,
+    "lng": -74.0059,
+    "country": "USA"
+  },
+  {
+    "rank": 533,
+    "name": "Bellarmine Knights",
+    "lat": 38.282011000000004,
+    "lng": -85.771378,
+    "country": "USA"
+  },
+  {
+    "rank": 534,
+    "name": "Western Illinois Leathernecks",
+    "lat": 40.4653,
+    "lng": -90.6712,
+    "country": "USA"
+  },
+  {
+    "rank": 535,
+    "name": "Holy Cross Crusaders",
+    "lat": 42.2619,
+    "lng": -71.8063,
+    "country": "USA"
+  },
+  {
+    "rank": 536,
+    "name": "California Baptist Lancers",
+    "lat": 33.9425,
+    "lng": -117.3617,
+    "country": "USA"
+  },
+  {
+    "rank": 537,
+    "name": "Saint-Quentin Basketball",
+    "lat": 49.8467,
+    "lng": 3.2878,
+    "country": "France"
+  },
+  {
+    "rank": 538,
+    "name": "Alimerka Oviedo Baloncesto",
+    "lat": 43.3614,
+    "lng": -5.8593,
+    "country": "Spain"
+  },
+  {
+    "rank": 539,
+    "name": "Wiha Panthers Schwenningen",
+    "lat": 48.0667,
+    "lng": 8.5333,
+    "country": "Germany"
+  },
+  {
+    "rank": 540,
+    "name": "Columbia Lions",
+    "lat": 40.8075,
+    "lng": -73.9626,
+    "country": "USA"
+  },
+  {
+    "rank": 541,
+    "name": "Merrimack Warriors",
+    "lat": 42.662811,
+    "lng": -71.328978,
+    "country": "USA"
+  },
+  {
+    "rank": 542,
+    "name": "UNC Wilmington Seahawks",
+    "lat": 34.2257,
+    "lng": -77.8868,
+    "country": "USA"
+  },
+  {
+    "rank": 543,
+    "name": "KK Zlatibor",
+    "lat": 43.7333,
+    "lng": 19.7167,
+    "country": "Serbia"
+  },
+  {
+    "rank": 544,
+    "name": "IUPUI Jaguars",
+    "lat": 39.797646,
+    "lng": -86.170811,
+    "country": "USA"
+  },
+  {
+    "rank": 545,
+    "name": "Lehigh Mountain Hawks",
+    "lat": 40.6259,
+    "lng": -75.3784,
+    "country": "USA"
+  },
+  {
+    "rank": 546,
+    "name": "N\u00fcrnberg Falcons BC",
+    "lat": 49.4521,
+    "lng": 11.0767,
+    "country": "Germany"
+  },
+  {
+    "rank": 547,
+    "name": "KK Atletas",
+    "lat": 54.715946,
+    "lng": 25.246610999999998,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 548,
+    "name": "Drexel Dragons",
+    "lat": 39.981881,
+    "lng": -75.177744,
+    "country": "USA"
+  },
+  {
+    "rank": 549,
+    "name": "Kretingos Kretinga",
+    "lat": 55.8833,
+    "lng": 21.25,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 550,
+    "name": "Iona Gaels",
+    "lat": 40.8776,
+    "lng": -73.837,
+    "country": "USA"
+  },
+  {
+    "rank": 551,
+    "name": "Eisb\u00e4ren Bremerhaven",
+    "lat": 53.5395,
+    "lng": 8.5809,
+    "country": "Germany"
+  },
+  {
+    "rank": 552,
+    "name": "Sesi Franca",
+    "lat": -20.5386,
+    "lng": -47.4008,
+    "country": "Brazil"
+  },
+  {
+    "rank": 553,
+    "name": "North Texas Mean Green",
+    "lat": 33.2148,
+    "lng": -97.1331,
+    "country": "USA"
+  },
+  {
+    "rank": 554,
+    "name": "Abilene Christian Wildcats",
+    "lat": 32.4487,
+    "lng": -99.7331,
+    "country": "USA"
+  },
+  {
+    "rank": 555,
+    "name": "ART Giants D\u00fcsseldorf",
+    "lat": 51.2277,
+    "lng": 6.7735,
+    "country": "Germany"
+  },
+  {
+    "rank": 556,
+    "name": "Jacksonville Dolphins",
+    "lat": 30.361611,
+    "lng": -81.668578,
+    "country": "USA"
+  },
+  {
+    "rank": 557,
+    "name": "Eastern Washington Eagles",
+    "lat": 47.4913,
+    "lng": -117.5847,
+    "country": "USA"
+  },
+  {
+    "rank": 558,
+    "name": "Artland Dragons",
+    "lat": 52.7744,
+    "lng": 7.9719,
+    "country": "Germany"
+  },
+  {
+    "rank": 559,
+    "name": "Canisius Golden Griffins",
+    "lat": 42.915811,
+    "lng": -78.891178,
+    "country": "USA"
+  },
+  {
+    "rank": 560,
+    "name": "Manhattan Jaspers",
+    "lat": 40.8896,
+    "lng": -73.9017,
+    "country": "USA"
+  },
+  {
+    "rank": 561,
+    "name": "Weber State Wildcats",
+    "lat": 41.223,
+    "lng": -111.9738,
+    "country": "USA"
+  },
+  {
+    "rank": 562,
+    "name": "VfL SparkassenStars Bochum",
+    "lat": 51.4818,
+    "lng": 7.2162,
+    "country": "Germany"
+  },
+  {
+    "rank": 563,
+    "name": "UT Rio Grande Valley Vaqueros",
+    "lat": 26.3009,
+    "lng": -98.167,
+    "country": "USA"
+  },
+  {
+    "rank": 564,
+    "name": "La Uni\u00f3n de Formosa",
+    "lat": -26.1775,
+    "lng": -58.1781,
+    "country": "Argentina"
+  },
+  {
+    "rank": 565,
+    "name": "Navy Midshipmen",
+    "lat": 38.9832,
+    "lng": -76.4951,
+    "country": "USA"
+  },
+  {
+    "rank": 566,
+    "name": "Fairfield Stags",
+    "lat": 41.1579,
+    "lng": -73.2478,
+    "country": "USA"
+  },
+  {
+    "rank": 567,
+    "name": "AO Amyntas",
+    "lat": 40.646011,
+    "lng": 21.981478,
+    "country": "Greece"
+  },
+  {
+    "rank": 568,
+    "name": "Yale Bulldogs",
+    "lat": 41.3163,
+    "lng": -72.9223,
+    "country": "USA"
+  },
+  {
+    "rank": 569,
+    "name": "Quinnipiac Bobcats",
+    "lat": 41.4271,
+    "lng": -72.8944,
+    "country": "USA"
+  },
+  {
+    "rank": 570,
+    "name": "Titanes de Barranquilla",
+    "lat": 10.9639,
+    "lng": -74.7964,
+    "country": "Colombia"
+  },
+  {
+    "rank": 571,
+    "name": "Kavala BC",
+    "lat": 41.084811,
+    "lng": 24.370378,
+    "country": "Greece"
+  },
+  {
+    "rank": 572,
+    "name": "Delaware Blue Hens",
+    "lat": 39.6837,
+    "lng": -75.7497,
+    "country": "USA"
+  },
+  {
+    "rank": 573,
+    "name": "CD Espa\u00f1ol Osorno",
+    "lat": -40.5728,
+    "lng": -73.1322,
+    "country": "Chile"
+  },
+  {
+    "rank": 574,
+    "name": "Sacramento State Hornets",
+    "lat": 38.611011,
+    "lng": -121.507178,
+    "country": "USA"
+  },
+  {
+    "rank": 575,
+    "name": "Saint Peter's Peacocks",
+    "lat": 40.7284,
+    "lng": -74.0776,
+    "country": "USA"
+  },
+  {
+    "rank": 576,
+    "name": "Rider Broncs",
+    "lat": 40.2677,
+    "lng": -74.7429,
+    "country": "USA"
+  },
+  {
+    "rank": 577,
+    "name": "Vilniaus Stekas",
+    "lat": 54.716081,
+    "lng": 25.246444,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 578,
+    "name": "KK Vrijednosnice Osijek",
+    "lat": 45.555,
+    "lng": 18.6955,
+    "country": "Croatia"
+  },
+  {
+    "rank": 579,
+    "name": "Montana Grizzlies",
+    "lat": 46.8787,
+    "lng": -113.9967,
+    "country": "USA"
+  },
+  {
+    "rank": 580,
+    "name": "Kansas City Roos",
+    "lat": 39.0997,
+    "lng": -94.5786,
+    "country": "USA"
+  },
+  {
+    "rank": 581,
+    "name": "Gardner-Webb Runnin' Bulldogs",
+    "lat": 35.2971,
+    "lng": -81.8723,
+    "country": "USA"
+  },
+  {
+    "rank": 582,
+    "name": "Vilniaus Perlas",
+    "lat": 54.716216,
+    "lng": 25.246277,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 583,
+    "name": "William & Mary Tribe",
+    "lat": 37.2707,
+    "lng": -76.7075,
+    "country": "USA"
+  },
+  {
+    "rank": 584,
+    "name": "South Dakota Coyotes",
+    "lat": 42.7918,
+    "lng": -96.9289,
+    "country": "USA"
+  },
+  {
+    "rank": 585,
+    "name": "Espa\u00f1ol de Talca",
+    "lat": -35.4264,
+    "lng": -71.6554,
+    "country": "Chile"
+  },
+  {
+    "rank": 586,
+    "name": "Princeton Tigers",
+    "lat": 40.3573,
+    "lng": -74.6672,
+    "country": "USA"
+  },
+  {
+    "rank": 587,
+    "name": "Cal Poly Mustangs",
+    "lat": 35.305,
+    "lng": -120.6625,
+    "country": "USA"
+  },
+  {
+    "rank": 588,
+    "name": "Chicago State Cougars",
+    "lat": 41.907816000000004,
+    "lng": -87.642077,
+    "country": "USA"
+  },
+  {
+    "rank": 589,
+    "name": "Portland State Vikings",
+    "lat": 45.544746,
+    "lng": -122.691011,
+    "country": "USA"
+  },
+  {
+    "rank": 590,
+    "name": "Long Beach State Beach",
+    "lat": 33.7701,
+    "lng": -118.1937,
+    "country": "USA"
+  },
+  {
+    "rank": 591,
+    "name": "Charleston Cougars",
+    "lat": 32.7765,
+    "lng": -79.9311,
+    "country": "USA"
+  },
+  {
+    "rank": 592,
+    "name": "CA Uni\u00f3n",
+    "lat": -31.391611,
+    "lng": -64.201578,
+    "country": "Argentina"
+  },
+  {
+    "rank": 593,
+    "name": "Grand Canyon Lopes",
+    "lat": 33.5387,
+    "lng": -112.1516,
+    "country": "USA"
+  },
+  {
+    "rank": 594,
+    "name": "Real Estel\u00ed",
+    "lat": 13.0931,
+    "lng": -86.3539,
+    "country": "Nicaragua"
+  },
+  {
+    "rank": 595,
+    "name": "Puente Alto CD",
+    "lat": -33.6167,
+    "lng": -70.5833,
+    "country": "Chile"
+  },
+  {
+    "rank": 596,
+    "name": "CA Platense",
+    "lat": -34.5333,
+    "lng": -58.4667,
+    "country": "Argentina"
+  },
+  {
+    "rank": 597,
+    "name": "KK Sloga",
+    "lat": 44.3092,
+    "lng": 20.9711,
+    "country": "Serbia"
+  },
+  {
+    "rank": 598,
+    "name": "UT Arlington Mavericks",
+    "lat": 32.7303,
+    "lng": -97.1136,
+    "country": "USA"
+  },
+  {
+    "rank": 599,
+    "name": "Pennsylvania Quakers",
+    "lat": 39.981716,
+    "lng": -75.177577,
+    "country": "USA"
+  },
+  {
+    "rank": 600,
+    "name": "Lamar Cardinals",
+    "lat": 30.0627,
+    "lng": -94.1099,
+    "country": "USA"
+  },
+  {
+    "rank": 601,
+    "name": "Campbell Fighting Camels",
+    "lat": 35.5151,
+    "lng": -78.8784,
+    "country": "USA"
+  },
+  {
+    "rank": 602,
+    "name": "Idaho Vandals",
+    "lat": 46.7298,
+    "lng": -117.0094,
+    "country": "USA"
+  },
+  {
+    "rank": 603,
+    "name": "CD Las \u00c1nimas",
+    "lat": -33.441111,
+    "lng": -70.68217800000001,
+    "country": "Chile"
+  },
+  {
+    "rank": 604,
+    "name": "R\u00f6merstrom Gladiators Trier",
+    "lat": 49.7596,
+    "lng": 6.6441,
+    "country": "Germany"
+  },
+  {
+    "rank": 605,
+    "name": "KK TFT Skopje",
+    "lat": 42.003211,
+    "lng": 21.415077999999998,
+    "country": "North Macedonia"
+  },
+  {
+    "rank": 606,
+    "name": "CD Tinguiririca San Fernando",
+    "lat": -34.5833,
+    "lng": -70.9833,
+    "country": "Chile"
+  },
+  {
+    "rank": 607,
+    "name": "Dresden Titans",
+    "lat": 51.0504,
+    "lng": 13.7373,
+    "country": "Germany"
+  },
+  {
+    "rank": 608,
+    "name": "Independiente Oliva",
+    "lat": -34.877480999999996,
+    "lng": -56.030744,
+    "country": "Uruguay"
+  },
+  {
+    "rank": 609,
+    "name": "Idaho State Bengals",
+    "lat": 42.8713,
+    "lng": -112.4455,
+    "country": "USA"
+  },
+  {
+    "rank": 610,
+    "name": "South Carolina Upstate Spartans",
+    "lat": 34.9495,
+    "lng": -81.932,
+    "country": "USA"
+  },
+  {
+    "rank": 611,
+    "name": "CSU Fullerton Titans",
+    "lat": 33.8839,
+    "lng": -117.885,
+    "country": "USA"
+  },
+  {
+    "rank": 612,
+    "name": "Santiago Morning Quilicura",
+    "lat": -33.3667,
+    "lng": -70.7333,
+    "country": "Chile"
+  },
+  {
+    "rank": 613,
+    "name": "UC Riverside Highlanders",
+    "lat": 33.9737,
+    "lng": -117.3281,
+    "country": "USA"
+  },
+  {
+    "rank": 614,
+    "name": "AS Papagou",
+    "lat": 37.9915,
+    "lng": 23.8186,
+    "country": "Greece"
+  },
+  {
+    "rank": 615,
+    "name": "North Dakota State Bison",
+    "lat": 46.8772,
+    "lng": -96.7898,
+    "country": "USA"
+  },
+  {
+    "rank": 616,
+    "name": "North Carolina A&T Aggies",
+    "lat": 36.0726,
+    "lng": -79.792,
+    "country": "USA"
+  },
+  {
+    "rank": 617,
+    "name": "Hampton Pirates",
+    "lat": 37.0271,
+    "lng": -76.3444,
+    "country": "USA"
+  },
+  {
+    "rank": 618,
+    "name": "Mount St. Mary's Mountaineers",
+    "lat": 39.6403,
+    "lng": -77.4286,
+    "country": "USA"
+  },
+  {
+    "rank": 619,
+    "name": "CD Universidad Cat\u00f3lica",
+    "lat": -33.441246,
+    "lng": -70.682011,
+    "country": "Chile"
+  },
+  {
+    "rank": 620,
+    "name": "Juaristi ISB",
+    "lat": 43.270211,
+    "lng": -2.959078,
+    "country": "Spain"
+  },
+  {
+    "rank": 621,
+    "name": "Uni Baskets Paderborn",
+    "lat": 51.7189,
+    "lng": 8.7575,
+    "country": "Germany"
+  },
+  {
+    "rank": 622,
+    "name": "CD Castro",
+    "lat": -42.4833,
+    "lng": -73.7667,
+    "country": "Chile"
+  },
+  {
+    "rank": 623,
+    "name": "Elon Phoenix",
+    "lat": 36.1026,
+    "lng": -79.502,
+    "country": "USA"
+  },
+  {
+    "rank": 624,
+    "name": "Grambling Tigers",
+    "lat": 32.5207,
+    "lng": -92.7179,
+    "country": "USA"
+  },
+  {
+    "rank": 625,
+    "name": "Western Carolina Catamounts",
+    "lat": 35.3099,
+    "lng": -83.1852,
+    "country": "USA"
+  },
+  {
+    "rank": 626,
+    "name": "UC Davis Aggies",
+    "lat": 38.5382,
+    "lng": -121.7617,
+    "country": "USA"
+  },
+  {
+    "rank": 627,
+    "name": "James Madison Dukes",
+    "lat": 38.4349,
+    "lng": -78.8689,
+    "country": "USA"
+  },
+  {
+    "rank": 628,
+    "name": "Niagara Purple Eagles",
+    "lat": 43.1079,
+    "lng": -78.9867,
+    "country": "USA"
+  },
+  {
+    "rank": 629,
+    "name": "Montana State Bobcats",
+    "lat": 45.677,
+    "lng": -111.0429,
+    "country": "USA"
+  },
+  {
+    "rank": 630,
+    "name": "Mogi Basquete",
+    "lat": -23.5232,
+    "lng": -46.2111,
+    "country": "Brazil"
+  },
+  {
+    "rank": 631,
+    "name": "Northern Arizona Lumberjacks",
+    "lat": 35.1983,
+    "lng": -111.6513,
+    "country": "USA"
+  },
+  {
+    "rank": 632,
+    "name": "Coastal Carolina Chanticleers",
+    "lat": 33.7948,
+    "lng": -79.0075,
+    "country": "USA"
+  },
+  {
+    "rank": 633,
+    "name": "Longwood Lancers",
+    "lat": 37.3036,
+    "lng": -78.1625,
+    "country": "USA"
+  },
+  {
+    "rank": 634,
+    "name": "UNC Asheville Bulldogs",
+    "lat": 35.5951,
+    "lng": -82.5515,
+    "country": "USA"
+  },
+  {
+    "rank": 635,
+    "name": "Klaipedos Neptunas-Akvaservis ",
+    "lat": 55.745746000000004,
+    "lng": 21.082110999999998,
+    "country": "Lithuania"
+  },
+  {
+    "rank": 636,
+    "name": "Northern Colorado Bears",
+    "lat": 40.4059,
+    "lng": -104.6757,
+    "country": "USA"
+  },
+  {
+    "rank": 637,
+    "name": "Radford Highlanders",
+    "lat": 37.1318,
+    "lng": -80.5764,
+    "country": "USA"
+  },
+  {
+    "rank": 638,
+    "name": "CSU Northridge Matadors",
+    "lat": 34.2411,
+    "lng": -118.5295,
+    "country": "USA"
+  },
+  {
+    "rank": 639,
+    "name": "CEB Puerto Montt",
+    "lat": -41.4733,
+    "lng": -72.94,
+    "country": "Chile"
+  },
+  {
+    "rank": 640,
+    "name": "Hawaii Rainbow Warriors",
+    "lat": 21.2985,
+    "lng": -157.8165,
+    "country": "USA"
+  },
+  {
+    "rank": 641,
+    "name": "Hartford Hawks",
+    "lat": 41.7658,
+    "lng": -72.6851,
+    "country": "USA"
+  },
+  {
+    "rank": 642,
+    "name": "Louisiana Ragin' Cajuns",
+    "lat": 30.2241,
+    "lng": -92.0198,
+    "country": "USA"
+  },
+  {
+    "rank": 643,
+    "name": "Morgan State Bears",
+    "lat": 39.3434,
+    "lng": -76.5819,
+    "country": "USA"
+  },
+  {
+    "rank": 644,
+    "name": "VMI Keydets",
+    "lat": 37.7873,
+    "lng": -79.4411,
+    "country": "USA"
+  },
+  {
+    "rank": 645,
+    "name": "Presbyterian Blue Hose",
+    "lat": 34.8698,
+    "lng": -81.5101,
+    "country": "USA"
+  },
+  {
+    "rank": 646,
+    "name": "East Tennessee State Buccaneers",
+    "lat": 36.3007,
+    "lng": -82.3709,
+    "country": "USA"
+  },
+  {
+    "rank": 647,
+    "name": "Winthrop Eagles",
+    "lat": 35.0434,
+    "lng": -81.0289,
+    "country": "USA"
+  },
+  {
+    "rank": 648,
+    "name": "AB Temuco",
+    "lat": -38.7359,
+    "lng": -72.5904,
+    "country": "Chile"
+  },
+  {
+    "rank": 649,
+    "name": "UNC Greensboro Spartans",
+    "lat": 36.0906,
+    "lng": -79.8291,
+    "country": "USA"
+  },
+  {
+    "rank": 650,
+    "name": "Binghamton Bearcats",
+    "lat": 42.0862,
+    "lng": -75.9683,
+    "country": "USA"
+  },
+  {
+    "rank": 651,
+    "name": "Omaha Mavericks",
+    "lat": 41.284811,
+    "lng": -95.947378,
+    "country": "USA"
+  },
+  {
+    "rank": 652,
+    "name": "North Dakota Fighting Hawks",
+    "lat": 47.9253,
+    "lng": -97.0329,
+    "country": "USA"
+  },
+  {
+    "rank": 653,
+    "name": "Arkansas State Red Wolves",
+    "lat": 35.8397,
+    "lng": -90.6787,
+    "country": "USA"
+  },
+  {
+    "rank": 654,
+    "name": "Delaware State Hornets",
+    "lat": 39.1573,
+    "lng": -75.5277,
+    "country": "USA"
+  },
+  {
+    "rank": 655,
+    "name": "UC Irvine Anteaters",
+    "lat": 33.6405,
+    "lng": -117.8443,
+    "country": "USA"
+  },
+  {
+    "rank": 656,
+    "name": "Northwestern State Demons",
+    "lat": 31.7619,
+    "lng": -93.0862,
+    "country": "USA"
+  },
+  {
+    "rank": 657,
+    "name": "Coppin State Eagles",
+    "lat": 39.3096,
+    "lng": -76.6728,
+    "country": "USA"
+  },
+  {
+    "rank": 658,
+    "name": "South Dakota State Jackrabbits",
+    "lat": 44.3114,
+    "lng": -96.7969,
+    "country": "USA"
+  },
+  {
+    "rank": 659,
+    "name": "Charleston Southern Buccaneers",
+    "lat": 32.8179,
+    "lng": -80.0018,
+    "country": "USA"
+  },
+  {
+    "rank": 660,
+    "name": "Samford Bulldogs",
+    "lat": 33.4734,
+    "lng": -86.7946,
+    "country": "USA"
+  },
+  {
+    "rank": 661,
+    "name": "Mercer Bears",
+    "lat": 32.8407,
+    "lng": -83.6324,
+    "country": "USA"
+  },
+  {
+    "rank": 662,
+    "name": "The Citadel Bulldogs",
+    "lat": 32.805811,
+    "lng": -79.943978,
+    "country": "USA"
+  },
+  {
+    "rank": 663,
+    "name": "WWU Baskets M\u00fcnster",
+    "lat": 51.9607,
+    "lng": 7.6261,
+    "country": "Germany"
+  },
+  {
+    "rank": 664,
+    "name": "Furman Paladins",
+    "lat": 34.9249,
+    "lng": -82.4375,
+    "country": "USA"
+  },
+  {
+    "rank": 665,
+    "name": "Stony Brook Seawolves",
+    "lat": 40.9176,
+    "lng": -73.1412,
+    "country": "USA"
+  },
+  {
+    "rank": 666,
+    "name": "Norfolk State Spartans",
+    "lat": 36.876011,
+    "lng": -76.297978,
+    "country": "USA"
+  },
+  {
+    "rank": 667,
+    "name": "Wofford Terriers",
+    "lat": 34.9249,
+    "lng": -81.9498,
+    "country": "USA"
+  },
+  {
+    "rank": 668,
+    "name": "Texas A&M-CC Islanders",
+    "lat": 27.8006,
+    "lng": -97.3964,
+    "country": "USA"
+  },
+  {
+    "rank": 669,
+    "name": "Georgia Southern Eagles",
+    "lat": 32.4279,
+    "lng": -81.7832,
+    "country": "USA"
+  },
+  {
+    "rank": 670,
+    "name": "Maryland-Eastern Shore Hawks",
+    "lat": 38.3498,
+    "lng": -75.5018,
+    "country": "USA"
+  },
+  {
+    "rank": 671,
+    "name": "South Carolina State Bulldogs",
+    "lat": 33.4534,
+    "lng": -80.9962,
+    "country": "USA"
+  },
+  {
+    "rank": 672,
+    "name": "UC Santa Barbara Gauchos",
+    "lat": 34.414,
+    "lng": -119.8489,
+    "country": "USA"
+  },
+  {
+    "rank": 673,
+    "name": "Georgia State Panthers",
+    "lat": 33.778411,
+    "lng": -84.400778,
+    "country": "USA"
+  },
+  {
+    "rank": 674,
+    "name": "Howard Bison",
+    "lat": 38.936816,
+    "lng": -77.049277,
+    "country": "USA"
+  },
+  {
+    "rank": 675,
+    "name": "Appalachian State Mountaineers",
+    "lat": 36.2168,
+    "lng": -81.6746,
+    "country": "USA"
+  },
+  {
+    "rank": 676,
+    "name": "Nicholls Colonels",
+    "lat": 29.7013,
+    "lng": -90.4426,
+    "country": "USA"
+  },
+  {
+    "rank": 677,
+    "name": "South Alabama Jaguars",
+    "lat": 30.6954,
+    "lng": -88.0399,
+    "country": "USA"
+  },
+  {
+    "rank": 678,
+    "name": "UL Monroe Warhawks",
+    "lat": 32.5093,
+    "lng": -92.1193,
+    "country": "USA"
+  },
+  {
+    "rank": 679,
+    "name": "Jackson State Tigers",
+    "lat": 32.2988,
+    "lng": -90.1848,
+    "country": "USA"
+  },
+  {
+    "rank": 680,
+    "name": "Troy Trojans",
+    "lat": 31.8088,
+    "lng": -85.9669,
+    "country": "USA"
+  },
+  {
+    "rank": 681,
+    "name": "Texas State Bobcats",
+    "lat": 29.8988,
+    "lng": -97.9391,
+    "country": "USA"
+  },
+  {
+    "rank": 682,
+    "name": "North Carolina Central Eagles",
+    "lat": 35.9778,
+    "lng": -78.8986,
+    "country": "USA"
+  },
+  {
+    "rank": 683,
+    "name": "CB Prat",
+    "lat": 41.7542,
+    "lng": 1.8461,
+    "country": "Spain"
+  },
+  {
+    "rank": 684,
+    "name": "McNeese Cowboys",
+    "lat": 30.2266,
+    "lng": -93.2174,
+    "country": "USA"
+  },
+  {
+    "rank": 685,
+    "name": "New Orleans Privateers",
+    "lat": 29.958246,
+    "lng": -90.106511,
+    "country": "USA"
+  },
+  {
+    "rank": 686,
+    "name": "Wagner Seahawks",
+    "lat": 40.6176,
+    "lng": -74.1424,
+    "country": "USA"
+  },
+  {
+    "rank": 687,
+    "name": "St. Francis (PA) Red Flash",
+    "lat": 40.3423,
+    "lng": -78.9394,
+    "country": "USA"
+  },
+  {
+    "rank": 688,
+    "name": "SE Louisiana Lions",
+    "lat": 30.5209,
+    "lng": -90.4426,
+    "country": "USA"
+  },
+  {
+    "rank": 689,
+    "name": "Long Island University Sharks",
+    "lat": 40.707300000000004,
+    "lng": -73.9682,
+    "country": "USA"
+  },
+  {
+    "rank": 690,
+    "name": "Sacred Heart Pioneers",
+    "lat": 41.186211,
+    "lng": -73.260678,
+    "country": "USA"
+  },
+  {
+    "rank": 691,
+    "name": "Central Connecticut Blue Devils",
+    "lat": 41.6488,
+    "lng": -72.7278,
+    "country": "USA"
+  },
+  {
+    "rank": 692,
+    "name": "St. Francis (BKN) Terriers",
+    "lat": 40.700611,
+    "lng": -73.933078,
+    "country": "USA"
+  },
+  {
+    "rank": 693,
+    "name": "Fairleigh Dickinson Knights",
+    "lat": 40.9584,
+    "lng": -74.1048,
+    "country": "USA"
+  },
+  {
+    "rank": 694,
+    "name": "Little Rock Trojans",
+    "lat": 34.7465,
+    "lng": -92.2896,
+    "country": "USA"
+  },
+  {
+    "rank": 695,
+    "name": "Incarnate Word Cardinals",
+    "lat": 29.453746000000002,
+    "lng": -98.50621100000001,
+    "country": "USA"
+  },
+  {
+    "rank": 696,
+    "name": "Mississippi Valley State Delta Devils",
+    "lat": 33.3515,
+    "lng": -90.307,
+    "country": "USA"
+  },
+  {
+    "rank": 697,
+    "name": "Florida A&M Rattlers",
+    "lat": 30.467611,
+    "lng": -84.29347800000001,
+    "country": "USA"
+  },
+  {
+    "rank": 698,
+    "name": "Southern Jaguars",
+    "lat": 29.958381,
+    "lng": -90.106344,
+    "country": "USA"
+  },
+  {
+    "rank": 699,
+    "name": "Alcorn State Braves",
+    "lat": 31.554,
+    "lng": -91.3918,
+    "country": "USA"
+  },
+  {
+    "rank": 700,
+    "name": "Prairie View A&M Panthers",
+    "lat": 30.0863,
+    "lng": -95.9917,
+    "country": "USA"
+  },
+  {
+    "rank": 701,
+    "name": "Arkansas-Pine Bluff Golden Lions",
+    "lat": 34.2284,
+    "lng": -92.0031,
+    "country": "USA"
+  },
+  {
+    "rank": 702,
+    "name": "Alabama State Hornets",
+    "lat": 32.3668,
+    "lng": -86.2999,
+    "country": "USA"
+  },
+  {
+    "rank": 703,
+    "name": "Houston Baptist Huskies",
+    "lat": 29.790446,
+    "lng": -95.382644,
+    "country": "USA"
+  },
+  {
+    "rank": 704,
+    "name": "Alabama A&M Bulldogs",
+    "lat": 34.7304,
+    "lng": -86.5861,
+    "country": "USA"
+  },
+  {
+    "rank": 705,
+    "name": "Bethune-Cookman Wildcats",
+    "lat": 29.2108,
+    "lng": -81.0228,
+    "country": "USA"
+  },
+  {
+    "rank": 706,
+    "name": "Texas Southern Tigers",
+    "lat": 29.789861000000002,
+    "lng": -95.396028,
+    "country": "USA"
+  }
 ];
