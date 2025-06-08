@@ -4,11 +4,11 @@ An interactive world map that visualizes the best basketball clubs per region an
 
 ## Dominance Areas View
 ![Dominance areas with radius circles](0-README-components/basketball-map-radius-preview.png)
-*Shows club dominance areas with configurable radius (here: 169km)*
+*Shows club dominance areas with configurable radius*
 
 ## Global Overview
 ![All clubs worldwide](0-README-components/basketball-map-general-preview.png)
-*Complete world map with 2999 clubs without dominance circles*
+*Complete world map with around 700 clubs without dominance circles*
 
 ## 🚀 Live Demo
 
