@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -19,6 +19,10 @@
     <div class="container">
         <nav class="controls">
             <h2>Basketball Club Filter</h2>
+
+            <div class="warning">
+                ⚠️ Note: Some club coordinates are inaccurate or estimated.
+            </div>
 
             <!-- Search Section -->
             <div class="control-group">
@@ -44,7 +48,7 @@
                     Show dominance areas
                 </label>
             </div>
-            
+
             <!-- Statistics area (updated dynamically) -->
             <div class="stats" id="stats">
                 <h3>Statistics</h3>
@@ -52,40 +56,54 @@
                 <div>Visible clubs: <span id="visibleClubs">0</span></div>
                 <div>Current zoom: <span id="zoomLevel">2</span></div>
             </div>
-            
+
             <!-- Legend placeholder - loaded dynamically from external file -->
             <div id="legend-container">
                 <!-- Legend content will be loaded from components/legend.html -->
                 <div class="loading-placeholder">Loading legend...</div>
             </div>
-            
+
             <!-- Instructions for map controls -->
             <h3>Map Controls</h3>
             <div class="help-text">
-                • Zoom: Mouse wheel or +/- buttons<br>
-                • Pan: Click and drag<br>
-                • Club info: Click on marker
+                <ul>
+                    <li>Zoom: Mouse wheel or +/- buttons</li>
+                    <li>Pan: Click and drag</li>
+                    <li>Club info: Click on marker</li>
+                </ul>
             </div>
-            
+
             <!-- Data source attribution -->
             <div class="source">
-                Ranking Source: <a href="https://store.steampowered.com/app/2098130/International_Basketball_Manager_23/" target="_blank" rel="noopener">International Basketball
+                Ranking Source: <a
+                    href="https://store.steampowered.com/app/2098130/International_Basketball_Manager_23/"
+                    target="_blank" rel="noopener">International Basketball
                     Manager 23 Database</a><br>
                 <em>Data from around 2023</em>
             </div>
+
+            <!-- GitHub Repository Link -->
+            <div class="source" style="margin-top:10px;">
+                <a href="https://github.com/KLubina/Best-Basketball-Club-2022-23-Per-Region-Interactive-Map"
+                    target="_blank" rel="noopener">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub"
+                        style="height:1em;vertical-align:middle;margin-right:6px;">
+                    View on GitHub
+                </a>
+            </div>
         </nav>
-        
+
         <div class="map-container">
             <div id="map"></div>
         </div>
     </div>
-    
+
     <!-- External Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-    
+
     <!-- Data -->
     <script src="data/clubs-data.js"></script>
-    
+
     <!-- Load external legend component -->
     <script>
         /**
@@ -99,10 +117,10 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                
+
                 // Get the HTML content
                 const legendHTML = await response.text();
-                
+
                 // Insert the legend into the placeholder container
                 const legendContainer = document.getElementById('legend-container');
                 if (legendContainer) {
@@ -117,11 +135,11 @@
                 }
             }
         }
-        
+
         // Load the legend component when the DOM is ready
         document.addEventListener('DOMContentLoaded', loadLegendComponent);
     </script>
-    
+
     <!-- Main Application (ES6 Modules) -->
     <script type="module" src="app.js"></script>
 </body>

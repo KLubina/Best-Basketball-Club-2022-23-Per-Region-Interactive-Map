@@ -1,45 +1,77 @@
-# Best-Basketball-Club-Per-Region-Interactive-Map
+# ⚽ Best Basketball Club Per Region - Interactive Map
 
-https://raw.githack.com/KLubina/Best-Basketball-Club-Per-Region-Interactive-Map/main/index.html
+An interactive world map that visualizes the best basketball clubs per region and displays their dominance areas.
 
-### Work Approach
+## Dominance Areas View
+![Dominance areas with radius circles](0-README-components/basketball-map-radius-preview.png)
+*Shows club dominance areas with configurable radius (here: 169km)*
 
-The data comes form the game 'International Basketball Manager 23' (https://store.steampowered.com/app/2098130/International_Basketball_Manager_23/) which has its stats for its game stored in the following files:
+## Global Overview
+![All clubs worldwide](0-README-components/basketball-map-general-preview.png)
+*Complete world map with 2999 clubs without dominance circles*
 
--initial_global_db_static
--initial_global_db_dynamic
-
-from there I "cleaned the data". After they were cleaned they are stored in the .json in the data-folder
-
-### File Structure
+## 🚀 Live Demo
 
 ```
-app.js
-index.html
-README.md
-│
-├───controllers
-│       SearchController.js
-│
-├───data
-│       clubs-data.js
-│
-├───managers
-│       MapManager.js
-│       RadiusManager.js
-│       StatsManager.js
-│
-├───renderers
-│       ClubRenderer.js
-│
-├───styles
-│       base.css
-│       map.css
-│       responsive.css
-│       search.css
-│
-└───utils
-        ClubFilter.js
-        DistanceCalculator.js
-        EventManager.js
+https://raw.githack.com/KLubina/Best-Basketball-Club-Per-Region-Interactive-Map/main/index.html
+```
+
+## 🛠️ Technical Implementation
+
+### Architecture
+```
+├── app.js                 # Main App Controller
+├── index.html            # Entry Point
+├── controllers/
+│   └── SearchController.js    # Search Functionality
+├── data/
+│   └── clubs-data.js         # Club Database
+├── managers/
+│   ├── MapManager.js         # Leaflet Map Management
+│   ├── RadiusManager.js      # Dominance Circle Logic
+│   └── StatsManager.js       # Statistics Updates
+├── renderers/
+│   └── ClubRenderer.js       # Club Marker Rendering
+├── styles/                   # CSS Styling
+└── utils/                    # Utility Functions
+```
+
+### Technologies Used
+- **Leaflet.js** - Interactive mapping library
+- **ES6 Modules** - Modular JavaScript architecture
+- **Responsive CSS** - Mobile-first design
+- **OpenStreetMap** - Map data
+- **Event-Driven Architecture** - Loosely coupled components
+
+## 📊 Data Structure
+
+The club data follows this schema:
+```javascript
+{
+  id: "unique_id",
+  name: "Club Name",
+  lat: 52.5200,      // Latitude
+  lng: 13.4050,      // Longitude
+  rank: 1,           // World ranking
+  country: "Germany",
+  tier: "top3"       // Calculated tier
+}
+```
+
+## 🔧 Configuration
+
+### Radius Settings
+```javascript
+// Configurable in RadiusManager.js
+const DEFAULT_RADIUS = 0;        // Default radius
+const MAX_RADIUS = 20000;        // Maximum radius (km)
+const RADIUS_STEP = 1;           // Slider steps
+```
+
+### Map Configuration
+```javascript
+// In MapManager.js
+const DEFAULT_CENTER = [20, 0];  // World center
+const DEFAULT_ZOOM = 2;          // Start zoom
+const MAX_ZOOM = 18;             // Maximum zoom
 ```
